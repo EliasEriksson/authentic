@@ -4,3 +4,4 @@ click
 msgspec
 black
 isort
+sqlalchemy
