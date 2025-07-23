@@ -1,0 +1,6 @@
+litestar
+uvicorn
+click
+msgspec
+black
+isort
