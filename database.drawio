@@ -333,7 +333,7 @@
             <mxRectangle width="48.125000000000156" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="XVOxswBhUQG1xmM62Aym-12" value="pkce_id" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" vertex="1" parent="XVOxswBhUQG1xmM62Aym-10">
+        <mxCell id="XVOxswBhUQG1xmM62Aym-12" value="&lt;div&gt;pkce_method_id&lt;/div&gt;" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" vertex="1" parent="XVOxswBhUQG1xmM62Aym-10">
           <mxGeometry x="48.125000000000156" width="131.87499999999983" height="30" as="geometry">
             <mxRectangle width="131.87499999999983" height="30" as="alternateBounds" />
           </mxGeometry>
