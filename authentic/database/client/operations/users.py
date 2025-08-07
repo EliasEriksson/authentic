@@ -7,7 +7,7 @@ import asyncio
 
 
 # noinspection DuplicatedCode
-class Applications:
+class Users:
     _session: AsyncSession
     _lock: asyncio.Lock
 
@@ -15,45 +15,41 @@ class Applications:
         self._session = session
         self._lock = asyncio.Lock()
 
-    async def fetch_by_key(self, id: UUID) -> models.Application:
-        query = select(models.Application).where(models.Application.id == id)
+    async def fetch_by_key(self, id: UUID) -> models.User:
+        query = select(models.User).where(models.User.id == id)
         result = await self._session.execute(query)
         return result.scalars().first()
 
     async def list(
         self, limit: int | None = None, offset: int | None = None
-    ) -> Sequence[models.Application]:
+    ) -> Sequence[models.User]:
         limit = limit or 10
         offset = offset or 0
         query = (
-            select(models.Application)
+            select(models.User)
             .limit(limit)
             .offset(offset)
-            .order_by(desc(models.Application.created))
+            .order_by(desc(models.User.created))
         )
         result = await self._session.execute(query)
         return result.scalars().all()
 
-    async def create(
-        self, application: models.application.ApplicationProtocol
-    ) -> models.Application:
-        model = models.Application.create(application)
+    async def create(self, user: models.user.UserProtocol):
+        model = models.User.create(user)
         async with self._lock:
             async with self._session.begin():
-                self._session.add(model)
+                self._session.add_all(model)
         return model
 
-    async def update(
-        self, id: UUID, application: models.application.ApplicationProtocol
-    ) -> models.Application:
+    async def update(self, id: UUID, user: models.user.UserProtocol) -> models.User:
         model = await self.fetch_by_key(id)
         async with self._lock:
             async with self._session.begin():
-                model.update(application)
+                model.update(user)
         return model
 
     async def delete_by_key(self, id: UUID) -> bool:
-        query = delete(models.Application).where(models.Application.id == id)
+        query = delete(models.User).where(models.User.id == id)
         async with self._lock:
             async with self._session.begin():
                 result = await self._session.execute(query)
