@@ -7,6 +7,7 @@ from .router import router
 
 gateway = Litestar(
     route_handlers=[router],
+    on_startup=[],
     openapi_config=OpenAPIConfig(
         title="Self-Hosted OAuth2 Server",
         version="1.0.0",

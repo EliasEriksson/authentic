@@ -1,9 +1,10 @@
 import litestar
-from . import routes
+
+from . import auth
 
 router = litestar.Router(
-    path="/api/",
+    path="/",
     route_handlers=[
-        routes.router,
+        auth.router,
     ],
 )

@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import *
 from ... import models
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -38,7 +39,7 @@ class Users:
         model = models.User.create(user)
         async with self._lock:
             async with self._session.begin():
-                self._session.add_all(model)
+                self._session.add(model)
         return model
 
     async def update(self, id: UUID, user: models.user.UserProtocol) -> models.User:

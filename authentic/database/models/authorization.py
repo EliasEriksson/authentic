@@ -12,7 +12,7 @@ from .model import Model
 if TYPE_CHECKING:
     from .application import Application
     from .organization import Organization
-    from .pkce_methods import PKCEMethod
+    from .pkce_method import PKCEMethod
     from .user import User
 
 

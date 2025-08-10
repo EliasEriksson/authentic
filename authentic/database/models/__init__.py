@@ -5,7 +5,7 @@ from . import (
     membership,
     organization,
     password,
-    pkce_methods,
+    pkce_method,
     refresh_token,
     subscription,
     user,
@@ -17,7 +17,7 @@ from .email import Email
 from .membership import Membership
 from .organization import Organization
 from .password import Password
-from .pkce_methods import PKCEMethod
+from .pkce_method import PKCEMethod
 from .refresh_token import RefreshToken
 from .subscription import Subscription
 from .user import User
