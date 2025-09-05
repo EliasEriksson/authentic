@@ -11,6 +11,10 @@ class Mutable(msgspec.Struct):
     name: str
 
 
+class Creatable(Mutable):
+    email: str
+
+
 class Listable(Mutable):
     id: UUID
     created: datetime
