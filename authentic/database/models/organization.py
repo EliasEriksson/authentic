@@ -2,8 +2,9 @@ from __future__ import annotations
 
 from typing import *
 
-from sqlalchemy import Text
+from sqlalchemy import Boolean, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.sql import false
 
 from .base import Identifiable
 
@@ -18,9 +19,14 @@ class Organization(Identifiable):
         Text(),
         nullable=False,
     )
+    open: Mapped[bool] = mapped_column(
+        Boolean(),
+        server_default=false(),
+        nullable=False,
+    )
     subscriptions: Mapped[List[Subscription]] = relationship(
         back_populates="organization",
     )
-    memberships: Mapped[List[Membership]] = relationship(
+    members: Mapped[List[Membership]] = relationship(
         back_populates="organization",
     )

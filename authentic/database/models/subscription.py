@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import *
 from uuid import UUID
 
-from sqlalchemy import ForeignKey, UniqueConstraint
+from sqlalchemy import Boolean, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..constants import CASCADE
@@ -26,8 +26,16 @@ class Subscription(Model):
         primary_key=True,
         nullable=False,
     )
+    invitation: Mapped[bool] = mapped_column(
+        Boolean(),
+        nullable=False,
+    )
+    request: Mapped[bool] = mapped_column(
+        Boolean(),
+        nullable=False,
+    )
     application: Mapped[Application] = relationship(
-        back_populates="subscriptions",
+        back_populates="subscribers",
     )
     organization: Mapped[Organization] = relationship(
         back_populates="subscriptions",
