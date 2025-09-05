@@ -59,7 +59,7 @@ async def token(request: Request) -> dict:
     redirect_uri = form.get("redirect_uri")
 
     if not all([code, code_verifier, client_id, redirect_uri]):
-        return {"error": "invalid_reNew Collectionquest"}
+        return {"error": "invalid_request"}
 
     auth_data = AUTH_CODES.get(code)
     if (
