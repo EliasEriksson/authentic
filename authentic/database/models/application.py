@@ -2,8 +2,9 @@ from __future__ import annotations
 
 from typing import *
 
-from sqlalchemy import Text
+from sqlalchemy import Boolean, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.sql import false
 
 from .base import Identifiable
 
@@ -17,6 +18,11 @@ class Application(Identifiable):
         Text(),
         nullable=False,
     )
-    subscriptions: Mapped[List[Subscription]] = relationship(
+    open: Mapped[bool] = mapped_column(
+        Boolean(),
+        server_default=false(),
+        nullable=False,
+    )
+    subscribers: Mapped[List[Subscription]] = relationship(
         back_populates="application",
     )

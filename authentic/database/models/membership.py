@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import *
 from uuid import UUID
 
-from sqlalchemy import ForeignKey, UniqueConstraint
+from sqlalchemy import Boolean, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..constants import CASCADE
@@ -26,10 +26,18 @@ class Membership(Model):
         primary_key=True,
         nullable=False,
     )
+    invitation: Mapped[bool] = mapped_column(
+        Boolean(),
+        nullable=False,
+    )
+    request: Mapped[bool] = mapped_column(
+        Boolean(),
+        nullable=False,
+    )
     user: Mapped[User] = relationship(
         back_populates="memberships",
     )
     organization: Mapped[Organization] = relationship(
-        back_populates="memberships",
+        back_populates="members",
     )
     __table_args__ = (UniqueConstraint(user_id, organization_id),)
