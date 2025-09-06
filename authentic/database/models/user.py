@@ -9,6 +9,7 @@ from .base import Identifiable
 
 if TYPE_CHECKING:
     from .membership import Membership
+    from .email import Email
 
 
 class User(Identifiable):
@@ -16,6 +17,9 @@ class User(Identifiable):
     name: Mapped[str] = mapped_column(
         Text(),
         nullable=False,
+    )
+    emails: Mapped[List[Email]] = relationship(
+        back_populates="user",
     )
     memberships: Mapped[List[Membership]] = relationship(
         back_populates="user",

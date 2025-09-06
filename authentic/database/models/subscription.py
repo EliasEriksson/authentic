@@ -17,12 +17,12 @@ if TYPE_CHECKING:
 class Subscription(Model):
     __tablename__ = "subscription"
     application_id: Mapped[UUID] = mapped_column(
-        ForeignKey(Application.id, ondelete=CASCADE),
+        ForeignKey("application.id", ondelete=CASCADE),
         primary_key=True,
         nullable=False,
     )
     organization_id: Mapped[UUID] = mapped_column(
-        ForeignKey(Organization.id, ondelete=CASCADE),
+        ForeignKey("organization.id", ondelete=CASCADE),
         primary_key=True,
         nullable=False,
     )

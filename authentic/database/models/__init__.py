@@ -6,3 +6,4 @@ from .organization import Organization
 from .pkce_methods import PKCEMethod
 from .subscription import Subscription
 from .user import User
+from .email import Email

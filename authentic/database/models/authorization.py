@@ -18,17 +18,17 @@ if TYPE_CHECKING:
 class Authorization(Model):
     __tablename__ = "authorization"
     application_id: Mapped[UUID] = mapped_column(
-        ForeignKey(Application.id, ondelete=CASCADE),
+        ForeignKey("application.id", ondelete=CASCADE),
         primary_key=True,
         nullable=False,
     )
     user_id: Mapped[UUID] = mapped_column(
-        ForeignKey(User.id, ondelete=CASCADE),
+        ForeignKey("user.id", ondelete=CASCADE),
         primary_key=True,
         nullable=False,
     )
     pkce_method_id: Mapped[PKCEMethod] = mapped_column(
-        ForeignKey(PKCEMethod.id, ondelete=CASCADE),
+        ForeignKey("pkce_method.id", ondelete=CASCADE),
     )
     challenge: Mapped[str] = mapped_column(
         Text(),

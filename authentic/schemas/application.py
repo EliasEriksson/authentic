@@ -12,6 +12,9 @@ class Mutable(msgspec.Struct):
     open: bool
 
 
+class Creatable(Mutable): ...
+
+
 class Listable(Mutable):
     id: UUID
     created: datetime
