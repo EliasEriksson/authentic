@@ -1,40 +1,44 @@
+from typing import *
+import enum
 import os
-from functools import reduce
 
 from . import types
 from .exceptions import EnvironmentMissingVariableError, EnvironmentValueTypeError
 
 
 class Environment:
-    _environment: types.Environment
+    _translations: Type[enum.StrEnum]
 
-    def __init__(self, *environments: types.Environment) -> None:
-        self._environment = reduce(
-            lambda result, environment: result.update(environment),
-            environments,
-            {},
+    def __init__(
+        self, translations: Type[enum.StrEnum], *environments: types.Environment
+    ) -> None:
+        self._translations = translations
+        for environment in environments:
+            self.write(environment)
+
+    def translate(self, variable: str) -> str:
+        return (
+            getattr(self._translations, variable)
+            if variable in self._translations
+            else None
         )
-        self.write(self._environment)
-
-    def __len__(self):
-        return len(self._environment)
 
     def write(self, environment: types.Environment) -> None:
         for variable, value in environment.items():
+            translated = self.translate(variable)
             if value is None:
-                self._environment.pop(variable)
-                os.environ.pop(variable)
+                os.environ.pop(translated)
             else:
-                os.environ[variable] = self._environment[variable] = str(value)
+                os.environ[translated] = str(value)
 
     def read_string(self, variable: str) -> str:
-        result = self._environment.get(variable)
+        result = os.environ.get(self.translate(variable))
         if result is None:
             raise EnvironmentMissingVariableError(variable)
         return result
 
     def read_int(self, variable: str) -> int:
-        result = self._environment.get(variable)
+        result = os.environ.get(self.translate(variable))
         if result is None:
             raise EnvironmentMissingVariableError(variable)
         try:
@@ -43,7 +47,7 @@ class Environment:
             raise EnvironmentValueTypeError(variable, result, "int")
 
     def read_float(self, variable: str) -> float:
-        result = self._environment.get(variable)
+        result = os.environ.get(self.translate(variable))
         if result is None:
             raise EnvironmentMissingVariableError(variable)
         try:

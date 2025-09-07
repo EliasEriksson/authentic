@@ -9,6 +9,7 @@ import msgspec
 
 class Mutable(msgspec.Struct): ...
 
+
 class Membership(Mutable):
     organization: UUID
     user: UUID

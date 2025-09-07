@@ -1,5 +1,5 @@
 import enum
 
 
-class Variables(enum.Enum):
+class Variables(enum.StrEnum):
     mode = "MODE"

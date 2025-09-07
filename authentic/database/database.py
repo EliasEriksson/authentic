@@ -35,7 +35,7 @@ class Database:
         cls, configuration: Configuration | None = None
     ) -> AsyncIterator[Self]:
         configuration = configuration or Configuration()
-        engine = create_async_engine("")
+        engine = create_async_engine(configuration.database.url)
         try:
             yield cls(engine)
         finally:

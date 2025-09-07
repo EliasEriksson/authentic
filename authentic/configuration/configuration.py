@@ -1,24 +1,18 @@
-import os
-from pathlib import Path
 from typing import *
 
-from rich_click.rich_help_formatter import cached_property
+from functools import cached_property
+from .database import Database
 
-from authentic import root, utils
-from authentic.utils import environment
 
 from .base import Base
-from .variables import Variables
 
 
 class Configuration(Base):
-    variables = Variables
-    _configuration_file: Path = root.project.joinpath(f"configuration.yaml")
-    _environment: environment.Environment
+    database: Database
 
-    def __init__(self, file, cli: environment.types.Environment) -> None:
-        self._environment = environment.Environment(cli)
+    def __init__(self) -> None:
+        self.database = Database(self)
 
     @cached_property
     def mode(self) -> Literal["production", "development"]:
-        return
+        return "development"
