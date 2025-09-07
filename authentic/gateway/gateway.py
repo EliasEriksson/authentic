@@ -1,12 +1,18 @@
 from litestar import Litestar
+from litestar.di import Provide
 from litestar.openapi import OpenAPIConfig
 from litestar.openapi.spec import Components, OAuthFlow, OAuthFlows, SecurityScheme
 
+from ..dependencies import database
 from .controller import Controller
 from .router import router
 
 gateway = Litestar(
     route_handlers=[router],
+    # lifespan=[database.lifespan],
+    dependencies={
+        "database": Provide(database.client),
+    },
     openapi_config=OpenAPIConfig(
         title="Self-Hosted OAuth2 Server",
         version="1.0.0",
