@@ -12,12 +12,19 @@ from ... import models
 from .... import schemas
 
 import contextlib
+from contextlib import nullcontext
+
+
+if TYPE_CHECKING:
+    from ..client import Client
 
 
 class Users:
+    _client: Client
     _operator: Operator
 
-    def __init__(self, operator: Operator) -> None:
+    def __init__(self, client: Client, operator: Operator) -> None:
+        self._client = client
         self._operator = operator
 
     async def list(
@@ -43,23 +50,42 @@ class Users:
         )
         return await self._operator.fetch(query)
 
-    async def create(self, schema: schemas.user.Creatable) -> models.User:
-        async with self._operator.transaction() as session:
+    async def create(
+        self, schema: schemas.user.Creatable, *, session: AsyncSession | None = None
+    ) -> models.User:
+        transaction = nullcontext(session) if session else self._operator.transaction()
+        async with transaction as session:
             user = models.User(name=schema.name)
             session.add(user)
             await session.flush()
             models.Email(user=user, address=schema.email)
+            await self._client.organizations.create(
+                user.id,
+                schemas.organization.Creatable(
+                    name=f"{schema.name}'s organization",
+                    open=False,
+                ),
+                session=session,
+            )
+
         return user
 
     async def update(
-        self, model: models.User, schema: schemas.user.Mutable
+        self,
+        model: models.User,
+        schema: schemas.user.Mutable,
+        *,
+        session: AsyncSession | None = None,
     ) -> models.User:
-        async with self._operator.transaction():
+        transaction = nullcontext(session) if session else self._operator.transaction()
+        async with transaction:
             model.name = schema.name
         return model
 
-    async def delete(self, *models: models.User) -> Sequence[models.User]:
-        return await self._operator.delete(*models)
+    async def delete(
+        self, *models: models.User, session: AsyncSession | None = None
+    ) -> Sequence[models.User]:
+        return await self._operator.delete(*models, session=session)
 
     @contextlib.asynccontextmanager
     async def transaction(self) -> AsyncIterable[AsyncSession]:

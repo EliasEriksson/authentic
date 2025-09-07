@@ -7,6 +7,7 @@ from sqlalchemy import Select, Sequence
 import asyncio
 from ..models.base import Model
 import contextlib
+from contextlib import nullcontext
 
 
 class Operator:
@@ -36,14 +37,20 @@ class Operator:
             raise NoResultFound("No row was found when one was required")
         return await self._writer.merge(model, load=False)
 
-    async def add[T: Model](self, *models: T) -> Sequence[T]:
-        async with self.transaction() as session:
+    async def add[T: Model](
+        self, *models: T, session: AsyncSession | None = None
+    ) -> Sequence[T]:
+        transaction = nullcontext(session) if session else self.transaction()
+        async with transaction as session:
             for model in models:
                 session.add(model)
         return models
 
-    async def delete[T: Model](self, *models: T) -> Sequence[T]:
-        async with self.transaction() as session:
+    async def delete[T: Model](
+        self, *models: T, session: AsyncSession | None = None
+    ) -> Sequence[T]:
+        transaction = nullcontext(session) if session else self.transaction()
+        async with transaction as session:
             result = await asyncio.gather(*[session.delete(model) for model in models])
         return result
 

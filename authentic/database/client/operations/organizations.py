@@ -2,6 +2,8 @@ from __future__ import annotations
 from typing import *
 
 from uuid import UUID
+from wsgiref.util import application_uri
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
@@ -12,12 +14,18 @@ from ... import models
 from .... import schemas
 
 import contextlib
+from contextlib import nullcontext
+
+if TYPE_CHECKING:
+    from ..client import Client
 
 
 class Organizations:
+    _client: Client
     _operator: Operator
 
-    def __init__(self, operator: Operator) -> None:
+    def __init__(self, client: Client, operator: Operator) -> None:
+        self._client = client
         self._operator = operator
 
     async def list(
@@ -45,9 +53,14 @@ class Organizations:
         return await self._operator.fetch(query)
 
     async def create(
-        self, owner_id: UUID, schema: schemas.organization.Creatable
+        self,
+        owner_id: UUID,
+        schema: schemas.organization.Creatable,
+        *,
+        session: AsyncSession | None = None,
     ) -> models.Organization:
-        async with self._operator.transaction() as session:
+        transaction = nullcontext(session) if session else self._operator.transaction()
+        async with transaction as session:
             organization = models.Organization(name=schema.name, open=schema.open)
             await session.flush()
             models.Membership(
@@ -56,20 +69,32 @@ class Organizations:
                 invitation=True,
                 request=True,
             )
+            application = await self._client.applications.fetch_identity()
+            models.Subscription(
+                organization=organization,
+                application=application,
+                invitation=True,
+                request=True,
+            )
         return organization
 
     async def update(
-        self, model: models.Organization, schema: schemas.organization.Mutable
+        self,
+        model: models.Organization,
+        schema: schemas.organization.Mutable,
+        *,
+        session: AsyncSession | None = None,
     ) -> models.Organization:
-        async with self._operator.transaction():
+        transaction = nullcontext(session) if session else self._operator.transaction()
+        async with transaction:
             model.name = schema.name
             model.open = schema.open
         return model
 
     async def delete(
-        self, *models: models.Organization
+        self, *models: models.Organization, session: AsyncSession | None = None
     ) -> Sequence[models.Organization]:
-        return await self._operator.delete(*models)
+        return await self._operator.delete(*models, session=session)
 
     @contextlib.asynccontextmanager
     async def transaction(self) -> AsyncIterable[AsyncSession]:

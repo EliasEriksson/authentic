@@ -12,12 +12,18 @@ from ... import models
 from .... import schemas
 
 import contextlib
+from contextlib import nullcontext
+
+if TYPE_CHECKING:
+    from ..client import Client
 
 
 class Applications:
+    _client: Client
     _operator: Operator
 
-    def __init__(self, operator: Operator) -> None:
+    def __init__(self, client: Client, operator: Operator) -> None:
+        self._client = client
         self._operator = operator
 
     async def list(
@@ -35,6 +41,15 @@ class Applications:
                 query = query.where(criteria)
         return await self._operator.list(query)
 
+    async def fetch_identity(self) -> models.Application:
+        query = (
+            select(models.Identity)
+            .options(joinedload(models.Identity.application))
+            .options(joinedload(models.Application.subscribers))
+        )
+        identity = await self._operator.fetch(query)
+        return identity.application
+
     async def fetch_by_key(self, id: UUID) -> models.Application:
         query = (
             select(models.Application)
@@ -44,9 +59,14 @@ class Applications:
         return await self._operator.fetch(query)
 
     async def create(
-        self, owner_id: UUID, schema: schemas.application.Creatable
+        self,
+        owner_id: UUID,
+        schema: schemas.application.Creatable,
+        *,
+        session: AsyncSession | None = None,
     ) -> models.Application:
-        async with self._operator.transaction() as session:
+        transaction = nullcontext(session) if session else self._operator.transaction()
+        async with transaction as session:
             application = models.Application(name=schema.name, open=schema.open)
             await session.flush()
             models.Subscription(
@@ -56,6 +76,24 @@ class Applications:
                 request=True,
             )
         return application
+
+    async def update(
+        self,
+        model: models.Application,
+        schema: schemas.application.Mutable,
+        *,
+        session: AsyncSession | None = None,
+    ) -> models.Application:
+        transaction = nullcontext(session) if session else self._operator.transaction()
+        async with transaction:
+            model.name = schema.name
+            model.open = schema.open
+        return model
+
+    async def delete(
+        self, *models: models.Application, session: AsyncSession | None = None
+    ) -> Sequence[models.Application]:
+        return await self._operator.delete(*models, session=session)
 
     @contextlib.asynccontextmanager
     async def transaction(self) -> AsyncIterable[AsyncSession]:
