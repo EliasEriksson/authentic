@@ -27,7 +27,7 @@ class Authorization(Model):
         primary_key=True,
         nullable=False,
     )
-    pkce_method_id: Mapped[PKCEMethod] = mapped_column(
+    pkce_method_id: Mapped[UUID] = mapped_column(
         ForeignKey("pkce_method.id", ondelete=CASCADE),
     )
     challenge: Mapped[str] = mapped_column(

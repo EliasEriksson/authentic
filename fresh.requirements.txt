@@ -5,3 +5,4 @@ msgspec
 black
 isort
 sqlalchemy
+psycopg

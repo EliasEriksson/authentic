@@ -4,7 +4,6 @@ import contextlib
 from typing import *
 
 from litestar import Litestar
-from rich.ansi import console
 
 from ..database import Client, Database
 
@@ -16,7 +15,6 @@ async def client(app: Litestar) -> AsyncIterator[Client]:
 
 @contextlib.asynccontextmanager
 async def lifespan(app: Litestar):
-    console.log("database_connection_lifespan")
     async with Database.open() as database:
         app.state.database = database
         yield

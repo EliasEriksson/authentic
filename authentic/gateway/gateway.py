@@ -9,7 +9,7 @@ from .router import router
 
 gateway = Litestar(
     route_handlers=[router],
-    # lifespan=[database.lifespan],
+    lifespan=[database.lifespan],
     dependencies={
         "database": Provide(database.client),
     },

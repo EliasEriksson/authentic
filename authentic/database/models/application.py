@@ -27,6 +27,6 @@ class Application(Identifiable):
     subscribers: Mapped[List[Subscription]] = relationship(
         back_populates="application",
     )
-    identity: Mapped[List[Identity]] = mapped_column(
+    identity: Mapped[List[Identity]] = relationship(
         back_populates="application",
     )
