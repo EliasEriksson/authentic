@@ -14,7 +14,6 @@ class Database:
     def __init__(self, configuration: Configuration, file, cli) -> None:
         self.configuration = configuration
 
-
     @cached_property
     def username(self) -> str:
 

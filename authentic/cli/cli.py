@@ -9,7 +9,9 @@ entry = click.Group("authentic")
 
 
 @entry.command("start")
-@click.option("username", "--username", envvar=configuration.database.Variables.username)
+@click.option(
+    "username", "--username", envvar=configuration.database.Variables.username
+)
 def start(**cli) -> None:
     configuration = Configuration(cli)
     print(username)
