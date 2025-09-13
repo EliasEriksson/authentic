@@ -1,10 +1,8 @@
+from functools import cached_property
 from typing import *
 
-from functools import cached_property
-from .database import Database
-
-
 from .base import Base
+from .database import Database
 
 
 class Configuration(Base):

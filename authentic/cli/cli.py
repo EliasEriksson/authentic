@@ -1,8 +1,9 @@
 import click
 import uvicorn
-from . import database
 
 from authentic import root
+
+from . import database
 
 entry = click.Group("authentic")
 entry.add_command(database.group)

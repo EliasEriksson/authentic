@@ -3,14 +3,14 @@ from __future__ import annotations
 from typing import *
 
 from sqlalchemy import Boolean, Text
-from sqlalchemy.orm import Mapped, mapped_column, relationship, backref
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import false
 
 from .base import Identifiable
 
 if TYPE_CHECKING:
-    from .subscription import Subscription
     from .identity import Identity
+    from .subscription import Subscription
 
 
 class Application(Identifiable):

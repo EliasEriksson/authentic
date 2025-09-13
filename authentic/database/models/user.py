@@ -8,8 +8,8 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Identifiable
 
 if TYPE_CHECKING:
-    from .membership import Membership
     from .email import Email
+    from .membership import Membership
     from .password import Password
 
 

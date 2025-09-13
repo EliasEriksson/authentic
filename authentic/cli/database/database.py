@@ -1,8 +1,10 @@
+import asyncio
+
 import click
 from alembic import command
+
 from authentic.configuration import Configuration
 from authentic.database import Database
-import asyncio
 
 group = click.Group("database")
 

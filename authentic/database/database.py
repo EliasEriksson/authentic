@@ -1,19 +1,22 @@
 from __future__ import annotations
+
+import asyncio
+import contextlib
 from typing import *
-from ..configuration import Configuration
-from sqlalchemy import create_engine, text
+
 from alembic.autogenerate import compare_metadata
 from alembic.migration import MigrationContext
+from sqlalchemy import create_engine, text
 from sqlalchemy.ext.asyncio import (
-    AsyncSession,
     AsyncEngine,
-    create_async_engine,
+    AsyncSession,
     async_sessionmaker,
+    create_async_engine,
 )
-import contextlib
-from .client import Client
-import asyncio
+
+from ..configuration import Configuration
 from . import models
+from .client import Client
 
 
 class Database:

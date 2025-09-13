@@ -1,6 +1,6 @@
-from typing import *
 import enum
 import os
+from typing import *
 
 from . import types
 from .exceptions import EnvironmentMissingVariableError, EnvironmentValueTypeError

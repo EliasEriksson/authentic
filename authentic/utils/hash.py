@@ -1,8 +1,9 @@
 from __future__ import annotations
-from xxhash import xxh128
-from bcrypt import hashpw
-from bcrypt import gensalt
+
 from datetime import datetime
+
+from bcrypt import gensalt, hashpw
+from xxhash import xxh128
 
 
 def etag(time: datetime) -> str:

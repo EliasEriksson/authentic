@@ -1,16 +1,16 @@
 from __future__ import annotations
+
 from typing import *
 from uuid import UUID
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Mapped
-from sqlalchemy import LargeBinary
-from sqlalchemy import ForeignKey
-from bcrypt import checkpw
-from authentic.utils import hash
-from .base import Model
-from ..constants import CASCADE
 
+from bcrypt import checkpw
+from sqlalchemy import ForeignKey, LargeBinary
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from authentic.utils import hash
+
+from ..constants import CASCADE
+from .base import Model
 
 if TYPE_CHECKING:
     from . import User
