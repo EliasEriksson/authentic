@@ -8,3 +8,4 @@ from .subscription import Subscription
 from .user import User
 from .email import Email
 from .identity import Identity
+from .password import Password
