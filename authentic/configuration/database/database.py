@@ -30,7 +30,6 @@ class Database:
 
     @cached_property
     def migrations(self) -> Path:
-        print(self.alembic.get_main_option("script_location"))
         return Path(self.alembic.get_main_option("script_location")) / "versions"
 
     @cached_property

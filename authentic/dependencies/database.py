@@ -16,6 +16,8 @@ async def client(app: Litestar) -> AsyncIterator[Client]:
 @contextlib.asynccontextmanager
 async def lifespan(app: Litestar):
     async with Database.open() as database:
+        if not await database.ready():
+            raise RuntimeError("Database schema is not up to date.")
         app.state.database = database
         yield
         del app.state.database
