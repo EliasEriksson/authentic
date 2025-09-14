@@ -12,8 +12,13 @@ from authentic import database, schemas
 
 class Controller(litestar.Controller):
     @litestar.get()
-    async def list(self, database: database.Client) -> Response[List[schemas.User]]:
-        users = await database.users.list()
+    async def list(
+        self,
+        database: database.Client,
+        limit: Annotated[int, Parameter(query="limit")] = 10,
+        offset: Annotated[int, Parameter(query="offset")] = 0,
+    ) -> Response[List[schemas.User]]:
+        users = await database.users.list(limit, offset)
         return Response([schemas.User.from_model(user) for user in users])
 
     @litestar.get("/{id:uuid}")
