@@ -57,6 +57,7 @@ class Operator:
     @contextlib.asynccontextmanager
     async def transaction(self) -> AsyncIterator[AsyncSession]:
         async with self._lock:
+            print("starting transaction")
             async with self._writer.begin():
                 yield self._writer
                 targets = [

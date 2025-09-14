@@ -1,15 +1,23 @@
+from typing import *
 from sqlalchemy.ext.asyncio import AsyncSession
 from .operator import Operator
 from . import operations
+import contextlib
 
 
 class Client:
+    _operator: Operator
     applications: operations.Applications
     organizations: operations.Organizations
     users: operations.Users
 
     def __init__(self, reader: AsyncSession, writer: AsyncSession) -> None:
-        operator = Operator(reader, writer)
-        self.applications = operations.Applications(self, operator)
-        self.organizations = operations.Organizations(self, operator)
-        self.users = operations.Users(self, operator)
+        self._operator = Operator(reader, writer)
+        self.applications = operations.Applications(self, self._operator)
+        self.organizations = operations.Organizations(self, self._operator)
+        self.users = operations.Users(self, self._operator)
+
+    @contextlib.asynccontextmanager
+    async def transaction(self) -> AsyncIterator[AsyncSession]:
+        async with self._operator.transaction() as session:
+            yield session
