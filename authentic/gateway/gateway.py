@@ -8,6 +8,7 @@ from .controller import Controller
 from .router import router
 
 gateway = Litestar(
+    debug=True,
     route_handlers=[router],
     lifespan=[database.lifespan],
     dependencies={

@@ -43,10 +43,10 @@ class Authorization(Model):
         nullable=False,
     )
     application: Mapped[Application] = relationship(
-        back_populates="subscriptions",
+        back_populates="authorizations",
     )
     user: Mapped[User] = relationship(
-        back_populates="subscriptions",
+        back_populates="authorizations",
     )
     pkce_method: Mapped[PKCEMethod] = relationship(
         back_populates="authorizations",

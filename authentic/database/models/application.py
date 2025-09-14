@@ -9,6 +9,7 @@ from sqlalchemy.sql import false
 from .base import Identifiable
 
 if TYPE_CHECKING:
+    from .authorization import Authorization
     from .identity import Identity
     from .subscription import Subscription
 
@@ -27,6 +28,9 @@ class Application(Identifiable):
     subscribers: Mapped[List[Subscription]] = relationship(
         back_populates="application",
     )
-    identity: Mapped[List[Identity]] = relationship(
+    identities: Mapped[List[Identity]] = relationship(
         back_populates="application",
+    )
+    authorizations: Mapped[List[Authorization]] = relationship(
+        back_populates="application"
     )

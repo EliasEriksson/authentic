@@ -1,18 +1,18 @@
 from __future__ import annotations
-from typing import *
 
+import contextlib
+from contextlib import nullcontext
+from typing import *
 from uuid import UUID
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql import ColumnExpressionArgument
 
-from ..operator import Operator
-from ... import models
 from .... import schemas
-
-import contextlib
-from contextlib import nullcontext
+from ... import models
+from ..operator import Operator
 
 if TYPE_CHECKING:
     from ..client import Client
@@ -42,13 +42,9 @@ class Applications:
         return await self._operator.list(query)
 
     async def fetch_identity(self) -> models.Application:
-        query = (
-            select(models.Identity)
-            .options(joinedload(models.Identity.application))
-            .options(joinedload(models.Application.subscribers))
-        )
+        query = select(models.Identity)
         identity = await self._operator.fetch(query)
-        return identity.application
+        return await self.fetch_by_key(identity.id)
 
     async def fetch_by_key(self, id: UUID) -> models.Application:
         query = (

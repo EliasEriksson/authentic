@@ -8,6 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Identifiable
 
 if TYPE_CHECKING:
+    from .authorization import Authorization
     from .email import Email
     from .membership import Membership
     from .password import Password
@@ -26,5 +27,8 @@ class User(Identifiable):
         back_populates="user",
     )
     passwords: Mapped[List[Password]] = relationship(
+        back_populates="user",
+    )
+    authorizations: Mapped[List[Authorization]] = relationship(
         back_populates="user",
     )

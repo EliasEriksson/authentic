@@ -10,13 +10,13 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from authentic.utils import hash
 
 from ..constants import CASCADE
-from .base import Model
+from .base import Identifiable
 
 if TYPE_CHECKING:
     from . import User
 
 
-class Password(Model):
+class Password(Identifiable):
     __tablename__ = "password"
     digest: Mapped[bytes] = mapped_column(
         LargeBinary(),
