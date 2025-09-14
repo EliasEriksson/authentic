@@ -42,9 +42,9 @@ class Applications:
         return await self._operator.list(query)
 
     async def fetch_identity(self) -> models.Application:
-        query = select(models.Identity)
+        query = select(models.Identity).limit(1)
         identity = await self._operator.fetch(query)
-        return await self.fetch_by_key(identity.id)
+        return await self.fetch_by_key(identity.application_id)
 
     async def fetch_by_key(self, id: UUID) -> models.Application:
         query = (

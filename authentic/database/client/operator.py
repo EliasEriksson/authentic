@@ -24,22 +24,31 @@ class Operator:
 
     async def list[T: Model](self, query: Select[Tuple[T]]) -> Sequence[T]:
         result = await self._reader.execute(query)
-        models = result.scalars().all()
-
-        return await asyncio.gather(
-            *[
-                asyncio.create_task(self._writer.merge(model, load=False))
-                for model in models
-            ]
+        models = result.unique().scalars().all()
+        transaction = (
+            nullcontext(self._writer)
+            if self._writer.in_transaction()
+            else self.transaction()
         )
+        async with transaction as session:
+            return await asyncio.gather(
+                *[
+                    asyncio.create_task(session.merge(model, load=False))
+                    for model in models
+                ]
+            )
 
     async def fetch[T: Model](self, query: Select[Tuple[T]]) -> T:
-
         result = await self._reader.execute(query)
         model = result.scalars().first()
         if model is None:
             raise NoResultFound("No row was found when one was required")
-        async with self.transaction() as session:
+        transaction = (
+            nullcontext(self._writer)
+            if self._writer.in_transaction()
+            else self.transaction()
+        )
+        async with transaction as session:
             return await session.merge(model, load=False)
 
     async def add[T: Model](
