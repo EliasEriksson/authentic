@@ -1,13 +1,15 @@
 from __future__ import annotations
-from typing import *
 
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.exc import NoResultFound
-from sqlalchemy import Select, Sequence
 import asyncio
-from ..models.base import Model
 import contextlib
 from contextlib import nullcontext
+from typing import *
+
+from sqlalchemy import Select, Sequence
+from sqlalchemy.exc import NoResultFound
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from ..models.base import Model
 
 
 class Operator:
@@ -23,6 +25,7 @@ class Operator:
     async def list[T: Model](self, query: Select[Tuple[T]]) -> Sequence[T]:
         result = await self._reader.execute(query)
         models = result.scalars().all()
+
         return await asyncio.gather(
             *[
                 asyncio.create_task(self._writer.merge(model, load=False))
@@ -31,11 +34,13 @@ class Operator:
         )
 
     async def fetch[T: Model](self, query: Select[Tuple[T]]) -> T:
+
         result = await self._reader.execute(query)
         model = result.scalars().first()
         if model is None:
             raise NoResultFound("No row was found when one was required")
-        return await self._writer.merge(model, load=False)
+        async with self.transaction() as session:
+            return await session.merge(model, load=False)
 
     async def add[T: Model](
         self, *models: T, session: AsyncSession | None = None
@@ -57,7 +62,6 @@ class Operator:
     @contextlib.asynccontextmanager
     async def transaction(self) -> AsyncIterator[AsyncSession]:
         async with self._lock:
-            print("starting transaction")
             async with self._writer.begin():
                 yield self._writer
                 targets = [

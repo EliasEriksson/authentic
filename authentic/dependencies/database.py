@@ -5,10 +5,9 @@ from typing import *
 
 from litestar import Litestar
 from litestar.datastructures import State
-from uuid import UUID
-from sqlalchemy.exc import NoResultFound, IntegrityError
+from sqlalchemy.exc import IntegrityError, NoResultFound
 
-from authentic import schemas
+from authentic import hardcoded
 
 from ..database import Client, Database, models
 
@@ -19,21 +18,19 @@ async def client(state: State) -> AsyncIterator[Client]:
 
 
 async def bootstrap(client: Client) -> None:
-    print("starting")
     async with client.transaction() as session:
-        print("started")
         application = models.Application(
-            id=UUID("00000000-0000-4000-0000-000000000000"),
+            id=hardcoded.identity_id,
             name="Authentic",
-            open=False,
+            open=True,
         )
         organization = models.Organization(
-            id=UUID("11111111-1111-4111-1111-111111111111"),
+            id=hardcoded.identity_organization_id,
             name="Authentic's organization",
             open=False,
         )
         user = models.User(
-            id=UUID("11111111-1111-4111-1111-111111111111"),
+            id=hardcoded.identity_user_id,
             name="Admin",
         )
         session.add(application)
@@ -71,7 +68,6 @@ async def lifespan(app: Litestar):
                 await client.applications.fetch_identity()
             except NoResultFound:
                 try:
-                    print("bootstrapping")
                     await bootstrap(client)
                 except IntegrityError:
                     pass
