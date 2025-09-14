@@ -8,6 +8,7 @@ from litestar.datastructures import State
 from sqlalchemy.exc import IntegrityError, NoResultFound
 
 from authentic import hardcoded
+from authentic.configuration import Configuration
 
 from ..database import Client, Database, models
 
@@ -18,6 +19,7 @@ async def client(state: State) -> AsyncIterator[Client]:
 
 
 async def bootstrap(client: Client) -> None:
+    configuration = Configuration()
     async with client.transaction() as session:
         application = models.Application(
             id=hardcoded.identity_id,
@@ -52,9 +54,14 @@ async def bootstrap(client: Client) -> None:
             invitation=True,
             request=True,
         )
+        email = models.Email(
+            user=user,
+            address=configuration.email.inbox,
+        )
         session.add(identity)
         session.add(subscription)
         session.add(membership)
+        session.add(email)
 
 
 @contextlib.asynccontextmanager
