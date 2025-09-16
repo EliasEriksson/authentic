@@ -4,7 +4,7 @@ from typing import *
 from uuid import UUID
 
 from bcrypt import checkpw
-from sqlalchemy import ForeignKey, LargeBinary
+from sqlalchemy import ForeignKey, LargeBinary, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from authentic.utils import hash
@@ -27,9 +27,9 @@ class Password(Identifiable):
         nullable=True,
     )
     user: Mapped[User] = relationship(
-        back_populates="passwords",
+        back_populates="password",
     )
-
+    __table_args__ = (UniqueConstraint("id", user_id),)
     def verify(self, password: str) -> bool:
         return checkpw(password.encode(), self.digest)
 

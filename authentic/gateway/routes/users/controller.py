@@ -33,7 +33,9 @@ class Controller(litestar.Controller):
 
     @litestar.post()
     async def create(
-        self, database: database.Client, data: schemas.user.Creatable
+        self,
+        database: database.Client,
+        data: schemas.user.Creatable | schemas.user.Mutable,
     ) -> Response[schemas.User]:
         try:
             user = await database.users.create(data)

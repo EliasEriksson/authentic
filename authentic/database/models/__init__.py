@@ -6,6 +6,7 @@ from .identity import Identity
 from .membership import Membership
 from .organization import Organization
 from .password import Password
+from .password_resets import PasswordReset
 from .pkce_methods import PKCEMethod
 from .subscription import Subscription
 from .user import User

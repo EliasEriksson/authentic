@@ -12,6 +12,7 @@ if TYPE_CHECKING:
     from .email import Email
     from .membership import Membership
     from .password import Password
+    from .password_resets import PasswordReset
 
 
 class User(Identifiable):
@@ -26,7 +27,10 @@ class User(Identifiable):
     memberships: Mapped[List[Membership]] = relationship(
         back_populates="user",
     )
-    passwords: Mapped[List[Password]] = relationship(
+    password: Mapped[Optional[Password]] = relationship(
+        back_populates="user",
+    )
+    password_reset: Mapped[Optional[PasswordReset]] = relationship(
         back_populates="user",
     )
     authorizations: Mapped[List[Authorization]] = relationship(

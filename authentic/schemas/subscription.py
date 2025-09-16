@@ -7,10 +7,12 @@ from uuid import UUID
 import msgspec
 
 
-class Mutable(msgspec.Struct): ...
+class Mutable(msgspec.Struct):
+    __schema_name__ = "SubscriptionMutable"
 
 
 class Subscription(Mutable):
+    __schema_name__ = "Subscription"
     application: UUID
     organization: UUID
     invitation: bool

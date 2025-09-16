@@ -10,20 +10,24 @@ from authentic.database import models
 
 
 class Mutable(msgspec.Struct):
+    __schema_name__ = "UserMutable"
     name: str
 
 
 class Creatable(Mutable):
+    __schema_name__ = "UserCreatable"
     email: str
 
 
 class Listable(Mutable):
+    __schema_name__ = "UserListable"
     id: UUID
     created: datetime
     modified: datetime
 
 
 class User(Mutable):
+    __schema_name__ = "User"
     id: UUID
     emails: List[UUID]
     memberships: List[UUID]
