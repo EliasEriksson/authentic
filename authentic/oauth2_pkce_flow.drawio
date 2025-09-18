@@ -62,10 +62,10 @@
           <mxGeometry x="480" y="350" width="250" height="35" as="geometry" />
         </mxCell>
         <mxCell id="PcOTl7jaeYxXwrJTTBFI-137" value="7. Auth server responds with both access token and refresh token in json response" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
-          <mxGeometry x="470" y="430" width="290" height="30" as="geometry" />
+          <mxGeometry x="465" y="400" width="290" height="30" as="geometry" />
         </mxCell>
         <mxCell id="PcOTl7jaeYxXwrJTTBFI-138" value="8. App server strips refresh token from response and puts it in http only cookie. sends access token thru to frontend." style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
-          <mxGeometry x="450" y="470" width="350" height="40" as="geometry" />
+          <mxGeometry x="445" y="440" width="350" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
