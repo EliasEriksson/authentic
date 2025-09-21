@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import contextlib
-from contextlib import nullcontext
 from typing import *
 from uuid import UUID
+from functools import reduce
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -46,6 +46,19 @@ class Users:
                 query = query.where(criteria)
         return await self._operator.list(query)
 
+    async def fetch_by_email(
+        self, email: str, *, joins: Sequence[models.base.Model] | None = None
+    ) -> models.User:
+        query = (
+            select(models.User)
+            .where(models.User.id == models.Email.user_id)
+            .where(models.Email.address == email)
+        )
+        if joins:
+            reduce(lambda result, join: result.options(joinedload(join)), joins, query)
+
+        return await self._operator.fetch(query)
+
     async def fetch_by_key(self, id: UUID) -> models.User:
         query = (
             select(models.User)
@@ -55,11 +68,8 @@ class Users:
         )
         return await self._operator.fetch(query)
 
-    async def create(
-        self, schema: schemas.user.Creatable, *, session: AsyncSession | None = None
-    ) -> models.User:
-        transaction = nullcontext(session) if session else self._operator.transaction()
-        async with transaction as session:
+    async def create(self, schema: schemas.user.Creatable) -> models.User:
+        async with self._operator.transaction() as session:
             user = models.User(name=schema.name)
             session.add(user)
             await session.flush()
@@ -71,7 +81,6 @@ class Users:
                     name=f"{schema.name}'s organization",
                     open=False,
                 ),
-                session=session,
             )
         return await self.fetch_by_key(user.id)
 
@@ -79,18 +88,13 @@ class Users:
         self,
         model: models.User,
         schema: schemas.user.Mutable,
-        *,
-        session: AsyncSession | None = None,
     ) -> models.User:
-        transaction = nullcontext(session) if session else self._operator.transaction()
-        async with transaction:
+        async with self._operator.transaction():
             model.name = schema.name
         return model
 
-    async def delete(
-        self, *models: models.User, session: AsyncSession | None = None
-    ) -> Sequence[models.User]:
-        return await self._operator.delete(*models, session=session)
+    async def delete(self, *models: models.User) -> Sequence[models.User]:
+        return await self._operator.delete(*models)
 
     @contextlib.asynccontextmanager
     async def transaction(self) -> AsyncIterable[AsyncSession]:

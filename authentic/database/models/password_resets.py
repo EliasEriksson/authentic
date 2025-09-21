@@ -8,6 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..constants import CASCADE
 from .base import Identifiable
+import secrets
 
 if TYPE_CHECKING:
     from . import User
@@ -27,3 +28,7 @@ class PasswordReset(Identifiable):
         back_populates="password_reset",
     )
     __table_args__ = (UniqueConstraint("id", user_id),)
+
+    @staticmethod
+    def generate_code() -> str:
+        return secrets.token_urlsafe(64)

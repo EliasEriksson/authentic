@@ -30,6 +30,7 @@ class Password(Identifiable):
         back_populates="password",
     )
     __table_args__ = (UniqueConstraint("id", user_id),)
+
     def verify(self, password: str) -> bool:
         return checkpw(password.encode(), self.digest)
 

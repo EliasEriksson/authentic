@@ -52,14 +52,9 @@ class Organizations:
         return await self._operator.fetch(query)
 
     async def create(
-        self,
-        owner_id: UUID,
-        schema: schemas.organization.Creatable,
-        *,
-        session: AsyncSession | None = None,
+        self, owner_id: UUID, schema: schemas.organization.Creatable
     ) -> models.Organization:
-        transaction = nullcontext(session) if session else self._operator.transaction()
-        async with transaction as session:
+        async with self._operator.transaction() as session:
             organization = models.Organization(name=schema.name, open=schema.open)
             session.add(organization)
             await session.flush()
@@ -81,22 +76,17 @@ class Organizations:
         return organization
 
     async def update(
-        self,
-        model: models.Organization,
-        schema: schemas.organization.Mutable,
-        *,
-        session: AsyncSession | None = None,
+        self, model: models.Organization, schema: schemas.organization.Mutable
     ) -> models.Organization:
-        transaction = nullcontext(session) if session else self._operator.transaction()
-        async with transaction:
+        async with self._operator.transaction():
             model.name = schema.name
             model.open = schema.open
         return model
 
     async def delete(
-        self, *models: models.Organization, session: AsyncSession | None = None
+        self, *models: models.Organization
     ) -> Sequence[models.Organization]:
-        return await self._operator.delete(*models, session=session)
+        return await self._operator.delete(*models)
 
     @contextlib.asynccontextmanager
     async def transaction(self) -> AsyncIterable[AsyncSession]:

@@ -58,11 +58,8 @@ class Applications:
         self,
         owner_id: UUID,
         schema: schemas.application.Creatable,
-        *,
-        session: AsyncSession | None = None,
     ) -> models.Application:
-        transaction = nullcontext(session) if session else self._operator.transaction()
-        async with transaction as session:
+        async with self._operator.transaction() as session:
             application = models.Application(name=schema.name, open=schema.open)
             await session.flush()
             models.Subscription(
@@ -74,22 +71,15 @@ class Applications:
         return application
 
     async def update(
-        self,
-        model: models.Application,
-        schema: schemas.application.Mutable,
-        *,
-        session: AsyncSession | None = None,
+        self, model: models.Application, schema: schemas.application.Mutable
     ) -> models.Application:
-        transaction = nullcontext(session) if session else self._operator.transaction()
-        async with transaction:
+        async with self._operator.transaction():
             model.name = schema.name
             model.open = schema.open
         return model
 
-    async def delete(
-        self, *models: models.Application, session: AsyncSession | None = None
-    ) -> Sequence[models.Application]:
-        return await self._operator.delete(*models, session=session)
+    async def delete(self, *models: models.Application) -> Sequence[models.Application]:
+        return await self._operator.delete(*models)
 
     @contextlib.asynccontextmanager
     async def transaction(self) -> AsyncIterable[AsyncSession]:
