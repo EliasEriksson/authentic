@@ -15,8 +15,6 @@ class Controller(litestar.Controller):
     async def create(
         self, database: database.Client, data: schemas.password.ResetRequest
     ) -> Response[None]:
-        return Response(None)
-
-    @litestar.patch()
-    async def patch(self, data: schemas.password.Reset) -> Response[None]:
+        password_reset = await database.password_reset.create(data)
+        print(password_reset.code)
         return Response(None)

@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from ..client import Client
 
 
-class PasswordReset:
+class PasswordResets:
     _client: Client
     _operator: Operator
 
@@ -34,11 +34,19 @@ class PasswordReset:
         )
         return await self._operator.fetch(query)
 
-    async def create(self, data: schemas.password.ResetRequest) -> str:
-        await self._client.users.fetch_by_email(data.email)
+    async def fetch_by_code(self, code: str) -> models.PasswordReset:
+        query = select(models.PasswordReset).where(models.PasswordReset.code == code)
+        return await self._operator.fetch(query)
+
+    async def create(self, data: schemas.password.ResetRequest) -> models.PasswordReset:
+        user = await self._client.users.fetch_by_email(data.email)
         async with self._operator.transaction() as session:
-            models.PasswordReset()
-        pass
+            password_reset = models.PasswordReset(
+                user=user,
+                code=models.PasswordReset.generate_code(),
+            )
+            session.add(password_reset)
+        return password_reset
 
     @contextlib.asynccontextmanager
     async def transaction(self) -> AsyncIterable[AsyncSession]:

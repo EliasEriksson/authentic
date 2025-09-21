@@ -6,6 +6,7 @@ from typing import *
 from uuid import UUID
 
 from sqlalchemy import select
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql import ColumnExpressionArgument
@@ -18,7 +19,7 @@ if TYPE_CHECKING:
     from ..client import Client
 
 
-class Applications:
+class Passwords:
     _client: Client
     _operator: Operator
 
@@ -26,11 +27,29 @@ class Applications:
         self._client = client
         self._operator = operator
 
-    def change(self): ...
+    async def fetch_by_email(self, email: str) -> models.Password:
+        query = (
+            select(models.Password)
+            .where(models.Email.address == email)
+            .where(models.Email.user_id == models.Password.user_id)
+        )
+        return await self._operator.fetch(query)
 
-    def reset(self): ...
+    async def change(self, data: schemas.password.Change) -> bool:
+        password = await self.fetch_by_email(data.email)
+        if password.digest != password.hash(data.old):
+            return False
+        async with self._operator.transaction():
+            password.digest = password.hash(data.password)
+        return True
 
-    def reset_request(self, data: schemas.password.ResetRequest) -> str: ...
+    async def reset(self, data: schemas.password.Reset) -> bool:
+        try:
+            password_reset = await self._client.password_reset.fetch_by_code(data.code)
+        except NoResultFound:
+            return False
+        # TODO continue here
+        return True
 
     @contextlib.asynccontextmanager
     async def transaction(self) -> AsyncIterable[AsyncSession]:

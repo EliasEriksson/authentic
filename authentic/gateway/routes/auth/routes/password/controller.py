@@ -12,5 +12,8 @@ from authentic import database, schemas
 
 class Controller(litestar.Controller):
     @litestar.patch()
-    async def patch(self, data: schemas.password.Change) -> Response[None]:
+    async def patch(
+        self, data: schemas.password.Change | schemas.password.Reset
+    ) -> Response[None]:
+
         return Response(None)

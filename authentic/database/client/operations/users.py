@@ -7,7 +7,7 @@ from functools import reduce
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import joinedload, InstrumentedAttribute
 from sqlalchemy.sql import ColumnExpressionArgument
 
 from .... import schemas
@@ -47,7 +47,7 @@ class Users:
         return await self._operator.list(query)
 
     async def fetch_by_email(
-        self, email: str, *, joins: Sequence[models.base.Model] | None = None
+        self, email: str, *, joins: Sequence[InstrumentedAttribute[Any]] | None = None
     ) -> models.User:
         query = (
             select(models.User)
