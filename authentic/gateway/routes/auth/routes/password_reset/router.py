@@ -1,11 +1,11 @@
 import litestar
 
-from .controller import Controller
+from .password_reset import PasswordReset
 
 router = litestar.Router(
     path="/password-reset/",
     tags=[],
     route_handlers=[
-        Controller,
+        PasswordReset,
     ],
 )

@@ -5,7 +5,7 @@ from contextlib import nullcontext
 from typing import *
 from uuid import UUID
 
-from sqlalchemy import select
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql import ColumnExpressionArgument
@@ -40,13 +40,21 @@ class PasswordResets:
 
     async def create(self, data: schemas.password.ResetRequest) -> models.PasswordReset:
         user = await self._client.users.fetch_by_email(data.email)
+        await self.delete_by_user_id(user.id)
         async with self._operator.transaction() as session:
             password_reset = models.PasswordReset(
-                user=user,
+                user_id=user.id,
                 code=models.PasswordReset.generate_code(),
             )
             session.add(password_reset)
         return password_reset
+
+    async def delete_by_user_id(self, user_id: UUID) -> None:
+        query = delete(models.PasswordReset).where(
+            models.PasswordReset.user_id == user_id
+        )
+        async with self._operator.transaction() as session:
+            await session.execute(query)
 
     @contextlib.asynccontextmanager
     async def transaction(self) -> AsyncIterable[AsyncSession]:

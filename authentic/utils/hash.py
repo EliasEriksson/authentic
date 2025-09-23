@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from bcrypt import gensalt, hashpw
+import bcrypt
 from xxhash import xxh128
 
 
@@ -11,4 +11,8 @@ def etag(time: datetime) -> str:
 
 
 def password(password: str) -> bytes:
-    return hashpw(password.encode(), gensalt())
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+
+
+def verify_password(password: str, digest: bytes) -> bool:
+    return bcrypt.checkpw(password.encode(), digest)

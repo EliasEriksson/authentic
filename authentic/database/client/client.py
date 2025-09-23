@@ -12,6 +12,7 @@ class Client:
     applications: operations.Applications
     organizations: operations.Organizations
     users: operations.Users
+    passwords: operations.Passwords
     password_reset: operations.PasswordResets
 
     def __init__(self, reader: AsyncSession, writer: AsyncSession) -> None:
@@ -19,6 +20,7 @@ class Client:
         self.applications = operations.Applications(self, self._operator)
         self.organizations = operations.Organizations(self, self._operator)
         self.users = operations.Users(self, self._operator)
+        self.passwords = operations.Passwords(self, self._operator)
         self.password_reset = operations.PasswordResets(self, self._operator)
 
     @contextlib.asynccontextmanager

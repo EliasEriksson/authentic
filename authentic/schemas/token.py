@@ -1,8 +1,11 @@
 from __future__ import annotations
-from typing import *
-from ..database import models
-import msgspec
+
 import secrets
+from typing import *
+
+import msgspec
+
+from ..database import models
 
 
 class Token(msgspec.Struct):

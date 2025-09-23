@@ -5,13 +5,13 @@ from . import (
     organization,
     password,
     subscription,
-    user,
     token,
+    user,
 )
 from .application import Application
 from .credentials import Credentials
 from .membership import Membership
 from .organization import Organization
 from .subscription import Subscription
-from .user import User
 from .token import Token
+from .user import User

@@ -9,12 +9,6 @@ class ResetRequest(msgspec.Struct):
 
 
 class Reset(ResetRequest):
-    __schema_name__ = "PasswordReset"
-    code: str
-    password: str
-
-
-class Change(ResetRequest):
     __schema_name__ = "PasswordChange"
-    old: str
     password: str
+    new_password: str

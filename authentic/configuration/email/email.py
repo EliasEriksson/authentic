@@ -18,7 +18,7 @@ class Email:
 
     @cached_property
     def inbox(self) -> str:
-        return "mail@authentic.org"
+        return "admin@authentic.org"
 
     @cached_property
     def sender(self) -> str:

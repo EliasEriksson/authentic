@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import contextlib
+from functools import reduce
 from typing import *
 from uuid import UUID
-from functools import reduce
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import joinedload, InstrumentedAttribute
+from sqlalchemy.orm import InstrumentedAttribute, joinedload
 from sqlalchemy.sql import ColumnExpressionArgument
 
 from .... import schemas
