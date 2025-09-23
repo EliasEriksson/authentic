@@ -14,6 +14,7 @@ from authentic.schemas.access_token.claims import Claims
 class AudienceProtocol(Protocol):
     def __str__(self) -> str: ...
 
+
 @dataclass(frozen=True)
 class AccessToken:
     audience: str
