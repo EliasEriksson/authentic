@@ -11,10 +11,7 @@ gateway = Litestar(
     debug=True,
     route_handlers=[router],
     lifespan=[database.lifespan],
-    dependencies={
-        "database": Provide(database.client),
-        "email": Provide(email)
-    },
+    dependencies={"database": Provide(database.client), "email": Provide(email)},
     openapi_config=OpenAPIConfig(
         title="Self-Hosted OAuth2 Server",
         version="1.0.0",
