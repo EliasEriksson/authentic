@@ -5,7 +5,7 @@ from . import (
     organization,
     password,
     subscription,
-    token,
+    token_response,
     user,
 )
 from .application import Application
@@ -13,5 +13,5 @@ from .credentials import Credentials
 from .membership import Membership
 from .organization import Organization
 from .subscription import Subscription
-from .token import Token
+from .token_response import Token
 from .user import User
