@@ -13,5 +13,5 @@ from .credentials import Credentials
 from .membership import Membership
 from .organization import Organization
 from .subscription import Subscription
-from .token_response import Token
+from .token_response import TokenResponse
 from .user import User

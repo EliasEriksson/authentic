@@ -6,7 +6,7 @@ from uuid import UUID
 from sqlalchemy import ForeignKey, LargeBinary, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from authentic.utils import hash
+from authentic.utils import hashing
 
 from ..constants import CASCADE
 from .base import Model
@@ -31,8 +31,8 @@ class Password(Model):
     )
 
     def verify(self, password: str) -> bool:
-        return hash.verify_password(password, self.digest)
+        return hashing.verify_salted_hash(password, self.digest)
 
     @staticmethod
     def hash(password: str) -> bytes:
-        return hash.password(password)
+        return hashing.salted_hash(password)

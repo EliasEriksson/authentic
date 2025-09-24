@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     from .membership import Membership
     from .password import Password
     from .password_resets import PasswordReset
+    from .refresh_token import RefreshToken
 
 
 class User(Identifiable):
@@ -31,6 +32,9 @@ class User(Identifiable):
         back_populates="user",
     )
     password_reset: Mapped[Optional[PasswordReset]] = relationship(
+        back_populates="user",
+    )
+    refresh_tokens: Mapped[List[RefreshToken]] = relationship(
         back_populates="user",
     )
     authorizations: Mapped[List[Authorization]] = relationship(

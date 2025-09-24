@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-import secrets
 from typing import *
 from uuid import UUID
 
-from sqlalchemy import ForeignKey, LargeBinary
+from sqlalchemy import ForeignKey, LargeBinary, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from authentic.utils import hashing
@@ -16,8 +15,8 @@ if TYPE_CHECKING:
     from . import User
 
 
-class PasswordReset(Model):
-    __tablename__ = "password_reset"
+class RefreshToken(Model):
+    __tablename__ = "refresh_token"
     user_id: Mapped[UUID] = mapped_column(
         ForeignKey("user.id", ondelete=CASCADE),
         primary_key=True,
@@ -28,16 +27,12 @@ class PasswordReset(Model):
         nullable=False,
     )
     user: Mapped[User] = relationship(
-        back_populates="password_reset",
+        back_populates="refresh_tokens",
     )
 
-    def verify(self, password: str) -> bool:
-        return hashing.verify_salted_hash(password, self.digest)
+    def verify(self, refresh_token: str) -> bool:
+        return hashing.verify_hash(refresh_token, self.digest)
 
     @staticmethod
-    def hash(code: str) -> bytes:
-        return hashing.salted_hash(code)
-
-    @staticmethod
-    def generate_code() -> str:
-        return secrets.token_urlsafe(64)
+    def hash(password: str) -> bytes:
+        return hashing.hash(password)

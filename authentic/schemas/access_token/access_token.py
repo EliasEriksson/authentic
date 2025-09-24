@@ -29,7 +29,7 @@ class AccessToken:
 
     @staticmethod
     def _expires(datetime: datetime) -> datetime:
-        return datetime + timedelta(minutes=20)
+        return datetime + timedelta(minutes=5)
 
     @classmethod
     def decode(cls, token: str, audience: AudienceProtocol) -> Self:

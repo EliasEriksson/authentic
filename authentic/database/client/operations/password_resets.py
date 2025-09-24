@@ -34,20 +34,19 @@ class PasswordResets:
         )
         return await self._operator.fetch(query)
 
-    async def fetch_by_code(self, code: str) -> models.PasswordReset:
-        query = select(models.PasswordReset).where(models.PasswordReset.code == code)
-        return await self._operator.fetch(query)
-
-    async def create(self, data: schemas.password.ResetRequest) -> models.PasswordReset:
+    async def create(self, data: schemas.password.ResetRequest) -> str:
         user = await self._client.users.fetch_by_email(data.email)
         await self.delete_by_user_id(user.id)
         async with self._operator.transaction() as session:
             password_reset = models.PasswordReset(
                 user_id=user.id,
-                code=models.PasswordReset.generate_code(),
+                digest=models.PasswordReset.hash(
+                    code := models.PasswordReset.generate_code()
+                ),
             )
+
             session.add(password_reset)
-        return password_reset
+        return code
 
     async def delete_by_user_id(self, user_id: UUID) -> None:
         query = delete(models.PasswordReset).where(

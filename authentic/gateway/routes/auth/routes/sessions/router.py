@@ -1,11 +1,11 @@
 import litestar
 
-from .controller import Controller
+from .sessions import Sessions
 
 router = litestar.Router(
     path="/oauth/",
     tags=[],
     route_handlers=[
-        Controller,
+        Sessions,
     ],
 )

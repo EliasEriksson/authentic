@@ -8,5 +8,6 @@ from .organization import Organization
 from .password import Password
 from .password_resets import PasswordReset
 from .pkce_methods import PKCEMethod
+from .refresh_token import RefreshToken
 from .subscription import Subscription
 from .user import User
