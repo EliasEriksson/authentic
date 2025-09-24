@@ -55,7 +55,9 @@ class Users:
             .where(models.Email.address == email)
         )
         if joins:
-            query = reduce(lambda result, join: result.options(joinedload(join)), joins, query)
+            query = reduce(
+                lambda result, join: result.options(joinedload(join)), joins, query
+            )
 
         return await self._operator.fetch(query)
 
