@@ -3,9 +3,11 @@ from __future__ import annotations
 import asyncio
 import contextlib
 from typing import *
+from functools import reduce
 
 from sqlalchemy import Select, Sequence
 from sqlalchemy.exc import NoResultFound
+from sqlalchemy.orm import InstrumentedAttribute, joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..models.base import Model
@@ -30,7 +32,16 @@ class Operator:
                 ]
             )
 
-    async def fetch[T: Model](self, query: Select[Tuple[T]]) -> T:
+    async def fetch[T: Model](
+        self,
+        query: Select[Tuple[T]],
+        *,
+        joins: Sequence[InstrumentedAttribute[Any]] | None = None,
+    ) -> T:
+        if joins:
+            query = reduce(
+                lambda result, join: result.options(joinedload(join)), joins, query
+            )
         result = await self._reader.execute(query)
         model = result.scalars().first()
         if model is None:

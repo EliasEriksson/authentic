@@ -31,8 +31,8 @@ class Passwords:
     async def fetch_by_email(self, email: str) -> models.Password:
         query = (
             select(models.Password)
-            .where(models.Email.address == email)
             .where(models.Email.user_id == models.Password.user_id)
+            .where(models.Email.address == email)
         )
         return await self._operator.fetch(query)
 
@@ -50,13 +50,15 @@ class Passwords:
                     password = models.Password(user_id=user.id, digest=digest)
                 session.add(password)
                 password.digest = digest
-                await self._client.password_reset.delete_by_user_id(user.id)
+                # await self._client.password_reset.delete_by_user_id(user.id)
             return True
+        print(data.email)
         password = await self.fetch_by_email(data.email)
         if not password.verify(data.password):
             return False
         async with self._operator.transaction():
             password.digest = password.hash(data.password)
+            await self._client.sessions.delete_by_user_id(user.id)
         return True
 
     @contextlib.asynccontextmanager

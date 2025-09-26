@@ -11,6 +11,7 @@ from .base import Identifiable
 
 if TYPE_CHECKING:
     from .user import User
+    from .session import Session
 
 
 class Email(Identifiable):
@@ -22,4 +23,7 @@ class Email(Identifiable):
     address: Mapped[str] = mapped_column(Text(), nullable=False, unique=True)
     user: Mapped[User] = relationship(
         back_populates="emails",
+    )
+    sessions: Mapped[List[Session]] = relationship(
+        back_populates="email",
     )

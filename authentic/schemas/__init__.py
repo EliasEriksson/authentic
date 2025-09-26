@@ -7,6 +7,7 @@ from . import (
     subscription,
     token_response,
     user,
+    access_token,
 )
 from .application import Application
 from .credentials import Credentials
@@ -15,3 +16,4 @@ from .organization import Organization
 from .subscription import Subscription
 from .token_response import TokenResponse
 from .user import User
+from .access_token import AccessToken

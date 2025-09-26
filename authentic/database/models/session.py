@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import secrets
 from typing import *
 from uuid import UUID
 
@@ -9,16 +10,16 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from authentic.utils import hashing
 
 from ..constants import CASCADE
-from .base import Model
+from .base import Identifiable
 
 if TYPE_CHECKING:
-    from . import User
+    from . import Email
 
 
-class RefreshToken(Model):
-    __tablename__ = "refresh_token"
-    user_id: Mapped[UUID] = mapped_column(
-        ForeignKey("user.id", ondelete=CASCADE),
+class Session(Identifiable):
+    __tablename__ = "session"
+    email_id: Mapped[UUID] = mapped_column(
+        ForeignKey("email.id", ondelete=CASCADE),
         primary_key=True,
         nullable=False,
     )
@@ -26,13 +27,17 @@ class RefreshToken(Model):
         LargeBinary(),
         nullable=False,
     )
-    user: Mapped[User] = relationship(
-        back_populates="refresh_tokens",
+    email: Mapped[Email] = relationship(
+        back_populates="sessions",
     )
 
     def verify(self, refresh_token: str) -> bool:
         return hashing.verify_hash(refresh_token, self.digest)
 
     @staticmethod
-    def hash(password: str) -> bytes:
-        return hashing.hash(password)
+    def hash(refresh_token: str) -> bytes:
+        return hashing.hash(refresh_token)
+
+    @staticmethod
+    def generate_refresh_token() -> str:
+        return secrets.token_urlsafe(64)

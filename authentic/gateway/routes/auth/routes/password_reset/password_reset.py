@@ -19,6 +19,9 @@ class PasswordReset(litestar.Controller):
         data: schemas.password.ResetRequest,
         email: Email,
     ) -> Response[None]:
-        code = await database.password_reset.create(data)
+        try:
+            code = await database.password_reset.create(data)
+        except NoResultFound:
+            return Response(None)
         await email.send_text(data.email, "Password reset", f"reset code: '{code}'")
         return Response(None)

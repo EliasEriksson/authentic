@@ -75,7 +75,7 @@ class Users:
             user = models.User(name=schema.name)
             session.add(user)
             await session.flush()
-            email = models.Email(user=user, address=schema.email)
+            email = await self._client.emails.create(user.id, schema.email)
             session.add(email)
             await self._client.organizations.create(
                 user.id,

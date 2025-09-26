@@ -7,6 +7,7 @@ from uuid import UUID
 
 from jose import jwt
 
+from authentic.configuration import Configuration
 from authentic.schemas.access_token.algorithms import Algorithms
 from authentic.schemas.access_token.claims import Claims
 
@@ -33,7 +34,14 @@ class AccessToken:
 
     @classmethod
     def decode(cls, token: str, audience: AudienceProtocol) -> Self:
-        decoded = jwt.decode(token, key="secret", algorithms=[Algorithms.RS512])
+        configuration = Configuration()
+        # TODO continue here
+        decoded = jwt.decode(
+            token,
+            audience=str(audience),
+            key=configuration.jwt_public_key,
+            algorithms=[Algorithms.RS512],
+        )
         renamed = {
             Claims.decode_map[name]: abbreviation
             for name, abbreviation in decoded.items()
@@ -42,12 +50,20 @@ class AccessToken:
         return cls(**renamed)
 
     def encode(self) -> str:
-        renamed = {
-            Claims.encode_map[abbreviation]: name
-            for abbreviation, name in asdict(self).items()
-            if abbreviation in Claims.encode_map
+        configuration = Configuration()
+        source = asdict(self)
+        transformed = {
+            str(Claims.audience.value): str(source[Claims.audience.name]),
+            str(Claims.issuer.value): str(source[Claims.issuer.name]),
+            str(Claims.subject.value): str(source[Claims.subject.name]),
+            str(Claims.issued.value): str(source[Claims.issued.name]),
+            str(Claims.expires.value): str(source[Claims.expires.name]),
         }
-        encoded = jwt.encode(renamed, "secret", algorithm=Algorithms.RS512)
+        encoded = jwt.encode(
+            transformed,
+            configuration.jwt_private_key,
+            algorithm=Algorithms.RS512.name,
+        )
         return encoded
 
     @classmethod
