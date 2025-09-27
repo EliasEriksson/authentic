@@ -36,29 +36,22 @@ class Passwords:
         )
         return await self._operator.fetch(query)
 
-    async def reset(
-        self, data: schemas.password.Reset, *, refresh_token: str | None = None
+    async def change(
+        self,
+        data: schemas.password.Reset,
+        access: schemas.AccessToken,
+        refresh_token: str,
     ) -> bool:
         user = await self._client.users.fetch_by_email(
             data.email, joins=[[models.User.password_reset]]
         )
-        if user.password_reset and user.password_reset.verify(data.password):
-            digest = models.Password.hash(data.new_password)
-            async with self._operator.transaction() as session:
-                try:
-                    password = await self._client.passwords.fetch_by_user_id(user.id)
-                    password.digest = digest
-                except NoResultFound:
-                    password = models.Password(user_id=user.id, digest=digest)
-                session.add(password)
-                password.digest = digest
-                # await self._client.password_reset.delete_by_user_id(user.id)
-            return True
         session = await self._client.sessions.fetch_by_email(
             data.email,
             joins=[[models.Session.email, models.Email.user, models.User.password]],
         )
-        if not refresh_token or not session.verify(refresh_token):
+        if not session.email.id != access.subject:
+            return False
+        if session.verify(refresh_token):
             return False
         if not session.email.user.password.verify(data.password):
             return False
@@ -67,6 +60,24 @@ class Passwords:
                 data.password
             )
             await self._client.sessions.delete_by_user_id(user.id)
+        return True
+
+    async def reset(self, data: schemas.password.Reset) -> bool:
+        user = await self._client.users.fetch_by_email(
+            data.email, joins=[[models.User.password_reset]]
+        )
+        if not user.password_reset or user.password_reset.verify(data.password):
+            return False
+        digest = models.Password.hash(data.new_password)
+        async with self._operator.transaction() as session:
+            try:
+                password = await self._client.passwords.fetch_by_user_id(user.id)
+                password.digest = digest
+            except NoResultFound:
+                password = models.Password(user_id=user.id, digest=digest)
+            session.add(password)
+            password.digest = digest
+            # await self._client.password_reset.delete_by_user_id(user.id)
         return True
 
     @contextlib.asynccontextmanager
