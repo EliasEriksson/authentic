@@ -34,40 +34,27 @@ class Users:
             Callable[[Type[models.User]], Iterable[ColumnExpressionArgument]] | None
         ) = None,
     ) -> Sequence[models.User]:
-        query = (
-            select(models.User)
-            .limit(limit)
-            .offset(offset)
-            .options(joinedload(models.User.emails))
-            .options(joinedload(models.User.memberships))
-        )
+        query = select(models.User).limit(limit).offset(offset)
         if search is not None:
             for criteria in search(models.User):
                 query = query.where(criteria)
         return await self._operator.list(query)
 
     async def fetch_by_email(
-        self, email: str, *, joins: Sequence[InstrumentedAttribute[Any]] | None = None
+        self,
+        email: str,
+        *,
+        joins: Iterable[Sequence[InstrumentedAttribute[Any]]] | None = None,
     ) -> models.User:
         query = (
             select(models.User)
             .where(models.User.id == models.Email.user_id)
             .where(models.Email.address == email)
         )
-        if joins:
-            query = reduce(
-                lambda result, join: result.options(joinedload(join)), joins, query
-            )
-
-        return await self._operator.fetch(query)
+        return await self._operator.fetch(query, joins=joins)
 
     async def fetch_by_key(self, id: UUID) -> models.User:
-        query = (
-            select(models.User)
-            .where(models.User.id == id)
-            .options(joinedload(models.User.emails))
-            .options(joinedload(models.User.memberships))
-        )
+        query = select(models.User).where(models.User.id == id)
         return await self._operator.fetch(query)
 
     async def create(self, schema: schemas.user.Creatable) -> models.User:

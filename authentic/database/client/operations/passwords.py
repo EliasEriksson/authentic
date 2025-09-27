@@ -36,9 +36,11 @@ class Passwords:
         )
         return await self._operator.fetch(query)
 
-    async def reset(self, data: schemas.password.Reset) -> bool:
+    async def reset(
+        self, data: schemas.password.Reset, *, refresh_token: str | None = None
+    ) -> bool:
         user = await self._client.users.fetch_by_email(
-            data.email, joins=[models.User.password_reset]
+            data.email, joins=[[models.User.password_reset]]
         )
         if user.password_reset and user.password_reset.verify(data.password):
             digest = models.Password.hash(data.new_password)
@@ -52,12 +54,18 @@ class Passwords:
                 password.digest = digest
                 # await self._client.password_reset.delete_by_user_id(user.id)
             return True
-        print(data.email)
-        password = await self.fetch_by_email(data.email)
-        if not password.verify(data.password):
+        session = await self._client.sessions.fetch_by_email(
+            data.email,
+            joins=[[models.Session.email, models.Email.user, models.User.password]],
+        )
+        if not refresh_token or not session.verify(refresh_token):
+            return False
+        if not session.email.user.password.verify(data.password):
             return False
         async with self._operator.transaction():
-            password.digest = password.hash(data.password)
+            session.email.user.password.digest = session.email.user.password.hash(
+                data.password
+            )
             await self._client.sessions.delete_by_user_id(user.id)
         return True
 

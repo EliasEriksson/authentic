@@ -35,19 +35,24 @@ class AccessToken:
     @classmethod
     def decode(cls, token: str, audience: AudienceProtocol) -> Self:
         configuration = Configuration()
-        # TODO continue here
         decoded = jwt.decode(
             token,
             audience=str(audience),
             key=configuration.jwt_public_key,
             algorithms=[Algorithms.RS512],
         )
-        renamed = {
-            Claims.decode_map[name]: abbreviation
-            for name, abbreviation in decoded.items()
-            if name in Claims.decode_map
+        transformed = {
+            Claims.audience.name: decoded[str(Claims.audience.value)],
+            Claims.issuer.name: decoded[str(Claims.issuer.value)],
+            Claims.subject.name: UUID(decoded[str(Claims.subject.value)]),
+            Claims.issued.name: datetime.fromtimestamp(
+                decoded[str(Claims.issued.value)]
+            ),
+            Claims.expires.name: datetime.fromtimestamp(
+                decoded[str(Claims.expires.value)]
+            ),
         }
-        return cls(**renamed)
+        return cls(**transformed)
 
     def encode(self) -> str:
         configuration = Configuration()

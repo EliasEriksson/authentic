@@ -36,12 +36,14 @@ class Operator:
         self,
         query: Select[Tuple[T]],
         *,
-        joins: Sequence[InstrumentedAttribute[Any]] | None = None,
+        joins: Iterable[Sequence[InstrumentedAttribute[Any]]] | None = None,
     ) -> T:
-        if joins:
-            query = reduce(
-                lambda result, join: result.options(joinedload(join)), joins, query
-            )
+        for segments in joins or []:
+            if segments:
+                join = joinedload(segments[0])
+                for segment in segments[1:]:
+                    join = join.joinedload(segment)
+                query = query.options(join)
         result = await self._reader.execute(query)
         model = result.scalars().first()
         if model is None:

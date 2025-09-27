@@ -20,7 +20,11 @@ class Email(Identifiable):
         ForeignKey("user.id", ondelete=CASCADE),
         nullable=False,
     )
-    address: Mapped[str] = mapped_column(Text(), nullable=False, unique=True)
+    address: Mapped[str] = mapped_column(
+        Text(),
+        nullable=False,
+        unique=True,
+    )
     user: Mapped[User] = relationship(
         back_populates="emails",
     )

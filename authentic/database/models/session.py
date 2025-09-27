@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import secrets
+from datetime import UTC, datetime, timedelta
 from typing import *
 from uuid import UUID
 
-from sqlalchemy import ForeignKey, LargeBinary, UniqueConstraint
+from sqlalchemy import DateTime, ForeignKey, LargeBinary, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from authentic.utils import hashing
@@ -30,9 +31,18 @@ class Session(Identifiable):
     email: Mapped[Email] = relationship(
         back_populates="sessions",
     )
+    expires: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(UTC) + timedelta(days=30),
+    )
 
     def verify(self, refresh_token: str) -> bool:
-        return hashing.verify_hash(refresh_token, self.digest)
+        # TODO check expires
+        return (
+            hashing.verify_hash(refresh_token, self.digest)
+            and datetime.now(UTC) < self.expires
+        )
 
     @staticmethod
     def hash(refresh_token: str) -> bytes:

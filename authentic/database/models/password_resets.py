@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import secrets
+from datetime import UTC, datetime, timedelta
 from typing import *
 from uuid import UUID
 
@@ -32,7 +33,9 @@ class PasswordReset(Model):
     )
 
     def verify(self, password: str) -> bool:
-        return hashing.verify_salted_hash(password, self.digest)
+        return hashing.verify_salted_hash(password, self.digest) and datetime.now(
+            UTC
+        ) < (self.created + timedelta(hours=1))
 
     @staticmethod
     def hash(code: str) -> bytes:

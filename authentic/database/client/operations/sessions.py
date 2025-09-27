@@ -27,7 +27,10 @@ class Sessions:
         self._operator = operator
 
     async def fetch_by_email(
-        self, address: str, *, joins: Sequence[InstrumentedAttribute[Any]] | None = None
+        self,
+        address: str,
+        *,
+        joins: Iterable[Sequence[InstrumentedAttribute[Any]]] | None = None,
     ) -> models.Session:
         query = (
             select(models.Session)
@@ -37,20 +40,22 @@ class Sessions:
         return await self._operator.fetch(query, joins=joins)
 
     async def fetch_by_key(
-        self, email_id: UUID, joins: Sequence[InstrumentedAttribute[Any]] | None = None
+        self,
+        email_id: UUID,
+        joins: Iterable[Sequence[InstrumentedAttribute[Any]]] | None = None,
     ) -> models.Session:
         query = select(models.Session).where(models.Session.email_id == email_id)
         return await self._operator.fetch(query, joins=joins)
 
     async def create(self, email_id: UUID) -> Tuple[models.Session, str]:
-        async with self._operator.transaction() as session:
-            model = models.Session(
+        async with self._operator.transaction() as database_session:
+            session = models.Session(
                 email_id=email_id,
                 digest=models.Session.hash(
                     refresh_token := models.Session.generate_refresh_token()
                 ),
             )
-            session.add(model)
+            database_session.add(session)
         return session, refresh_token
 
     async def delete_by_user_id(self, user_id: UUID) -> None:
@@ -60,4 +65,4 @@ class Sessions:
             .where(models.Email.id == models.Session.email_id)
         )
         async with self._operator.transaction() as session:
-            session.execute(query)
+            await session.execute(query)

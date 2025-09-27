@@ -27,13 +27,18 @@ class Emails:
         self._operator = operator
 
     async def fetch_by_address(
-        self, address: str, *, joins: Sequence[InstrumentedAttribute[Any]] | None = None
+        self,
+        address: str,
+        *,
+        joins: Iterable[Sequence[InstrumentedAttribute[Any]]] | None = None,
     ) -> models.Email:
         query = select(models.Email).where(models.Email.address == address)
         return await self._operator.fetch(query, joins=joins)
 
     async def fetch_by_key(
-        self, id: UUID, joins: Sequence[InstrumentedAttribute[Any]] | None = None
+        self,
+        id: UUID,
+        joins: Iterable[Sequence[InstrumentedAttribute[Any]]] | None = None,
     ) -> models.Email:
         query = select(models.Email).where(models.Email.id == id)
         return await self._operator.fetch(query, joins=joins)
