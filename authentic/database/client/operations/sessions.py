@@ -5,7 +5,7 @@ from functools import reduce
 from typing import *
 from uuid import UUID
 
-from sqlalchemy import select, delete
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import InstrumentedAttribute, joinedload
 from sqlalchemy.sql import ColumnExpressionArgument

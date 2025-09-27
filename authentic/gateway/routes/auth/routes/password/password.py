@@ -1,5 +1,5 @@
 import litestar
-from litestar import Response, Request
+from litestar import Request, Response
 from litestar.exceptions.http_exceptions import NotAuthorizedException
 from sqlalchemy.exc import NoResultFound
 

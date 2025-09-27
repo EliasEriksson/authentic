@@ -10,8 +10,8 @@ from ..constants import CASCADE
 from .base import Identifiable
 
 if TYPE_CHECKING:
-    from .user import User
     from .session import Session
+    from .user import User
 
 
 class Email(Identifiable):

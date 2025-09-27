@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
-from typing import *
 from functools import reduce
+from typing import *
 
 from sqlalchemy import Select, Sequence
 from sqlalchemy.exc import NoResultFound
-from sqlalchemy.orm import InstrumentedAttribute, joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import InstrumentedAttribute, joinedload
 
 from ..models.base import Model
 
