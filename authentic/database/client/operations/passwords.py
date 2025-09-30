@@ -38,19 +38,14 @@ class Passwords:
 
     async def change(
         self,
-        data: schemas.password.Reset,
-        access: schemas.AccessToken,
+        data: schemas.password.PasswordChange,
+        access_token: schemas.AccessToken,
         refresh_token: str,
     ) -> bool:
-        user = await self._client.users.fetch_by_email(
-            data.email, joins=[[models.User.password_reset]]
-        )
-        session = await self._client.sessions.fetch_by_email(
-            data.email,
+        session = await self._client.sessions.fetch_by_key(
+            access_token.subject,
             joins=[[models.Session.email, models.Email.user, models.User.password]],
         )
-        if not session.email.id != access.subject:
-            return False
         if session.verify(refresh_token):
             return False
         if not session.email.user.password.verify(data.password):
@@ -59,17 +54,17 @@ class Passwords:
             session.email.user.password.digest = session.email.user.password.hash(
                 data.password
             )
-            await self._client.sessions.delete_by_user_id(user.id)
+            await self._client.sessions.delete_by_user_id(session.email.user.id)
         return True
 
-    async def reset(self, data: schemas.password.Reset) -> bool:
+    async def reset(self, data: schemas.password.PasswordReset) -> bool:
         user = await self._client.users.fetch_by_email(
             data.email, joins=[[models.User.password_reset]]
         )
-        if not user.password_reset or user.password_reset.verify(data.password):
+        if not user.password_reset or user.password_reset.verify(data.code):
             return False
-        digest = models.Password.hash(data.new_password)
         async with self._operator.transaction() as session:
+            digest = models.Password.hash(data.new_password)
             try:
                 password = await self._client.passwords.fetch_by_user_id(user.id)
                 password.digest = digest
@@ -78,6 +73,7 @@ class Passwords:
             session.add(password)
             password.digest = digest
             # await self._client.password_reset.delete_by_user_id(user.id)
+            await self._client.sessions.delete_by_user_id(user.id)
         return True
 
     @contextlib.asynccontextmanager

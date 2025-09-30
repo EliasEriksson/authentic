@@ -3,12 +3,17 @@ from __future__ import annotations
 import msgspec
 
 
-class ResetRequest(msgspec.Struct):
+class PasswordResetRequest(msgspec.Struct):
     __schema_name__ = "PasswordResetRequest"
     email: str
 
 
-class Reset(ResetRequest):
+class PasswordChange(msgspec.Struct):
     __schema_name__ = "PasswordChange"
     password: str
+
+
+class PasswordReset(PasswordResetRequest):
+    __schema_name__ = "PasswordChange"
+    code: str
     new_password: str

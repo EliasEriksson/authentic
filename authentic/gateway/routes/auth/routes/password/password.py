@@ -4,25 +4,35 @@ import litestar
 from litestar import Request, Response
 from litestar.datastructures.cookie import Cookie
 from litestar.exceptions.http_exceptions import NotAuthorizedException
-from litestar.params import Parameter
 from sqlalchemy.exc import NoResultFound
 
 from authentic import database, schemas
 
 
 class Password(litestar.Controller):
+
+    @litestar.put()
+    async def put(
+        self,
+        database: database.Client,
+        access_token: schemas.AccessToken,
+        refresh_token: str,
+        data: schemas.password.PasswordChange,
+    ) -> Response[None]:
+        # await database.passwords.change(data, access_token, refresh_token)
+        return Response(None)
+
     @litestar.patch()
     async def patch(
         self,
         database: database.Client,
         request: Request,
-        refresh_token: Annotated[str | None, Parameter(cookie="refresh_token")],
-        data: schemas.password.Reset,
+        data: schemas.password.PasswordReset,
     ) -> Response[schemas.ClientTokenResponse]:
         # TODO: split database.passwords.reset into 2 functions
         #       endpoint optionally decodes JWT. if one provided -> try change if fail try reset else reset
         try:
-            if not await database.passwords.reset(data, refresh_token=refresh_token):
+            if not await database.passwords.reset(data):
                 raise NotAuthorizedException()
         except NoResultFound as error:
             raise NotAuthorizedException() from error

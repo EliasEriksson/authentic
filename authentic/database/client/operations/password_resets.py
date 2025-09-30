@@ -34,7 +34,7 @@ class PasswordResets:
         )
         return await self._operator.fetch(query)
 
-    async def create(self, data: schemas.password.ResetRequest) -> str:
+    async def create(self, data: schemas.password.PasswordResetRequest) -> str:
         user = await self._client.users.fetch_by_email(data.email)
         await self.delete_by_user_id(user.id)
         async with self._operator.transaction() as session:

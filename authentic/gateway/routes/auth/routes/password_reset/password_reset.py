@@ -16,7 +16,7 @@ class PasswordReset(litestar.Controller):
     async def create(
         self,
         database: database.Client,
-        data: schemas.password.ResetRequest,
+        data: schemas.password.PasswordResetRequest,
         email: Email,
     ) -> Response[None]:
         try:

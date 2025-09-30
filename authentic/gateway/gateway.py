@@ -3,7 +3,9 @@ from litestar.di import Provide
 from litestar.openapi import OpenAPIConfig
 from litestar.openapi.spec import Components, OAuthFlow, OAuthFlows, SecurityScheme
 
-from ..dependencies import database, email
+# from .. import dependencies
+
+from ..dependencies import database, email, access_token, refresh_token
 from .controller import Controller
 from .router import router
 
@@ -11,7 +13,12 @@ gateway = Litestar(
     debug=True,
     route_handlers=[router],
     lifespan=[database.lifespan],
-    dependencies={"database": Provide(database.client), "email": Provide(email)},
+    dependencies={
+        "access_token": Provide(access_token),
+        "refresh_token": Provide(refresh_token),
+        "database": Provide(database.client),
+        "email": Provide(email),
+    },
     openapi_config=OpenAPIConfig(
         title="Self-Hosted OAuth2 Server",
         version="1.0.0",

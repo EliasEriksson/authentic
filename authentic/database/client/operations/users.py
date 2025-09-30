@@ -53,6 +53,19 @@ class Users:
         )
         return await self._operator.fetch(query, joins=joins)
 
+    async def fetch_by_email_id(
+        self,
+        email_id: UUID,
+        *,
+        joins: Iterable[Sequence[InstrumentedAttribute[Any]]] | None = None,
+    ) -> models.User:
+        query = (
+            select(models.User)
+            .where(models.User.id == models.Email.user_id)
+            .where(models.Email.id == email_id)
+        )
+        return await self._operator.fetch(query, joins=joins)
+
     async def fetch_by_key(self, id: UUID) -> models.User:
         query = select(models.User).where(models.User.id == id)
         return await self._operator.fetch(query)
