@@ -16,4 +16,4 @@ class PasswordChange(msgspec.Struct):
 class PasswordReset(PasswordResetRequest):
     __schema_name__ = "PasswordChange"
     code: str
-    new_password: str
+    password: str

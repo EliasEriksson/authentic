@@ -42,18 +42,24 @@ class Passwords:
         access_token: schemas.AccessToken,
         refresh_token: str,
     ) -> bool:
+        print("asd")
         session = await self._client.sessions.fetch_by_key(
             access_token.subject,
             joins=[[models.Session.email, models.Email.user, models.User.password]],
         )
         if session.verify(refresh_token):
+            print("false 1", refresh_token)
             return False
         if not session.email.user.password.verify(data.password):
+            print("false 2")
             return False
-        async with self._operator.transaction():
+        async with self._operator.transaction() as database_session:
             session.email.user.password.digest = session.email.user.password.hash(
                 data.password
             )
+            # TODO why are these old sessiosn not deleted?
+            await database_session.delete(session)
+            print(database_session.deleted)
             await self._client.sessions.delete_by_user_id(session.email.user.id)
         return True
 
@@ -61,10 +67,10 @@ class Passwords:
         user = await self._client.users.fetch_by_email(
             data.email, joins=[[models.User.password_reset]]
         )
-        if not user.password_reset or user.password_reset.verify(data.code):
+        if not user.password_reset or not user.password_reset.verify(data.code):
             return False
         async with self._operator.transaction() as session:
-            digest = models.Password.hash(data.new_password)
+            digest = models.Password.hash(data.password)
             try:
                 password = await self._client.passwords.fetch_by_user_id(user.id)
                 password.digest = digest

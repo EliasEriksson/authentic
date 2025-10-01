@@ -32,10 +32,10 @@ class PasswordReset(Model):
         back_populates="password_reset",
     )
 
-    def verify(self, password: str) -> bool:
-        return hashing.verify_salted_hash(password, self.digest) and datetime.now(
-            UTC
-        ) < (self.created + timedelta(hours=1))
+    def verify(self, code: str) -> bool:
+        return hashing.verify_salted_hash(code, self.digest) and datetime.now(UTC) < (
+            self.created + timedelta(hours=1)
+        )
 
     @staticmethod
     def hash(code: str) -> bytes:

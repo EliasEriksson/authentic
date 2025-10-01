@@ -14,13 +14,37 @@ class Password(litestar.Controller):
     @litestar.put()
     async def put(
         self,
+        request: Request,
         database: database.Client,
         access_token: schemas.AccessToken,
         refresh_token: str,
         data: schemas.password.PasswordChange,
-    ) -> Response[None]:
-        # await database.passwords.change(data, access_token, refresh_token)
-        return Response(None)
+    ) -> Response[schemas.ClientTokenResponse]:
+        if not (await database.passwords.change(data, access_token, refresh_token)):
+            raise NotAuthorizedException()
+        token_response = schemas.ClientTokenResponse(
+            access_token=schemas.AccessToken.create(
+                access_token.subject, request.url.hostname, request.url.hostname
+            ).encode()
+        )
+        # try:
+        #     session, refresh_token = await database.sessions.create(
+        #         access_token.subject
+        #     )
+        # except NoResultFound as error:
+        #     raise NotAuthorizedException() from error
+        return Response(
+            token_response,
+            cookies=[
+                Cookie(
+                    key="refresh_token",
+                    value=refresh_token,
+                    samesite="strict",
+                    httponly=True,
+                    max_age=int(111111111111),
+                )
+            ],
+        )
 
     @litestar.patch()
     async def patch(

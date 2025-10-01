@@ -5,7 +5,7 @@ import contextlib
 from functools import reduce
 from typing import *
 
-from sqlalchemy import Select, Sequence
+from sqlalchemy import Select, Sequence, Delete
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import InstrumentedAttribute, joinedload

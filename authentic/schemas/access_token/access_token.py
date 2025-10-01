@@ -39,7 +39,7 @@ class AccessToken:
             token,
             audience=str(audience),
             key=configuration.jwt_public_key,
-            algorithms=[Algorithms.RS512],
+            algorithms=[Algorithms.RS512.name],
         )
         transformed = {
             Claims.audience.name: decoded[str(Claims.audience.value)],
@@ -61,8 +61,8 @@ class AccessToken:
             str(Claims.audience.value): str(source[Claims.audience.name]),
             str(Claims.issuer.value): str(source[Claims.issuer.name]),
             str(Claims.subject.value): str(source[Claims.subject.name]),
-            str(Claims.issued.value): str(source[Claims.issued.name]),
-            str(Claims.expires.value): str(source[Claims.expires.name]),
+            str(Claims.issued.value): int(source[Claims.issued.name].timestamp()),
+            str(Claims.expires.value): int(source[Claims.expires.name].timestamp()),
         }
         encoded = jwt.encode(
             transformed,
