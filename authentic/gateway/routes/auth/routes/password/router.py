@@ -1,11 +1,11 @@
 import litestar
 
-from .password import Password
+from .controller import Controller
 
 router = litestar.Router(
     path="/password/",
     tags=[],
     route_handlers=[
-        Password,
+        Controller,
     ],
 )

@@ -11,7 +11,7 @@ from sqlalchemy.exc import IntegrityError, NoResultFound
 from authentic import database, schemas
 
 
-class Sessions(litestar.Controller):
+class Controller(litestar.Controller):
     @litestar.get()
     async def create(self) -> Response[None]:
         return Response(None)

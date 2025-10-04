@@ -38,7 +38,6 @@ class Session(Identifiable):
     )
 
     def verify(self, refresh_token: str) -> bool:
-        # TODO check expires
         return (
             hashing.verify_hash(refresh_token, self.digest)
             and datetime.now(UTC) < self.expires

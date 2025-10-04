@@ -9,7 +9,7 @@ from sqlalchemy.exc import NoResultFound
 from authentic import database, schemas
 
 
-class Password(litestar.Controller):
+class Controller(litestar.Controller):
 
     @litestar.put()
     async def put(
@@ -27,12 +27,12 @@ class Password(litestar.Controller):
                 access_token.subject, request.url.hostname, request.url.hostname
             ).encode()
         )
-        # try:
-        #     session, refresh_token = await database.sessions.create(
-        #         access_token.subject
-        #     )
-        # except NoResultFound as error:
-        #     raise NotAuthorizedException() from error
+        try:
+            session, refresh_token = await database.sessions.create(
+                access_token.subject
+            )
+        except NoResultFound as error:
+            raise NotAuthorizedException() from error
         return Response(
             token_response,
             cookies=[

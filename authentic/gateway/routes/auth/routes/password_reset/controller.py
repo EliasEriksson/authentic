@@ -11,7 +11,7 @@ from authentic import database, schemas
 from authentic.services.email import Email
 
 
-class PasswordReset(litestar.Controller):
+class Controller(litestar.Controller):
     @litestar.post()
     async def create(
         self,
