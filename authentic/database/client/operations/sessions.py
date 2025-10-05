@@ -47,6 +47,17 @@ class Sessions:
         query = select(models.Session).where(models.Session.email_id == email_id)
         return await self._operator.fetch(query, joins=joins)
 
+    async def fetch_by_refresh_token(
+        self,
+        refresh_token: str,
+        *,
+        joins: Iterable[Sequence[InstrumentedAttribute]] | None = None,
+    ) -> models.Session:
+        query = select(models.Session).where(
+            models.Session.digest == models.Session.hash(refresh_token)
+        )
+        return await self._operator.fetch(query, joins=joins)
+
     async def create(self, email: models.Email) -> Tuple[models.Session, str]:
         async with self._operator.transaction() as database_session:
             session = models.Session(

@@ -1,12 +1,12 @@
+import asyncio
 from typing import *
 
 import litestar
 from litestar import Request, Response
-from litestar.datastructures.cookie import Cookie
 from litestar.exceptions.http_exceptions import NotAuthorizedException
 from sqlalchemy.exc import NoResultFound
 
-from authentic import database, schemas
+from authentic import database, schemas, cookies
 from authentic.database import models
 
 
@@ -21,22 +21,20 @@ class Controller(litestar.Controller):
         data: schemas.password.PasswordChange,
     ) -> Response[schemas.ClientTokenResponse]:
         try:
-            session = await database.sessions.fetch_by_email_id(
-                access_token.subject,
+            session = await database.sessions.fetch_by_refresh_token(
+                refresh_token,
                 joins=[[models.Session.email, models.Email.user, models.User.password]],
             )
         except NoResultFound:
             raise NotAuthorizedException()
-        if not session.verify(refresh_token):
+        if not (email := session.email).id == access_token.subject:
             raise NotAuthorizedException()
-        if not session.email.user.password.verify(data.password):
+        if not email.user.password.verify(data.password):
             raise NotAuthorizedException()
         async with database.transaction():
-            session.email.user.password.digest = models.Password.hash(data.password)
-            await database.sessions.delete_by_user_id(session.email.user.id)
-        async with database.transaction():
-            session, refresh_token = await database.sessions.create(session.email)
-            await database.sessions.delete_by_user_id(session.email.user.id)
+            email.user.password.digest = models.Password.hash(data.password)
+            await database.sessions.delete_by_user_id(email.user.id)
+            created_session = await database.sessions.create(email)
         token_response = schemas.ClientTokenResponse(
             access_token=schemas.AccessToken.create(
                 access_token.subject, request.url.hostname, request.url.hostname
@@ -44,15 +42,7 @@ class Controller(litestar.Controller):
         )
         return Response(
             token_response,
-            cookies=[
-                Cookie(
-                    key="refresh_token",
-                    value=refresh_token,
-                    samesite="strict",
-                    httponly=True,
-                    max_age=int(session.expires.timestamp()),
-                )
-            ],
+            cookies=[cookies.refresh_token(*created_session)],
         )
 
     @litestar.patch()
@@ -80,24 +70,11 @@ class Controller(litestar.Controller):
             await database.passwords.create(email.user, data.password)
             await database.password_reset.delete_by_user_id(email.user.id)
             await database.sessions.delete_by_user_id(email.user.id)
-        try:
-            session, refresh_token = await database.sessions.create(email)
-        except NoResultFound as error:
-            raise NotAuthorizedException() from error
-        token_response = schemas.token_response.ClientTokenResponse(
-            access_token=schemas.AccessToken.create(
-                email.id, request.url.hostname, request.url.hostname
-            ).encode(),
+            created_session = await database.sessions.create(email)
+        client_token_response = schemas.ClientTokenResponse.create(
+            email.id, request.url.hostname, request.url.hostname
         )
         return Response(
-            token_response,
-            cookies=[
-                Cookie(
-                    key="refresh_token",
-                    value=refresh_token,
-                    samesite="strict",
-                    httponly=True,
-                    max_age=int(session.expires.timestamp()),
-                ),
-            ],
+            client_token_response,
+            cookies=[cookies.refresh_token(*created_session)],
         )

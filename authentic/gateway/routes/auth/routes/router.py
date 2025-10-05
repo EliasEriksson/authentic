@@ -1,6 +1,6 @@
 import litestar
 
-from . import oauth, password, password_reset
+from . import oauth, password, password_reset, sessions
 
 router = litestar.Router(
     path="/",
@@ -8,5 +8,6 @@ router = litestar.Router(
         oauth.router,
         password.router,
         password_reset.router,
+        sessions.router,
     ],
 )
