@@ -39,7 +39,7 @@ class Sessions:
         )
         return await self._operator.fetch(query, joins=joins)
 
-    async def fetch_by_key(
+    async def fetch_by_email_id(
         self,
         email_id: UUID,
         joins: Iterable[Sequence[InstrumentedAttribute[Any]]] | None = None,
@@ -47,10 +47,10 @@ class Sessions:
         query = select(models.Session).where(models.Session.email_id == email_id)
         return await self._operator.fetch(query, joins=joins)
 
-    async def create(self, email_id: UUID) -> Tuple[models.Session, str]:
+    async def create(self, email: models.Email) -> Tuple[models.Session, str]:
         async with self._operator.transaction() as database_session:
             session = models.Session(
-                email_id=email_id,
+                email_id=email.id,
                 digest=models.Session.hash(
                     refresh_token := models.Session.generate_refresh_token()
                 ),

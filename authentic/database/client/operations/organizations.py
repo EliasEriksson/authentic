@@ -87,8 +87,3 @@ class Organizations:
         self, *models: models.Organization
     ) -> Sequence[models.Organization]:
         return await self._operator.delete(*models)
-
-    @contextlib.asynccontextmanager
-    async def transaction(self) -> AsyncIterable[AsyncSession]:
-        async with self._operator.transaction() as session:
-            yield session

@@ -80,8 +80,3 @@ class Applications:
 
     async def delete(self, *models: models.Application) -> Sequence[models.Application]:
         return await self._operator.delete(*models)
-
-    @contextlib.asynccontextmanager
-    async def transaction(self) -> AsyncIterable[AsyncSession]:
-        async with self._operator.transaction() as session:
-            yield session

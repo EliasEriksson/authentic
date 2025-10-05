@@ -13,5 +13,12 @@ from authentic import database, schemas
 
 class Controller(litestar.Controller):
     @litestar.get()
-    async def create(self) -> Response[None]:
+    async def create(
+        self,
+        request: Request,
+        database: database.Client,
+        data: schemas.Credentials,
+    ) -> Response[None]:
+        # database.sessions.create()
+
         return Response(None)

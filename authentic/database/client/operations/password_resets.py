@@ -34,8 +34,7 @@ class PasswordResets:
         )
         return await self._operator.fetch(query)
 
-    async def create(self, data: schemas.password.PasswordResetRequest) -> str:
-        user = await self._client.users.fetch_by_email(data.email)
+    async def create(self, user: models.User) -> Tuple[models.PasswordReset, str]:
         await self.delete_by_user_id(user.id)
         async with self._operator.transaction() as session:
             password_reset = models.PasswordReset(
@@ -46,7 +45,7 @@ class PasswordResets:
             )
 
             session.add(password_reset)
-        return code
+        return password_reset, code
 
     async def delete_by_user_id(self, user_id: UUID) -> None:
         query = delete(models.PasswordReset).where(
@@ -54,8 +53,3 @@ class PasswordResets:
         )
         async with self._operator.transaction() as session:
             await session.execute(query)
-
-    @contextlib.asynccontextmanager
-    async def transaction(self) -> AsyncIterable[AsyncSession]:
-        async with self._operator.transaction() as session:
-            yield session

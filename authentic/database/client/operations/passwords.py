@@ -36,47 +36,13 @@ class Passwords:
         )
         return await self._operator.fetch(query)
 
-    async def change(
-        self,
-        data: schemas.password.PasswordChange,
-        access_token: schemas.AccessToken,
-        refresh_token: str,
-    ) -> bool:
-        session = await self._client.sessions.fetch_by_key(
-            access_token.subject,
-            joins=[[models.Session.email, models.Email.user, models.User.password]],
-        )
-        if not session.verify(refresh_token):
-            return False
-        if not session.email.user.password.verify(data.password):
-            return False
-        async with self._operator.transaction():
-            session.email.user.password.digest = session.email.user.password.hash(
-                data.password
-            )
-            await self._client.sessions.delete_by_user_id(session.email.user.id)
-        return True
-
-    async def reset(self, data: schemas.password.PasswordReset) -> bool:
-        user = await self._client.users.fetch_by_email(
-            data.email, joins=[[models.User.password_reset]]
-        )
-        if not user.password_reset or not user.password_reset.verify(data.code):
-            return False
+    async def create(self, user: models.User, password: str) -> models.Password:
+        digest = models.Password.hash(password)
         async with self._operator.transaction() as session:
-            digest = models.Password.hash(data.password)
-            try:
-                password = await self._client.passwords.fetch_by_user_id(user.id)
-                password.digest = digest
-            except NoResultFound:
-                password = models.Password(user_id=user.id, digest=digest)
-            session.add(password)
-            password.digest = digest
-            await self._client.password_reset.delete_by_user_id(user.id)
-            await self._client.sessions.delete_by_user_id(user.id)
-        return True
-
-    @contextlib.asynccontextmanager
-    async def transaction(self) -> AsyncIterable[AsyncSession]:
-        async with self._operator.transaction() as session:
-            yield session
+            if user.password is None:
+                result = models.Password(user_id=user.id, digest=digest)
+                session.add(result)
+            else:
+                user.password.digest = digest
+                result = user.password
+        return result
