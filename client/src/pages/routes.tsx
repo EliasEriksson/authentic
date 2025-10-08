@@ -1,6 +1,6 @@
 import { type RouteObject } from "react-router";
 import about from "./about/routes.tsx";
-import login from "./login/routes.tsx";
+import app from "./app/routes.tsx";
 import { Index } from "./index.tsx";
 
 export const index = [
@@ -9,6 +9,6 @@ export const index = [
     element: <Index />,
   } as const,
   ...about,
-  ...login,
+  ...app,
 ] satisfies RouteObject[];
 export default index;

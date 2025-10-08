@@ -19,6 +19,11 @@ export default defineConfig({
       },
     },
   },
+  css: {
+    modules: {
+      localsConvention: "camelCase",
+    },
+  },
   plugins: [
     react({
       babel: { plugins: [["babel-plugin-react-compiler"]] },

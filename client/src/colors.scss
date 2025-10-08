@@ -1,0 +1,37 @@
+@mixin dark {
+  --contrast-color: #ffffff;
+  --background-color-level-1: #1f1e25;
+  --background-color-level-2: #2b2a33;
+  --background-color-level-3: #2b2a33;
+}
+
+@mixin light {
+  --contrast-color: #5f606a;
+  --background-color-level-1: #f3f3f4;
+  --background-color-level-2: #eeeeef;
+  --background-color-level-3: #ffffff;
+}
+
+:root {
+  @include dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include dark;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    @include light;
+  }
+}
+
+:root.dark {
+  @include dark;
+}
+
+:root.light {
+  @include light;
+}

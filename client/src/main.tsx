@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router/dom";
 import { router } from "./router.ts";
 
+import "./colors.scss";
+
 const rootElement = document.getElementById("root");
 
 if (rootElement && !rootElement.innerHTML) {

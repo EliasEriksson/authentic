@@ -1,5 +1,5 @@
 import { type RouteObject } from "react-router";
-import Login from "./index";
+import Login from "./index.tsx";
 
 export const login = [
   {

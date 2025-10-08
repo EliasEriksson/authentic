@@ -1,0 +1,44 @@
+.root {
+  --page-padding: 1rem;
+  background-color: var(--background-color-level-1);
+  color: var(--contrast-color);
+}
+
+.min-height {
+  min-height: 100dvh;
+}
+
+.header-wrapper {
+  padding: var(--page-padding);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-left-menu {
+  display: flex;
+}
+
+.header-right-menu {
+  display: flex;
+  gap: 1rem;
+}
+
+.main-wrapper {
+  padding: var(--page-padding);
+}
+
+.footer-wrapper {
+  padding: var(--page-padding);
+}
+
+.select-wrapper {
+  & > select {
+    & > option {
+    }
+    //background-color: #2b2a33;
+    //border: none;
+  }
+}
