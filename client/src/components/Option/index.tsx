@@ -26,21 +26,14 @@ export const Option = (props: PropsWithChildren<Props>) => {
   const [hidden, setHidden] = useState<boolean>(true);
   useEffect(() => {
     (() => {
-      if (!data.search) {
-        return setHidden(false);
-      }
+      if (!data.search) return setHidden(false);
       const terms = [props.value.toString(), ...(props.searchTerms ?? [])];
       for (const term of terms) {
-        if (term.match(data.search)) {
-          console.log("search hit", data.search, term);
-          return setHidden(false);
-        }
+        if (term.match(data.search)) return setHidden(false);
       }
-      console.log("no search hit for any of", terms, data.search);
       return setHidden(true);
     })();
   }, [data.search, props.searchTerms, props.value]);
-  console.log(props.value, "is hidden", hidden);
   return (
     <li
       tabIndex={0}
