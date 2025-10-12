@@ -3,6 +3,11 @@
   padding: calc(var(--padding) / 2);
   cursor: pointer;
 }
+.hidden {
+}
+.option.hidden {
+  display: none;
+}
 
 .view-wrapper {
   padding: calc(var(--padding) / 2);

@@ -4,15 +4,15 @@ export type Nullable<T> = {
   [P in keyof T]?: T[P] | null | undefined;
 };
 
-export interface Selected {
+export interface Data {
   value: string | number | readonly string[] | undefined;
   search: string;
   view: (() => ReactNode) | undefined;
 }
 
 export interface SelectContext {
-  get: () => Selected;
-  set: (selected: Nullable<Selected>) => void;
+  get: () => Data;
+  set: (selected: Nullable<Data>) => void;
 }
 
 export const SelectContext = createContext<SelectContext | undefined>(

@@ -1,18 +1,18 @@
 import { useState, type PropsWithChildren, useMemo } from "react";
 import styles from "./styles.module.scss";
 import { css } from "../../utils/css";
-import { SelectContext, type Selected } from "./context.ts";
+import { SelectContext, type Data } from "./context.ts";
 
 interface Props {
   name: string;
-  initialValue?: Selected["value"];
+  initialValue?: Data["value"];
   className?: string;
 }
 
 export const Select = (props: PropsWithChildren<Props>) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<Selected["value"]>(props.initialValue);
-  const [view, setView] = useState<Selected["view"]>(undefined);
+  const [value, setValue] = useState<Data["value"]>(props.initialValue);
+  const [view, setView] = useState<Data["view"]>(undefined);
   const [search, setSearch] = useState<string>("");
   const context: SelectContext = useMemo(() => {
     return {
