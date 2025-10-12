@@ -4,7 +4,7 @@ import { SelectContext } from "../Select/context.ts";
 import styles from "./styles.module.scss";
 
 type Props = {
-  value: ReturnType<SelectContext["get"]>;
+  value: ReturnType<SelectContext["get"]>["value"];
 };
 
 export const Option = (props: PropsWithChildren<Props>) => {
@@ -14,19 +14,22 @@ export const Option = (props: PropsWithChildren<Props>) => {
   const view = useMemo(() => {
     return () => props.children;
   }, [props.children]);
-  const value = context.get();
-  if (props.value === value) context.set({ value, view });
+  const selected = context.get();
+  if (props.value === selected.value) context.set({ view });
   return (
     <li
       tabIndex={0}
       className={css.classes({
-        [styles.selected]: props.value === value,
+        [styles.option]: true,
+        [styles.selected]: props.value === selected.value,
       })}
       onClick={() => {
         context.set({ value: props.value, view });
       }}
     >
-      {props.children}
+      <div className={css.classes({ [styles.viewWrapper]: true })}>
+        {props.children}
+      </div>
     </li>
   );
 };

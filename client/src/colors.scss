@@ -1,15 +1,31 @@
 @mixin dark {
-  --contrast-color: #ffffff;
-  --background-color-level-1: #1f1e25;
-  --background-color-level-2: #2b2a33;
-  --background-color-level-3: #2b2a33;
+  --bg0-h: #1d2021;
+  --fg0-h: #ffffff;
+  --bg0: #282828;
+  --fg0: #ffffff;
+  --bg1: #3c3836;
+  --fg1: #ffffff;
+  --bg2: #504945;
+  --fg2: #ffffff;
+  --bg3: #665c54;
+  --fg3: #ffffff;
+  --bg4: #7c6f64;
+  --fg4: #ffffff;
 }
 
 @mixin light {
-  --contrast-color: #5f606a;
-  --background-color-level-1: #f3f3f4;
-  --background-color-level-2: #eeeeef;
-  --background-color-level-3: #ffffff;
+  --bg0-h: #f9f5d7;
+  --fg0-h: #000000;
+  --bg0: #fbf1c7;
+  --fg0: #000000;
+  --bg1: #ebdbb2;
+  --fg1: #000000;
+  --bg2: #d5c4a1;
+  --fg2: #000000;
+  --bg3: #bdae93;
+  --fg3: #000000;
+  --bg4: #a89984;
+  --fg4: #000000;
 }
 
 :root {

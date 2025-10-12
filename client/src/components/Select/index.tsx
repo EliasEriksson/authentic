@@ -6,44 +6,99 @@ import { SelectContext, type Selected } from "./context.ts";
 interface Props {
   name: string;
   initialValue?: Selected["value"];
+  className?: string;
 }
 
 export const Select = (props: PropsWithChildren<Props>) => {
-  const [opened, setOpened] = useState(false);
+  const [open, setOpen] = useState(false);
   const [value, setValue] = useState<Selected["value"]>(props.initialValue);
   const [view, setView] = useState<Selected["view"]>(undefined);
+  const [search, setSearch] = useState<string>("");
   const context: SelectContext = useMemo(() => {
     return {
       get: () => {
-        return value;
+        return { value, view, search };
       },
       set: (selected) => {
-        setValue(() => selected.value);
-        setView(() => selected.view);
+        setValue((value) => {
+          return selected.value === undefined
+            ? value
+            : (selected.value ?? undefined);
+        });
+        setView((view) => {
+          return selected.view === undefined
+            ? view
+            : (selected.view ?? undefined);
+        });
+        setSearch((search) => {
+          return selected.search === undefined
+            ? search
+            : (selected.search ?? "");
+        });
       },
     };
-  }, [value]);
+  }, [value, view, search]);
   return (
     <SelectContext.Provider value={context}>
-      <div>
+      <div
+        className={css.classes({
+          [styles.select]: true,
+          [styles.open]: open,
+          ...(props.className !== undefined && { [props.className]: true }),
+        })}
+      >
         <button
+          className={css.classes({ [styles.button]: true, button: true })}
           name={props.name}
           type={"submit"}
           value={value ?? ""}
           onClick={() => {
-            setOpened((state) => !state);
+            setOpen((state) => !state);
           }}
         >
-          {view?.() ?? <span>{"No Value"}</span>}
+          <div className={css.classes({ [styles.view]: true, view: true })}>
+            {view?.() ?? (
+              <span className={css.classes({ [styles.noValue]: true })}>
+                {"No Value"}
+              </span>
+            )}
+          </div>
+          <div className={css.classes({ [styles.chevronWrapper]: true })}>
+            <svg
+              className={css.classes({ [styles.chevron]: true })}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+              width={512}
+            >
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="48"
+                d="M184 112l144 144-144 144"
+              />
+            </svg>
+          </div>
         </button>
         <div
           className={css.classes({
             [styles.dropDown]: true,
-            [styles.open]: opened,
+            "drop-down": true,
           })}
         >
-          <input type={"text"} placeholder={"Search"}></input>
-          <ul>{props.children}</ul>
+          <input
+            type={"text"}
+            placeholder={"Search"}
+            className={css.classes({ [styles.search]: true, search: true })}
+            value={search}
+            onInput={(event) => {
+              setSearch(event.currentTarget.value);
+            }}
+          />
+          <ul className={css.classes({ [styles.list]: true })}>
+            {props.children}
+          </ul>
         </div>
       </div>
     </SelectContext.Provider>
