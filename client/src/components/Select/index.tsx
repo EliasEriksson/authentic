@@ -1,36 +1,50 @@
-import { useState, type PropsWithChildren } from "react";
+import { useState, type PropsWithChildren, useMemo } from "react";
 import styles from "./styles.module.scss";
 import { css } from "../../utils/css";
-import { SelectContext } from "./context.ts";
+import { SelectContext, type Selected } from "./context.ts";
 
 interface Props {
   name: string;
+  initialValue?: Selected["value"];
 }
 
 export const Select = (props: PropsWithChildren<Props>) => {
   const [opened, setOpened] = useState(false);
+  const [value, setValue] = useState<Selected["value"]>(props.initialValue);
+  const [view, setView] = useState<Selected["view"]>(undefined);
+  const context: SelectContext = useMemo(() => {
+    return {
+      get: () => {
+        return value;
+      },
+      set: (selected) => {
+        setValue(() => selected.value);
+        setView(() => selected.view);
+      },
+    };
+  }, [value]);
   return (
-    <>
-      <SelectContext.Provider value={{ onSelected: () => {} }}>
-        <input
-          name={props.name}
-          type={"button"}
-          value={"button"}
-          onClick={() => {
-            setOpened((state) => !state);
-          }}
-        ></input>
-        <div
-          className={css.classes({
-            [styles.dropDown]: true,
-            [styles.open]: opened,
-          })}
-        >
-          <input type={"text"} placeholder={"Search"}></input>
-          <ul>{props.children}</ul>
-        </div>
-      </SelectContext.Provider>
-    </>
+    <SelectContext.Provider value={context}>
+      <button
+        name={props.name}
+        type={"submit"}
+        value={value ?? ""}
+        onClick={() => {
+          setOpened((state) => !state);
+        }}
+      >
+        {view?.()}
+      </button>
+      <div
+        className={css.classes({
+          [styles.dropDown]: true,
+          [styles.open]: opened,
+        })}
+      >
+        <input type={"text"} placeholder={"Search"}></input>
+        <ul>{props.children}</ul>
+      </div>
+    </SelectContext.Provider>
   );
 };
 export default Select;
