@@ -12,6 +12,9 @@
   border: 1px solid var(--bg2);
   color: var(--fg0);
   background: var(--bg1);
+  &[type="submit"]:focus-visible {
+    outline: auto;
+  }
 }
 
 .chevron-wrapper {
@@ -49,7 +52,9 @@
   border: none;
   padding: calc(var(--padding) / 2);
   margin: calc(var(--padding) / 2);
-  outline: none;
+  &::placeholder {
+    color: var(--fg3);
+  }
 }
 
 .select.open .chevron {

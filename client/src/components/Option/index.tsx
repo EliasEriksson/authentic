@@ -36,7 +36,6 @@ export const Option = (props: PropsWithChildren<Props>) => {
   }, [data.search, props.searchTerms, props.value]);
   return (
     <li
-      tabIndex={0}
       className={css.classes({
         [styles.option]: true,
         [styles.hidden]: hidden,
@@ -45,8 +44,16 @@ export const Option = (props: PropsWithChildren<Props>) => {
       onClick={() => {
         context.set({ value: props.value, view });
       }}
+      onKeyDown={(event) => {
+        switch (event.key) {
+          case "Enter":
+          case "Space":
+            context.set({ value: props.value, view });
+            break;
+        }
+      }}
     >
-      <div className={css.classes({ [styles.viewWrapper]: true })}>
+      <div tabIndex={0} className={css.classes({ [styles.viewWrapper]: true })}>
         {props.children}
       </div>
     </li>

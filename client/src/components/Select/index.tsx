@@ -1,4 +1,4 @@
-import { useState, type PropsWithChildren, useMemo } from "react";
+import { useState, type PropsWithChildren, useMemo, useRef } from "react";
 import styles from "./styles.module.scss";
 import { css } from "../../utils/css";
 import { SelectContext, type Data } from "./context.ts";
@@ -14,6 +14,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
   const [value, setValue] = useState<Data["value"]>(props.initialValue);
   const [view, setView] = useState<Data["view"]>(undefined);
   const [search, setSearch] = useState<string>("");
+  const buttonElement = useRef<HTMLButtonElement>(null);
   const context: SelectContext = useMemo(() => {
     return {
       get: () => {
@@ -46,8 +47,18 @@ export const Select = (props: PropsWithChildren<Props>) => {
           [styles.open]: open,
           ...(props.className !== undefined && { [props.className]: true }),
         })}
+        onKeyDown={(event) => {
+          console.log(event.key);
+          switch (event.key) {
+            case "Escape":
+              setOpen(false);
+              buttonElement.current?.focus();
+              break;
+          }
+        }}
       >
         <button
+          ref={buttonElement}
           className={css.classes({ [styles.button]: true, button: true })}
           name={props.name}
           type={"submit"}
@@ -89,7 +100,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
         >
           <input
             type={"text"}
-            placeholder={"Search"}
+            placeholder={"Search..."}
             className={css.classes({ [styles.search]: true, search: true })}
             value={search}
             onInput={(event) => {

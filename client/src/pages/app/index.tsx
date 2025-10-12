@@ -4,10 +4,18 @@ import { Option } from "../../components/Option/index.tsx";
 export const App = () => {
   return (
     <>
-      <p>about</p>
-      <Select name={"selector"}>
-        <Option value={"hello"}>hello</Option>
-        <Option value={"world"}>world</Option>
+      <p>app index</p>
+      <span>Fruits</span>
+      <Select name={"selector"} initialValue={"apple"}>
+        <Option value={"apple"} searchTerms={["fruit"]}>
+          Apple
+        </Option>
+        <Option value={"orange"} searchTerms={["fruit", "citrus"]}>
+          Orange
+        </Option>
+        <Option value={"lemon"} searchTerms={["fruit", "citrus"]}>
+          Lemon
+        </Option>
       </Select>
     </>
   );
