@@ -25,24 +25,26 @@ export const Select = (props: PropsWithChildren<Props>) => {
   }, [value]);
   return (
     <SelectContext.Provider value={context}>
-      <button
-        name={props.name}
-        type={"submit"}
-        value={value ?? ""}
-        onClick={() => {
-          setOpened((state) => !state);
-        }}
-      >
-        {view?.()}
-      </button>
-      <div
-        className={css.classes({
-          [styles.dropDown]: true,
-          [styles.open]: opened,
-        })}
-      >
-        <input type={"text"} placeholder={"Search"}></input>
-        <ul>{props.children}</ul>
+      <div>
+        <button
+          name={props.name}
+          type={"submit"}
+          value={value ?? ""}
+          onClick={() => {
+            setOpened((state) => !state);
+          }}
+        >
+          {view?.() ?? <span>{"No Value"}</span>}
+        </button>
+        <div
+          className={css.classes({
+            [styles.dropDown]: true,
+            [styles.open]: opened,
+          })}
+        >
+          <input type={"text"} placeholder={"Search"}></input>
+          <ul>{props.children}</ul>
+        </div>
       </div>
     </SelectContext.Provider>
   );
