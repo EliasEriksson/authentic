@@ -1,53 +1,82 @@
 @mixin dark {
-  --bg0-h: #1d2021;
-  --fg0-h: #ffffff;
-  --bg0: #282828;
-  --fg0: #ffffff;
-  --bg1: #3c3836;
-  --fg1: #ffffff;
-  --bg2: #504945;
-  --fg2: #ffffff;
-  --bg3: #665c54;
-  --fg3: #ffffff;
-  --bg4: #7c6f64;
-  --fg4: #ffffff;
+  --color-bg0: hsl(0 0 10);
+  --color-bg1: hsl(0 0 13);
+  --color-bg2: hsl(0 0 20);
+  --color-border: hsl(0 0 30);
+  --color-highlight: hsl(0 0 35);
+  --color-fg0: hsl(0 0 100);
+  --color-fg1: hsl(0 0 100);
+  --color-fg2: hsl(0 0 100);
+}
+
+@mixin darker-dark {
+  --color-bg0: hsl(0 0 7);
+  --color-bg1: hsl(0 0 13);
+  --color-bg2: hsl(0 0 20);
+  --color-border: hsl(0 0 30);
+  --color-highlight: hsl(0 0 60);
+  --color-fg0: hsl(0 0 100);
+  --color-fg1: hsl(0 0 100);
+  --color-fg2: hsl(0 0 100);
 }
 
 @mixin light {
-  --bg0-h: #f9f5d7;
-  --fg0-h: #000000;
-  --bg0: #fbf1c7;
-  --fg0: #000000;
-  --bg1: #ebdbb2;
-  --fg1: #000000;
-  --bg2: #d5c4a1;
-  --fg2: #000000;
-  --bg3: #bdae93;
-  --fg3: #000000;
-  --bg4: #a89984;
-  --fg4: #000000;
+  --color-bg0: hsl(0 0 80);
+  --color-bg1: hsl(0 0 90);
+  --color-bg2: hsl(0 0 93);
+  --color-border: hsl(0 0 70);
+  --color-highlight: hsl(0 0 100);
+  --color-fg0: hsl(0 0 0);
+  --color-fg1: hsl(0 0 0);
+  --color-fg2: hsl(0 0 0);
+}
+
+@mixin darker-light {
+  --color-bg0: hsl(0 0 80);
+  --color-bg1: hsl(0 0 87);
+  --color-bg2: hsl(0 0 90);
+  --color-border: hsl(0 0 70);
+  --color-highlight: hsl(0 0 100);
+  --color-fg0: hsl(0 0 0);
+  --color-fg1: hsl(0 0 0);
+  --color-fg2: hsl(0 0 0);
 }
 
 :root {
   @include dark;
+  & .darker {
+    @include darker-dark;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     @include dark;
+    & .darker {
+      @include darker-dark;
+    }
   }
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     @include light;
+    & .darker {
+      @include darker-light;
+    }
   }
 }
 
 :root.dark {
   @include dark;
+  & .darker {
+    @include darker-dark;
+  }
 }
 
 :root.light {
   @include light;
+  & .darker {
+    @include darker-light;
+  }
 }

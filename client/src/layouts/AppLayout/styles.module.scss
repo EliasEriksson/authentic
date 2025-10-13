@@ -1,7 +1,7 @@
 .root {
   --page-padding: 1rem;
-  background-color: var(--bg0);
-  color: var(--fg0);
+  background-color: var(--color-bg0);
+  color: var(--color-fg0);
 }
 
 .min-height {
@@ -10,8 +10,8 @@
 
 .header-wrapper {
   padding: var(--page-padding);
-  background-color: var(--bg0-h);
-  color: var(--fg0-h);
+  background-color: var(--color-bg0);
+  color: var(--color-fg0);
 }
 
 .header {

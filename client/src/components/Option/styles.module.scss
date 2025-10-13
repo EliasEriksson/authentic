@@ -1,5 +1,5 @@
 .option {
-  background-color: var(--bg1);
+  background-color: var(--color-bg1);
   padding: calc(var(--padding) / 2);
   cursor: pointer;
 }
@@ -12,12 +12,13 @@
 .view-wrapper {
   padding: calc(var(--padding) / 2);
 }
-.view-wrapper:hover {
-  background-color: var(--bg4);
-  color: var(--fg4);
-}
 
 .selected .view-wrapper {
-  background-color: var(--bg3);
+  background-color: var(--color-bg2);
   color: var(--fg3);
+}
+
+.option:hover .view-wrapper {
+  background-color: var(--color-highlight);
+  color: var(--fg4);
 }

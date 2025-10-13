@@ -9,11 +9,11 @@
   cursor: pointer;
   margin: 0;
   padding: var(--padding);
-  border: 1px solid var(--bg2);
-  color: var(--fg0);
-  background: var(--bg1);
+  background: var(--color-bg1);
+  color: var(--color-fg0);
+  border: 1px solid var(--color-border);
   &[type="submit"]:focus-visible {
-    outline: auto;
+    outline: solid 2px var(--color-highlight);
   }
 }
 
@@ -31,10 +31,10 @@
 
 .drop-down {
   //padding: var(--padding);
-  border: 1px solid var(--bg2);
+  background-color: var(--color-bg1);
+  color: var(--color-fg1);
+  border: 1px solid var(--color-border);
   border-top: none;
-  background-color: var(--bg1);
-  color: var(--fg1);
 }
 
 .select:not(.open) .drop-down {
@@ -47,13 +47,14 @@
 
 .search {
   width: calc(100% - var(--padding));
-  background: var(--bg3);
-  color: var(--fg3);
+  background-color: var(--color-bg1);
+  --color: var(--color-fg2);
+  color: var(--color);
   border: none;
   padding: calc(var(--padding) / 2);
   margin: calc(var(--padding) / 2);
   &::placeholder {
-    color: var(--fg3);
+    color: var(--color);
   }
 }
 
@@ -64,7 +65,7 @@
 .list {
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--bg2);
+  border-top: 1px solid var(--color-border);
   list-style-type: none;
   display: flex;
   flex-direction: column;

@@ -5,13 +5,14 @@ import {
   useState,
   useEffect,
 } from "react";
-import { css } from "../../utils/css/index.ts";
+import { css } from "../../utils/css.ts";
 import { SelectContext } from "../Select/context.ts";
 import styles from "./styles.module.scss";
 
 type Props = {
   value: Exclude<ReturnType<SelectContext["get"]>["value"], null | undefined>;
   searchTerms?: string[];
+  className?: string;
 };
 
 export const Option = (props: PropsWithChildren<Props>) => {
@@ -36,11 +37,15 @@ export const Option = (props: PropsWithChildren<Props>) => {
   }, [data.search, props.searchTerms, props.value]);
   return (
     <li
-      className={css.classes({
-        [styles.option]: true,
-        [styles.hidden]: hidden,
-        [styles.selected]: props.value === data.value,
-      })}
+      className={css(
+        {
+          [styles.hidden]: hidden,
+          [styles.selected]: props.value === data.value,
+        },
+        styles.option,
+        props.className,
+        "option",
+      )}
       onClick={() => {
         context.set({ value: props.value, view });
       }}
@@ -53,9 +58,13 @@ export const Option = (props: PropsWithChildren<Props>) => {
         }
       }}
     >
-      <div tabIndex={0} className={css.classes({ [styles.viewWrapper]: true })}>
+      <div
+        className={css(styles.viewWrapper, "option__view-wrapper")}
+        tabIndex={0}
+      >
         {props.children}
       </div>
     </li>
   );
 };
+export default Option;

@@ -1,6 +1,6 @@
 import { useState, type PropsWithChildren, useMemo, useRef } from "react";
 import styles from "./styles.module.scss";
-import { css } from "../../utils/css";
+import { css } from "../../utils/css.ts";
 import { SelectContext, type Data } from "./context.ts";
 
 interface Props {
@@ -42,13 +42,13 @@ export const Select = (props: PropsWithChildren<Props>) => {
   return (
     <SelectContext.Provider value={context}>
       <div
-        className={css.classes({
-          [styles.select]: true,
-          [styles.open]: open,
-          ...(props.className !== undefined && { [props.className]: true }),
-        })}
+        className={css(
+          { [styles.open]: open },
+          styles.select,
+          props.className,
+          "select",
+        )}
         onKeyDown={(event) => {
-          console.log(event.key);
           switch (event.key) {
             case "Escape":
               setOpen(false);
@@ -58,8 +58,8 @@ export const Select = (props: PropsWithChildren<Props>) => {
         }}
       >
         <button
+          className={css(styles.button, "select__button")}
           ref={buttonElement}
-          className={css.classes({ [styles.button]: true, button: true })}
           name={props.name}
           type={"submit"}
           value={value ?? ""}
@@ -67,16 +67,18 @@ export const Select = (props: PropsWithChildren<Props>) => {
             setOpen((state) => !state);
           }}
         >
-          <div className={css.classes({ [styles.view]: true, view: true })}>
+          <div className={css(styles.view, "select__view")}>
             {view?.() ?? (
-              <span className={css.classes({ [styles.noValue]: true })}>
+              <span className={css(styles.noValue, "select__view__no-value")}>
                 {"No Value"}
               </span>
             )}
           </div>
-          <div className={css.classes({ [styles.chevronWrapper]: true })}>
+          <div
+            className={css(styles.chevronWrapper, "select__chevron-wrapper")}
+          >
             <svg
-              className={css.classes({ [styles.chevron]: true })}
+              className={css(styles.chevron, "select__chevron")}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
               width={512}
@@ -92,24 +94,17 @@ export const Select = (props: PropsWithChildren<Props>) => {
             </svg>
           </div>
         </button>
-        <div
-          className={css.classes({
-            [styles.dropDown]: true,
-            "drop-down": true,
-          })}
-        >
+        <div className={css(styles.dropDown, "select__drop-down")}>
           <input
+            className={css(styles.search, "select__search")}
             type={"text"}
             placeholder={"Search..."}
-            className={css.classes({ [styles.search]: true, search: true })}
             value={search}
             onInput={(event) => {
               setSearch(event.currentTarget.value);
             }}
           />
-          <ul className={css.classes({ [styles.list]: true })}>
-            {props.children}
-          </ul>
+          <ul className={css(styles.list, "select__list")}>{props.children}</ul>
         </div>
       </div>
     </SelectContext.Provider>

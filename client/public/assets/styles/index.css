@@ -1,10 +1,17 @@
 @import "./normalize.css";
 @import "./fonts/index.css";
 
+:root {
+  --default-outline: 2px solid var(--color-highlight);
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+:focus-visible {
+  outline: 2px solid var(--color-highlight);
 }
 
 html {

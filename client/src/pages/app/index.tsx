@@ -4,7 +4,7 @@ import { Option } from "../../components/Option/index.tsx";
 export const App = () => {
   return (
     <>
-      <p>app index</p>
+      <p>Page on my site</p>
       <span>Fruits</span>
       <Select name={"selector"} initialValue={"apple"}>
         <Option value={"apple"} searchTerms={["fruit"]}>
@@ -15,6 +15,9 @@ export const App = () => {
         </Option>
         <Option value={"lemon"} searchTerms={["fruit", "citrus"]}>
           Lemon
+        </Option>
+        <Option value={"pineapple"} searchTerms={["fruit", "exotic"]}>
+          Pineapple
         </Option>
       </Select>
     </>

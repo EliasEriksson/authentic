@@ -1,0 +1,12 @@
+export function css(
+  ...classes: (Record<string, unknown> | string | undefined)[]
+): string {
+  function* generator() {
+    for (const name of classes) {
+      if (typeof name === "object") {
+        for (const [key, value] of Object.entries(name)) if (value) yield key;
+      } else if (name) yield name;
+    }
+  }
+  return [...generator()].join(" ");
+}
