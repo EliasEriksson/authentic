@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import { Outlet } from "react-router";
 import Select from "../../components/Select";
 import Option from "../../components/Option";
+import { css } from "../../utils/css.ts";
 
 export const AppLayout = () => {
   return (
@@ -18,7 +19,11 @@ export const AppLayout = () => {
                 <div>Language</div>
                 <div>Profile</div>
                 <div className={styles.selectWrapper}>
-                  <Select name={"selector"} initialValue={"apple"}>
+                  <Select
+                    className={css(styles.select)}
+                    name={"selector"}
+                    initialValue={"apple"}
+                  >
                     <Option value={"apple"} searchTerms={["fruit"]}>
                       Apple
                     </Option>

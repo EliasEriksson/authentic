@@ -36,9 +36,10 @@
   padding: var(--page-padding);
 }
 
-.select-wrapper {
-  & > select {
-    & > option {
-    }
+.select {
+  position: relative;
+
+  :global(.select__drop-down) {
+    position: absolute;
   }
 }

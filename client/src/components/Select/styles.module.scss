@@ -1,8 +1,10 @@
 .select {
   --padding: 0.5rem;
+  --chevron-size: 20px;
 }
 .button {
   display: flex;
+  gap: var(--padding);
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -18,9 +20,8 @@
 }
 
 .chevron-wrapper {
-  --size: 20px;
-  max-width: var(--size);
-  max-height: var(--size);
+  max-width: var(--chevron-size);
+  max-height: var(--chevron-size);
   width: 100%;
   height: 100%;
 }
@@ -30,25 +31,21 @@
 }
 
 .drop-down {
-  //padding: var(--padding);
   background-color: var(--color-bg1);
   color: var(--color-fg1);
   border: 1px solid var(--color-border);
-  border-top: none;
+  width: 100%;
+  margin-top: -1px;
 }
 
 .select:not(.open) .drop-down {
   display: none;
 }
 
-.drop-down {
-  width: 100%;
-}
-
 .search {
+  --color: var(--color-fg2);
   width: calc(100% - var(--padding));
   background-color: var(--color-bg1);
-  --color: var(--color-fg2);
   color: var(--color);
   border: none;
   padding: calc(var(--padding) / 2);
