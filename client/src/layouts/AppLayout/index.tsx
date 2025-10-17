@@ -4,8 +4,12 @@ import { Outlet } from "react-router";
 import Select from "../../components/Select";
 import Option from "../../components/Option";
 import { css } from "../../utils/css.ts";
+import { state } from "../../state/index.ts";
+import { translations } from "../../translations/index.ts";
+import i18next from "i18next";
 
 export const AppLayout = () => {
+  const { language } = state.useLanguage();
   return (
     <>
       <div className={styles.root}>
@@ -20,18 +24,14 @@ export const AppLayout = () => {
 
                 <Select
                   className={css(styles.select)}
-                  name={"selector"}
-                  initialValue={"apple"}
+                  name={"language"}
+                  initialValue={language ?? translations.language.fallback}
                 >
-                  <Option value={"apple"} searchTerms={["fruit"]}>
-                    Apple
-                  </Option>
-                  <Option value={"orange"} searchTerms={["fruit", "citrus"]}>
-                    Orange
-                  </Option>
-                  <Option value={"lemon"} searchTerms={["fruit", "citrus"]}>
-                    Lemon
-                  </Option>
+                  {Array.from(translations.language.supported, (language) => (
+                    <Option key={language} value={language}>
+                      {i18next.t(`languages.${language}`)}
+                    </Option>
+                  ))}
                 </Select>
                 <div>Profile</div>
               </div>
