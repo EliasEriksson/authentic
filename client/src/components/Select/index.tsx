@@ -98,7 +98,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
           <input
             className={css(styles.search, "select__search")}
             type={"text"}
-            placeholder={"Search..."}
+            placeholder={"🔍👀"}
             value={search}
             onInput={(event) => {
               setSearch(event.currentTarget.value);

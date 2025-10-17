@@ -17,24 +17,23 @@ export const AppLayout = () => {
               </div>
               <div className={styles.headerRightMenu}>
                 <div>Language</div>
+
+                <Select
+                  className={css(styles.select)}
+                  name={"selector"}
+                  initialValue={"apple"}
+                >
+                  <Option value={"apple"} searchTerms={["fruit"]}>
+                    Apple
+                  </Option>
+                  <Option value={"orange"} searchTerms={["fruit", "citrus"]}>
+                    Orange
+                  </Option>
+                  <Option value={"lemon"} searchTerms={["fruit", "citrus"]}>
+                    Lemon
+                  </Option>
+                </Select>
                 <div>Profile</div>
-                <div className={styles.selectWrapper}>
-                  <Select
-                    className={css(styles.select)}
-                    name={"selector"}
-                    initialValue={"apple"}
-                  >
-                    <Option value={"apple"} searchTerms={["fruit"]}>
-                      Apple
-                    </Option>
-                    <Option value={"orange"} searchTerms={["fruit", "citrus"]}>
-                      Orange
-                    </Option>
-                    <Option value={"lemon"} searchTerms={["fruit", "citrus"]}>
-                      Lemon
-                    </Option>
-                  </Select>
-                </div>
               </div>
             </header>
           </div>

@@ -3,9 +3,9 @@
   --chevron-size: 20px;
 }
 .button {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(2em, 1fr) var(--chevron-size);
   gap: var(--padding);
-  justify-content: space-between;
   align-items: center;
   width: 100%;
   cursor: pointer;
@@ -17,6 +17,15 @@
   &[type="submit"]:focus-visible {
     outline: solid 2px var(--color-highlight);
   }
+  &:hover {
+    background-color: var(--color-highlight);
+  }
+}
+
+.view {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
 }
 
 .chevron-wrapper {
@@ -47,11 +56,14 @@
   width: calc(100% - var(--padding));
   background-color: var(--color-bg1);
   color: var(--color);
-  border: none;
+  border: 1px solid var(--color-border);
   padding: calc(var(--padding) / 2);
   margin: calc(var(--padding) / 2);
   &::placeholder {
     color: var(--color);
+  }
+  &:hover {
+    border-color: var(--color-highlight);
   }
 }
 

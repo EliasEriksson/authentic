@@ -9,14 +9,18 @@
 }
 
 .header-wrapper {
-  padding: var(--page-padding);
+  padding: calc(var(--page-padding) / 2) var(--page-padding);
   background-color: var(--color-bg0);
   color: var(--color-fg0);
 }
 
 .header {
   display: flex;
-  justify-content: space-between;
+  gap: var(--page-padding);
+  align-items: center;
+  & > * {
+    flex: 1;
+  }
 }
 
 .header-left-menu {
@@ -25,21 +29,35 @@
 
 .header-right-menu {
   display: flex;
+  align-items: center;
+  justify-content: end;
   gap: 1rem;
+  height: 100%;
+  margin-left: auto;
 }
 
 .main-wrapper {
-  padding: var(--page-padding);
+  padding: calc(var(--page-padding) / 2) var(--page-padding);
 }
 
 .footer-wrapper {
-  padding: var(--page-padding);
+  padding: calc(var(--page-padding) / 2) var(--page-padding);
 }
 
 .select {
   position: relative;
+  z-index: 1000;
+  max-width: 8rem;
+  width: 100%;
 
   :global(.select__drop-down) {
     position: absolute;
+    right: 0;
+    min-width: fit-content;
+    width: 100%;
+    max-width: 100%;
+  }
+  :global(.select__button:not(:hover)) {
+    background-color: var(--color-bg0);
   }
 }
