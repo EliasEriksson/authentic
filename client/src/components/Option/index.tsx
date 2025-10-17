@@ -23,7 +23,9 @@ export const Option = (props: PropsWithChildren<Props>) => {
     return () => props.children;
   }, [props.children]);
   const data = context.get();
-  if (props.value === data.value) context.set({ view });
+  useEffect(() => {
+    if (props.value === data.value) context.set({ view });
+  }, [props.value, data.value, view, context]);
   const [hidden, setHidden] = useState<boolean>(true);
   useEffect(() => {
     (() => {

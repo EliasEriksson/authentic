@@ -21,11 +21,15 @@ export const AppLayout = () => {
               </div>
               <div className={styles.headerRightMenu}>
                 <div>Language</div>
-
                 <Select
                   className={css(styles.select)}
                   name={"language"}
                   initialValue={language ?? translations.language.fallback}
+                  onInput={async (value) => {
+                    if (typeof value !== "string") return;
+                    if (i18next.language !== value)
+                      await i18next.changeLanguage(value);
+                  }}
                 >
                   {Array.from(translations.language.supported, (language) => (
                     <Option key={language} value={language}>

@@ -7,6 +7,7 @@ interface Props {
   name: string;
   initialValue?: Data["value"];
   className?: string;
+  onInput?: (value: Data["value"]) => void;
 }
 
 export const Select = (props: PropsWithChildren<Props>) => {
@@ -22,9 +23,12 @@ export const Select = (props: PropsWithChildren<Props>) => {
       },
       set: (selected) => {
         setValue((value) => {
-          return selected.value === undefined
-            ? value
-            : (selected.value ?? undefined);
+          const result =
+            selected.value === undefined
+              ? value
+              : (selected.value ?? undefined);
+          props.onInput?.(result);
+          return result;
         });
         setView((view) => {
           return selected.view === undefined
@@ -38,7 +42,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
         });
       },
     };
-  }, [value, view, search]);
+  }, [value, view, search, props]);
   return (
     <SelectContext.Provider value={context}>
       <div
