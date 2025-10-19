@@ -9,6 +9,7 @@ import "./colors.scss";
 
 (async () => {
   await state.translator.languages.init();
+  state.theme.init();
   const rootElement = document.getElementById("root");
   if (rootElement && !rootElement.innerHTML) {
     const root = createRoot(rootElement);

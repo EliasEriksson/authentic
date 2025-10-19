@@ -1,6 +1,5 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { client } from "../client.ts";
-import select from "../../components/Select";
 
 function queryKey() {
   return ["theme"] as const;
@@ -30,6 +29,7 @@ export const useChangeTheme = () => {
   const { mutate, mutateAsync, ...context } = useMutation({
     mutationFn: async (theme: string) => {
       writeLocalStorage(theme);
+      init();
       return theme;
     },
     onSuccess: (theme) => {
@@ -55,13 +55,13 @@ export const useTheme = () => {
 
 export function init() {
   const selected = readLocalStorage();
+  if (selected && selected !== fallback) {
+    document.documentElement.classList.add(selected);
+  }
 
   for (const theme of supported) {
     if (theme === selected) continue;
-    if (document.documentElement.classList.contains(theme)) continue;
+    if (!document.documentElement.classList.contains(theme)) continue;
     document.documentElement.classList.remove(theme);
-  }
-  if (selected && selected !== fallback) {
-    document.documentElement.classList.add(selected);
   }
 }
