@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { client } from "../client.ts";
+import select from "../../components/Select";
 
 function queryKey() {
   return ["theme"] as const;
@@ -17,7 +18,7 @@ function writeLocalStorage(theme: string) {
   localStorage.setItem(localStorageKey(), theme);
 }
 
-export const fallback = "system" as const;
+export const fallback = "auto" as const;
 export const supported = new Set([fallback, "dark", "light"]);
 
 function getLocalTheme() {
@@ -51,3 +52,27 @@ export const useTheme = () => {
     }),
   );
 };
+
+export function init() {
+  const selected = readLocalStorage();
+  if (selected === fallback || !selected) {
+    for (const theme of supported) {
+      document.documentElement.classList.remove(theme);
+    }
+  } else {
+    const removals: string[] = [];
+    for (const theme of supported) {
+      if (
+        theme !== selected &&
+        document.documentElement.classList.contains(theme)
+      )
+        removals.push(theme);
+    }
+    for (const theme of removals) {
+      document.documentElement.classList.remove(theme);
+    }
+    if (!document.documentElement.classList.contains(selected)) {
+      document.documentElement.classList.add(selected);
+    }
+  }
+}

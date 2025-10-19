@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import { Outlet } from "react-router";
-import LanguagePicker from "../../components/LanguagePicker";
+import LanguagePicker from "../../components/LanguagePicker/index.tsx";
+import ThemePicker from "../../components/ThemePicker/index.tsx";
 import { css } from "../../utils/css.ts";
 import { state } from "../../state/index.ts";
 
@@ -17,6 +18,7 @@ export const AppLayout = () => {
                 <div>Logo</div>
               </div>
               <div className={styles.headerRightMenu}>
+                <ThemePicker className={css(styles.select)} />
                 <LanguagePicker className={css(styles.select)} />
               </div>
             </header>
