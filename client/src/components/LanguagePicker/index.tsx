@@ -24,20 +24,26 @@ export const LanguagePicker = (props: Props) => {
         changeLanguage(value);
       }}
     >
-      {Array.from(state.translator.languages.supported, (language) => (
-        <Option key={language} value={language}>
-          <div className={css(styles.optionContentWrapper)}>
-            <img
-              className={css(styles.optionContentImage)}
-              src={`/assets/icons/flags/4x3/${language}.svg`}
-              alt={translator.data("languages", language)}
-            />
-            <span className={css(styles.optionContentText)}>
-              {translator.data("languages", language)}
-            </span>
-          </div>
-        </Option>
-      ))}
+      <Option value={"en"}>
+        <div className={css(styles.optionContentWrapper)}>
+          <img
+            className={css(styles.optionContentImage)}
+            src={`/assets/icons/flags/4x3/en.svg`}
+            alt={"English"}
+          />
+          <span className={css(styles.optionContentText)}>English</span>
+        </div>
+      </Option>
+      <Option value={"sv"}>
+        <div className={css(styles.optionContentWrapper)}>
+          <img
+            className={css(styles.optionContentImage)}
+            src={`/assets/icons/flags/4x3/sv.svg`}
+            alt={"Svenska"}
+          />
+          <span className={css(styles.optionContentText)}>Svenska</span>
+        </div>
+      </Option>
     </Select>
   );
 };
