@@ -55,24 +55,13 @@ export const useTheme = () => {
 
 export function init() {
   const selected = readLocalStorage();
-  if (selected === fallback || !selected) {
-    for (const theme of supported) {
-      document.documentElement.classList.remove(theme);
-    }
-  } else {
-    const removals: string[] = [];
-    for (const theme of supported) {
-      if (
-        theme !== selected &&
-        document.documentElement.classList.contains(theme)
-      )
-        removals.push(theme);
-    }
-    for (const theme of removals) {
-      document.documentElement.classList.remove(theme);
-    }
-    if (!document.documentElement.classList.contains(selected)) {
-      document.documentElement.classList.add(selected);
-    }
+
+  for (const theme of supported) {
+    if (theme === selected) continue;
+    if (document.documentElement.classList.contains(theme)) continue;
+    document.documentElement.classList.remove(theme);
+  }
+  if (selected && selected !== fallback) {
+    document.documentElement.classList.add(selected);
   }
 }
