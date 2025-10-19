@@ -27,7 +27,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
             selected.value === undefined
               ? value
               : (selected.value ?? undefined);
-          props.onInput?.(result);
+          if (result !== value) props.onInput?.(result);
           return result;
         });
         setView((view) => {

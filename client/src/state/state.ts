@@ -1,3 +1,3 @@
 export { client } from "./client.ts";
-export { useLanguage } from "./language/index.ts";
-export * as language from "./language/index.ts";
+export * as translator from "./translator/index.ts";
+export { useTranslator } from "./translator/index.ts";

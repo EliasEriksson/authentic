@@ -4,12 +4,11 @@ import { RouterProvider } from "react-router/dom";
 import { router } from "./router.ts";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { state } from "./state/index.ts";
-import { translations } from "./translations/index.ts";
 
 import "./colors.scss";
 
 (async () => {
-  await translations.init();
+  await state.translator.languages.init();
   const rootElement = document.getElementById("root");
   if (rootElement && !rootElement.innerHTML) {
     const root = createRoot(rootElement);
