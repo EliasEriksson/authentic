@@ -20,10 +20,10 @@ export const AppLayout = () => {
                 <div>Logo</div>
               </div>
               <div className={styles.headerRightMenu}>
-                <div>Language</div>
                 <Select
                   className={css(styles.select)}
                   name={"language"}
+                  unsearchable
                   initialValue={
                     language.data ?? state.translator.languages.fallback
                   }
@@ -36,12 +36,20 @@ export const AppLayout = () => {
                     state.translator.languages.supported,
                     (language) => (
                       <Option key={language} value={language}>
-                        {translator.data("languages", language)}
+                        <div className={css(styles.optionContentWrapper)}>
+                          <img
+                            className={css(styles.optionContentImage)}
+                            src={`/assets/icons/flags/4x3/${language}.svg`}
+                            alt={translator.data("languages", language)}
+                          />
+                          <span className={css(styles.optionContentText)}>
+                            {translator.data("languages", language)}
+                          </span>
+                        </div>
                       </Option>
                     ),
                   )}
                 </Select>
-                <div>Profile</div>
               </div>
             </header>
           </div>

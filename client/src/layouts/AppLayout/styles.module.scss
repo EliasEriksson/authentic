@@ -18,6 +18,7 @@
   display: flex;
   gap: var(--page-padding);
   align-items: center;
+
   & > * {
     flex: 1;
   }
@@ -47,7 +48,7 @@
 .select {
   position: relative;
   z-index: 1000;
-  max-width: 8rem;
+  max-width: 8.5em;
   width: 100%;
 
   :global(.select__drop-down) {
@@ -57,7 +58,16 @@
     width: 100%;
     max-width: 100%;
   }
+
   :global(.select__button:not(:hover)) {
     background-color: var(--color-bg0);
   }
+}
+
+
+.option-content-wrapper {
+  display: grid;
+  grid-template-columns: 1em auto;
+  align-items: center;
+  gap: 1ch;
 }

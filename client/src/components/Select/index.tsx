@@ -6,6 +6,7 @@ import { SelectContext, type Data } from "./context.ts";
 interface Props {
   name: string;
   initialValue?: Data["value"];
+  unsearchable?: boolean;
   className?: string;
   onInput?: (value: Data["value"]) => void;
 }
@@ -27,7 +28,10 @@ export const Select = (props: PropsWithChildren<Props>) => {
             selected.value === undefined
               ? value
               : (selected.value ?? undefined);
-          if (result !== value) props.onInput?.(result);
+          if (result !== value) {
+            props.onInput?.(result);
+            setOpen(() => false);
+          }
           return result;
         });
         setView((view) => {
@@ -100,9 +104,13 @@ export const Select = (props: PropsWithChildren<Props>) => {
         </button>
         <div className={css(styles.dropDown, "select__drop-down")}>
           <input
-            className={css(styles.search, "select__search")}
+            className={css(
+              { [styles.unsearchable]: props.unsearchable },
+              styles.search,
+              "select__search",
+            )}
             type={"text"}
-            placeholder={"🔍👀"}
+            placeholder={"🔍"}
             value={search}
             onInput={(event) => {
               setSearch(event.currentTarget.value);
