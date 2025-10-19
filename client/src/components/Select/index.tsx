@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { css } from "../../utils/css.ts";
 import { SelectContext, type Data } from "./context.ts";
 
-interface Props {
+export interface Props {
   name: string;
   initialValue?: Data["value"];
   unsearchable?: boolean;

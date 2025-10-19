@@ -19,9 +19,10 @@ function writeLocalStorage(language: string) {
   localStorage.setItem(localStorageKey(), language);
 }
 
-function getBrowserLanguage() {
+function getLocalLanguage() {
   const localLanguage = readLocalStorage();
-  if (localLanguage) return localLanguage;
+  if (localLanguage && languages.supported.has(localLanguage))
+    return localLanguage;
   const locale = (() => {
     try {
       return new Intl.Locale(navigator.language);
@@ -55,12 +56,12 @@ export const useLanguage = () => {
     useQuery({
       queryKey: queryKey(),
       placeholderData: () => {
-        const language = getBrowserLanguage();
+        const language = getLocalLanguage();
         if (i18next.language !== language) changeLanguage(language);
         return language;
       },
       queryFn: async () => {
-        const language = getBrowserLanguage();
+        const language = getLocalLanguage();
         if (i18next.language !== language) changeLanguage(language);
         return language;
       },
