@@ -25,8 +25,40 @@
 }
 
 .header-left-menu {
-  display: flex;
 }
+
+.logo-link {
+  display: flex;
+  align-items: baseline;
+
+}
+
+.logo-link-text-wrapper {
+
+}
+
+.logo-wrapper {
+  position: relative;
+  width: fit-content;
+}
+
+.logo-letter {
+  position: absolute;
+  text-align: center;
+  color: var(--color-bg0);
+  font-weight: bolder;
+  font-size: 1.5em;
+  left: 0;
+  width: 100%;
+  top: 0.35em;
+}
+
+.logo {
+  height: 2.5em;
+  fill: var(--color-fg0);
+  stroke: var(--color-fg0);
+}
+
 
 .header-right-menu {
   display: flex;
