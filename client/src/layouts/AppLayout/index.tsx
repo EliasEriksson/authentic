@@ -16,7 +16,10 @@ export const AppLayout = () => {
       <div className={css(styles.pageHeight)}>
         <div className={css(styles.headerWrapper)}>
           <header className={css(styles.header)}>
-            <button onClick={() => changeSidebar(!sidebar.data)}>
+            <button
+              className={css(styles.menuButton)}
+              onClick={() => changeSidebar(!sidebar.data)}
+            >
               <svg
                 className={css(styles.menuImage)}
                 viewBox="0 0 20 20"
@@ -44,12 +47,13 @@ export const AppLayout = () => {
           </header>
         </div>
         <div className={css(styles.asideWrapper, "darker")}>
-          <aside className={css(styles.aside)}>
-            <div className={css(styles.asideEntry)}>
-              <div className={css(styles.asideImage)}>image</div>
-              <div className={css(styles.asideContent)}>
-                This is my long long long long content
-              </div>
+          <aside className={css(styles.aside, { [styles.open]: sidebar.data })}>
+            <div>
+              <ul>
+                <li>Applications</li>
+                <li>Organizations</li>
+                <li>Users</li>
+              </ul>
             </div>
           </aside>
         </div>

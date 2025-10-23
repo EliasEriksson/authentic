@@ -1,6 +1,6 @@
 .grid {
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto 1fr;
   background-color: var(--color-bg0);
   color: var(--color-fg0);
   --page-padding: 0.75em;
@@ -25,14 +25,13 @@
 
 .header {
   grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: subgrid;
+  display: flex;
   gap: var(--page-padding);
 }
 
 .header-top {
-  grid-column: 2 / -1;
   display: flex;
+  width: 100%;
   gap: var(--page-padding);
   align-items: center;
 
@@ -53,12 +52,23 @@
   margin-left: auto;
 }
 
+.menu-button {
+  align-self: center;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: calc(1.5em + (var(--page-padding)));
+  background-color: var(--color-bg0);
+  border: none;
+  padding: calc(var(--page-padding) / 2);
+  &:hover {
+    background-color: var(--color-highlight);
+  }
+}
+
 .menu-image {
   width: 100%;
   max-width: 1.5em;
   fill: var(--color-fg0);
-  justify-self: center;
-  margin: auto;
 }
 
 .logo-link {
@@ -90,7 +100,6 @@
 }
 
 .aside-wrapper {
-  grid-column: 1 / 3;
   display: grid;
   grid-template-columns: subgrid;
   background-color: var(--color-bg0);
@@ -100,22 +109,19 @@
 
 .aside {
   grid-column: 1 /-1;
-  display: grid;
-  grid-template-columns: subgrid;
   height: fit-content;
-}
-
-.aside-entry {
-  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: subgrid;
-
-  align-items: center;
-  gap: var(--page-padding);
-}
-
-.aside-content {
-  max-width: 10rem;
+  grid-template-columns: 0fr;
+  overflow: hidden;
+  transition: grid-template-columns 150ms ease-in-out;
+  & > div {
+    grid-column: 1 / span 2;
+    overflow: hidden;
+    min-width: 12em;
+  }
+  &.open {
+    grid-template-columns: 1fr;
+  }
 }
 
 .main-wrapper {
