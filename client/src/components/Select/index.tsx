@@ -1,33 +1,33 @@
 import { useState, type PropsWithChildren, useMemo, useRef } from "react";
 import styles from "./styles.module.scss";
 import { css } from "../../utils/css.ts";
-import { SelectContext, type Data } from "./context.ts";
+import { SelectContextController, type SelectContext } from "./context.ts";
 
 export interface Props {
   name: string;
-  initialValue?: Data["value"];
+  initialValue?: SelectContext["value"];
   unsearchable?: boolean;
   className?: string;
-  onInput?: (value: Data["value"]) => void;
+  onInput?: (value: SelectContext["value"]) => void;
 }
 
 export const Select = (props: PropsWithChildren<Props>) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<Data["value"]>(props.initialValue);
-  const [view, setView] = useState<Data["view"]>(undefined);
+  const [value, setValue] = useState<SelectContext["value"]>(
+    props.initialValue,
+  );
+  const [view, setView] = useState<SelectContext["view"]>(undefined);
   const [search, setSearch] = useState<string>("");
   const buttonElement = useRef<HTMLButtonElement>(null);
-  const context: SelectContext = useMemo(() => {
+  const context: SelectContextController = useMemo(() => {
     return {
       get: () => {
         return { value, view, search };
       },
-      set: (selected) => {
+      set: (context) => {
         setValue((value) => {
           const result =
-            selected.value === undefined
-              ? value
-              : (selected.value ?? undefined);
+            context.value == undefined ? value : (context.value ?? undefined);
           if (result !== value) {
             props.onInput?.(result);
             setOpen(() => false);
@@ -35,20 +35,16 @@ export const Select = (props: PropsWithChildren<Props>) => {
           return result;
         });
         setView((view) => {
-          return selected.view === undefined
-            ? view
-            : (selected.view ?? undefined);
+          return context.view == undefined ? view : (context.view ?? undefined);
         });
         setSearch((search) => {
-          return selected.search === undefined
-            ? search
-            : (selected.search ?? "");
+          return context.search == undefined ? search : (context.search ?? "");
         });
       },
     };
   }, [value, view, search, props]);
   return (
-    <SelectContext.Provider value={context}>
+    <SelectContextController.Provider value={context}>
       <div
         className={css(
           { [styles.open]: open },
@@ -119,7 +115,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
           <ul className={css(styles.list, "select__list")}>{props.children}</ul>
         </div>
       </div>
-    </SelectContext.Provider>
+    </SelectContextController.Provider>
   );
 };
 export default Select;

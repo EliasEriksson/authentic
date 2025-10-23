@@ -6,17 +6,20 @@ import {
   useEffect,
 } from "react";
 import { css } from "../../utils/css.ts";
-import { SelectContext } from "../Select/context.ts";
+import { SelectContextController } from "../Select/context.ts";
 import styles from "./styles.module.scss";
 
 type Props = {
-  value: Exclude<ReturnType<SelectContext["get"]>["value"], null | undefined>;
+  value: Exclude<
+    ReturnType<SelectContextController["get"]>["value"],
+    null | undefined
+  >;
   searchTerms?: string[];
   className?: string;
 };
 
 export const Option = (props: PropsWithChildren<Props>) => {
-  const uncheckedContext = useContext(SelectContext);
+  const uncheckedContext = useContext(SelectContextController);
   if (!uncheckedContext) throw new Error("Not inside <Select>");
   const context = uncheckedContext;
   const view = useMemo(() => {
