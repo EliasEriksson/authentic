@@ -1,4 +1,10 @@
-import { useState, type PropsWithChildren, useMemo, useRef } from "react";
+import {
+  useState,
+  type PropsWithChildren,
+  useMemo,
+  useRef,
+  useEffect,
+} from "react";
 import styles from "./styles.module.scss";
 import { css } from "../../utils/css.ts";
 import { SelectContextController, type SelectContext } from "./context.ts";
@@ -12,6 +18,7 @@ export interface Props {
 }
 
 export const Select = (props: PropsWithChildren<Props>) => {
+  const rootElement = useRef<HTMLDivElement | null>(null);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<SelectContext["value"]>(
     props.initialValue,
@@ -19,6 +26,17 @@ export const Select = (props: PropsWithChildren<Props>) => {
   const [view, setView] = useState<SelectContext["view"]>(undefined);
   const [search, setSearch] = useState<string>("");
   const buttonElement = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const listener = (event: PointerEvent) => {
+      if (!rootElement.current) return;
+      if (event.composedPath().includes(rootElement.current)) return;
+      setOpen(() => false);
+    };
+    window.addEventListener("click", listener);
+    return () => {
+      window.removeEventListener("click", listener);
+    };
+  }, []);
   const context: SelectContextController = useMemo(() => {
     return {
       get: () => {
@@ -46,6 +64,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
   return (
     <SelectContextController.Provider value={context}>
       <div
+        ref={rootElement}
         className={css(
           { [styles.open]: open },
           styles.select,
