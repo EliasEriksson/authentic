@@ -99,20 +99,24 @@ export const Select = (props: PropsWithChildren<Props>) => {
           </div>
         </button>
         <div className={css(styles.dropDown, "select__drop-down")}>
-          <input
-            className={css(
-              { [styles.unsearchable]: props.unsearchable },
-              styles.search,
-              "select__search",
-            )}
-            type={"text"}
-            placeholder={"🔍"}
-            value={search}
-            onInput={(event) => {
-              setSearch(event.currentTarget.value);
-            }}
-          />
-          <ul className={css(styles.list, "select__list")}>{props.children}</ul>
+          <div className={css(styles.animate)}>
+            <input
+              className={css(
+                { [styles.unsearchable]: props.unsearchable },
+                styles.search,
+                "select__search",
+              )}
+              type={"text"}
+              placeholder={"🔍"}
+              value={search}
+              onInput={(event) => {
+                setSearch(event.currentTarget.value);
+              }}
+            />
+            <ul className={css(styles.list, "select__list")}>
+              {props.children}
+            </ul>
+          </div>
         </div>
       </div>
     </SelectContextController.Provider>

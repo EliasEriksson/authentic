@@ -48,10 +48,17 @@
   border: 1px solid var(--color-border);
   width: 100%;
   margin-top: -1px;
+  display: grid;
+  transition: grid-template-rows 150ms ease-in-out;
+  grid-template-rows: 1fr;
+}
+
+.animate {
+  overflow: hidden;
 }
 
 .select:not(.open) .drop-down {
-  display: none;
+  grid-template-rows: 0fr;
 }
 
 .search {
