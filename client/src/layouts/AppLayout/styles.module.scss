@@ -21,13 +21,14 @@
   grid-template-columns: subgrid;
   background-color: var(--color-bg0);
   color: var(--color-fg0);
-  padding: var(--page-padding);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .header {
   grid-column: 1 / -1;
   display: flex;
   gap: var(--page-padding);
+  margin: var(--page-padding);
 }
 
 .header-top {
@@ -103,36 +104,12 @@
 
 .aside-wrapper {
   position: relative;
+  right: 1px;
   display: grid;
   grid-template-columns: subgrid;
   background-color: var(--color-bg0);
   color: var(--color-fg0);
-  padding: var(--page-padding);
-  --border-radius: calc(var(--page-padding));
-
-  &::before,
-  &::after {
-    position: absolute;
-    left: 100%;
-    content: "";
-    width: calc(var(--page-padding));
-    height: calc(var(--page-padding));
-    background: var(--color-bg0);
-    mask-image: radial-gradient(
-                    circle 1px at 0 0,
-                    transparent 0,
-                    transparent var(--border-radius),
-                    black var(--border-radius));
-  }
-
-  &::before {
-    rotate: 180deg;
-  }
-
-  &::after {
-    rotate: 90deg;
-    bottom: 0;
-  }
+  border-right: 1px solid var(--color-border);
 }
 
 .aside {
@@ -140,6 +117,7 @@
   height: fit-content;
   display: grid;
   grid-template-columns: 0fr;
+  grid-template-rows: subgrid;
   overflow: hidden;
   transition: grid-template-columns 150ms ease-in-out;
 
@@ -147,6 +125,7 @@
     grid-column: 1 / span 2;
     overflow: hidden;
     min-width: 12em;
+
   }
 
   &.open {
@@ -163,7 +142,11 @@
   grid-column: 1 / -1;
   background-color: var(--color-bg0);
   color: var(--color-fg0);
-  padding: var(--page-padding);
+  border-top: 1px solid var(--color-border);
+}
+
+.footer {
+  margin: var(--page-padding);
 }
 
 .select {
