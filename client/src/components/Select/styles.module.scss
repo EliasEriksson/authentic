@@ -4,6 +4,9 @@
 }
 
 .button {
+  position: relative;
+  z-index: 2500;
+
   display: grid;
   grid-template-columns: minmax(2em, 1fr) var(--chevron-size);
   gap: var(--padding);
@@ -48,6 +51,7 @@
   border: 1px solid var(--color-border);
   width: 100%;
   margin-top: -1px;
+  border-top: none;
   display: grid;
   transition: grid-template-rows 150ms ease-in-out;
   grid-template-rows: 1fr;
