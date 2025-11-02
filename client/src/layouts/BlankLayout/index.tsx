@@ -5,17 +5,31 @@ import ThemePicker from "../../components/ThemePicker/index.tsx";
 import { css } from "../../utils/css.ts";
 import { state } from "../../state/index.ts";
 import { Link } from "../../components/Link";
+import type { ReactNode } from "react";
 
-export const BlankLayout = () => {
+interface Props {
+  header?: {
+    start?: ReactNode;
+    left?: { start?: ReactNode; end?: ReactNode };
+    right?: { start?: ReactNode; end?: ReactNode };
+    end?: ReactNode;
+  };
+  aside?: ReactNode;
+}
+
+export const BlankLayout = (props: Props) => {
   const translator = state.useTranslator();
+  const sidebar = state.useSidebar();
   if (!translator.data) return [];
   return (
     <div className={css(styles.grid, "darker")}>
       <div className={css(styles.pageHeight)}>
         <div className={css(styles.headerWrapper)}>
           <header className={css(styles.header)}>
+            {props.header?.start}
             <div className={css(styles.headerTop)}>
               <div className={css(styles.headerLeft)}>
+                {props.header?.left?.start}
                 <Link className={css(styles.logoLink)} to={"/app"}>
                   <div className={css(styles.logoWrapper)}>
                     <span className={css(styles.logoLetter)}>A</span>
@@ -24,13 +38,24 @@ export const BlankLayout = () => {
                     </svg>
                   </div>
                 </Link>
+                {props.header?.left?.end}
               </div>
               <div className={css(styles.headerRight)}>
+                {props.header?.right?.start}
                 <ThemePicker className={css(styles.select)} />
                 <LanguagePicker className={css(styles.select)} />
+                {props.header?.right?.end}
               </div>
             </div>
+            {props.header?.end}
           </header>
+        </div>
+        <div className={css(styles.asideWrapper, "darker")}>
+          <aside className={css(styles.aside, { [styles.open]: sidebar.data })}>
+            <div>
+              <div className={css(styles.asideContent)}>{props.aside}</div>
+            </div>
+          </aside>
         </div>
         <div className={css(styles.mainWrapper)}>
           <main className={css(styles.main)}>
