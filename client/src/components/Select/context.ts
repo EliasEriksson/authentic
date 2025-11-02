@@ -7,6 +7,7 @@ export type Nullable<T> = {
 export interface SelectContext {
   value: string | number | readonly string[] | undefined;
   search: string;
+  open: boolean;
   view: (() => ReactNode) | undefined;
 }
 

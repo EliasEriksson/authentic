@@ -20,6 +20,7 @@ export const App = () => {
           Pineapple
         </Option>
       </Select>
+      <p>Testing</p>
     </>
   );
 };

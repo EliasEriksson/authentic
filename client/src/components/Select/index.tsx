@@ -40,12 +40,12 @@ export const Select = (props: PropsWithChildren<Props>) => {
   const context: SelectContextController = useMemo(() => {
     return {
       get: () => {
-        return { value, view, search };
+        return { value, view, search, open };
       },
       set: (context) => {
         setValue((value) => {
           const result =
-            context.value == undefined ? value : (context.value ?? undefined);
+            context.value === undefined ? value : (context.value ?? undefined);
           if (result !== value) {
             props.onInput?.(result);
             setOpen(() => false);
@@ -53,14 +53,19 @@ export const Select = (props: PropsWithChildren<Props>) => {
           return result;
         });
         setView((view) => {
-          return context.view == undefined ? view : (context.view ?? undefined);
+          return context.view === undefined
+            ? view
+            : (context.view ?? undefined);
         });
         setSearch((search) => {
-          return context.search == undefined ? search : (context.search ?? "");
+          return context.search === undefined ? search : (context.search ?? "");
+        });
+        setOpen((open) => {
+          return context.open === undefined ? open : (context.open ?? false);
         });
       },
     };
-  }, [value, view, search, props]);
+  }, [value, view, search, props, open]);
   return (
     <SelectContextController.Provider value={context}>
       <div
@@ -120,6 +125,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
         <div className={css(styles.dropDown, "select__drop-down")}>
           <div className={css(styles.animate)}>
             <input
+              tabIndex={open ? 0 : -1}
               className={css(
                 { [styles.unsearchable]: props.unsearchable },
                 styles.search,

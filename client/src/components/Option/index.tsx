@@ -65,7 +65,7 @@ export const Option = (props: PropsWithChildren<Props>) => {
     >
       <div
         className={css(styles.viewWrapper, "option__view-wrapper")}
-        tabIndex={0}
+        tabIndex={data.open ? 0 : -1}
       >
         {props.children}
       </div>
