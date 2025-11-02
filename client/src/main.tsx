@@ -8,8 +8,7 @@ import { state } from "./state/index.ts";
 import "./colors.scss";
 
 (async () => {
-  await state.translator.languages.init();
-  state.theme.init();
+  await state.init();
   const rootElement = document.getElementById("root");
   if (rootElement && !rootElement.innerHTML) {
     const root = createRoot(rootElement);

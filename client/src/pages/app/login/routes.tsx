@@ -1,10 +1,5 @@
 import { type RouteObject } from "react-router";
-import Login from "./index.tsx";
+import route from "./route.tsx";
 
-export const login = [
-  {
-    path: "/login",
-    element: <Login />,
-  } as const,
-] satisfies RouteObject[];
-export default login;
+export const routes = [route] satisfies RouteObject[];
+export default routes;
