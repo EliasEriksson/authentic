@@ -4,3 +4,4 @@ import routes from "./pages/routes";
 export const router = createBrowserRouter(routes, {});
 export { routes };
 export type Routes = typeof routes;
+export type Paths = Routes[number]["path"];
