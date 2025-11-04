@@ -11,7 +11,11 @@ export class Client {
       http.Client.open({
         hooks: {
           response: [
-            () => {
+            ({ init, response }) => {
+              const url = new URL(response.url);
+              if (response.status !== 401) return response;
+              if (init.method !== "POST") return response;
+              if (url.pathname !== "/api/sessions") return response;
               throw routing.redirect("/app/login");
             },
           ],

@@ -1,5 +1,5 @@
 import Select from "../../components/Select/index.tsx";
-import Option from "../../components/Option/index.tsx";
+import SelectOption from "../SelectOption/index.tsx";
 import { css } from "../../utils/css.ts";
 import styles from "./styles.module.scss";
 import { state } from "../../state/index.ts";
@@ -24,7 +24,7 @@ export const ThemePicker = (props: Props) => {
         changeTheme(value);
       }}
     >
-      <Option value={"auto"}>
+      <SelectOption value={"auto"}>
         <div className={css(styles.optionContentWrapper)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -45,8 +45,8 @@ export const ThemePicker = (props: Props) => {
             {translator.data("themes", "auto")}
           </span>
         </div>
-      </Option>
-      <Option value={"dark"}>
+      </SelectOption>
+      <SelectOption value={"dark"}>
         <div className={css(styles.optionContentWrapper)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -59,8 +59,8 @@ export const ThemePicker = (props: Props) => {
             {translator.data("themes", "dark")}
           </span>
         </div>
-      </Option>
-      <Option value={"light"}>
+      </SelectOption>
+      <SelectOption value={"light"}>
         <div className={css(styles.optionContentWrapper)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +73,7 @@ export const ThemePicker = (props: Props) => {
             {translator.data("themes", "light")}
           </span>
         </div>
-      </Option>
+      </SelectOption>
     </Select>
   );
 };

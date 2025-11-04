@@ -1,10 +1,15 @@
 import * as React from "react";
+import LoginForm from "../../../components/LoginForm/index.tsx";
+import { css } from "../../../utils/index.ts";
+import styles from "./style.module.scss";
 
 export const Login: React.FC = () => {
   return (
-    <>
-      <p>login</p>
-    </>
+    <div className={css(styles.loginWrapper)}>
+      <div className={css(styles.login)}>
+        <LoginForm />
+      </div>
+    </div>
   );
 };
 export default Login;

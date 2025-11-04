@@ -18,7 +18,7 @@ type Props = {
   className?: string;
 };
 
-export const Option = (props: PropsWithChildren<Props>) => {
+export const SelectOption = (props: PropsWithChildren<Props>) => {
   const uncheckedContext = useContext(SelectContextController);
   if (!uncheckedContext) throw new Error("Not inside <Select>");
   const context = uncheckedContext;
@@ -72,4 +72,4 @@ export const Option = (props: PropsWithChildren<Props>) => {
     </li>
   );
 };
-export default Option;
+export default SelectOption;

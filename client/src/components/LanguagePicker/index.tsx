@@ -1,5 +1,5 @@
 import Select from "../../components/Select/index.tsx";
-import Option from "../../components/Option/index.tsx";
+import SelectOption from "../SelectOption/index.tsx";
 import { css } from "../../utils/css.ts";
 import styles from "./styles.module.scss";
 import { state } from "../../state/index.ts";
@@ -24,7 +24,7 @@ export const LanguagePicker = (props: Props) => {
         changeLanguage(value);
       }}
     >
-      <Option value={"en"}>
+      <SelectOption value={"en"}>
         <div className={css(styles.optionContentWrapper)}>
           <img
             className={css(styles.optionContentImage)}
@@ -33,8 +33,8 @@ export const LanguagePicker = (props: Props) => {
           />
           <span className={css(styles.optionContentText)}>English</span>
         </div>
-      </Option>
-      <Option value={"sv"}>
+      </SelectOption>
+      <SelectOption value={"sv"}>
         <div className={css(styles.optionContentWrapper)}>
           <img
             className={css(styles.optionContentImage)}
@@ -43,7 +43,7 @@ export const LanguagePicker = (props: Props) => {
           />
           <span className={css(styles.optionContentText)}>Svenska</span>
         </div>
-      </Option>
+      </SelectOption>
     </Select>
   );
 };

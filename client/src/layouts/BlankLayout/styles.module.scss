@@ -125,6 +125,10 @@
   padding: var(--page-padding);
 }
 
+.main {
+  height: 100%;
+}
+
 .footer-wrapper {
   grid-column: 1 / -1;
   background-color: var(--color-bg0);

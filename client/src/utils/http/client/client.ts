@@ -14,10 +14,11 @@ export class Client {
     url: URL,
     request: Omit<RequestInit, "method">,
   ): Promise<Response> {
+    const init = { url, method, ...request };
     const response = await fetch(url, { method, ...request }).then(
       async (response) => {
         for (const hook of this.hooks.response) {
-          response = await hook(response);
+          response = await hook({ init, response });
         }
         return response;
       },

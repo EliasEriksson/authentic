@@ -1,5 +1,5 @@
 import Select from "../../components/Select/index.tsx";
-import { Option } from "../../components/Option/index.tsx";
+import { SelectOption } from "../../components/SelectOption/index.tsx";
 
 export const App = () => {
   return (
@@ -7,18 +7,18 @@ export const App = () => {
       <p>Page on my site</p>
       <span>Fruits</span>
       <Select name={"selector"} initialValue={"apple"}>
-        <Option value={"apple"} searchTerms={["fruit"]}>
+        <SelectOption value={"apple"} searchTerms={["fruit"]}>
           Apple
-        </Option>
-        <Option value={"orange"} searchTerms={["fruit", "citrus"]}>
+        </SelectOption>
+        <SelectOption value={"orange"} searchTerms={["fruit", "citrus"]}>
           Orange
-        </Option>
-        <Option value={"lemon"} searchTerms={["fruit", "citrus"]}>
+        </SelectOption>
+        <SelectOption value={"lemon"} searchTerms={["fruit", "citrus"]}>
           Lemon
-        </Option>
-        <Option value={"pineapple"} searchTerms={["fruit", "exotic"]}>
+        </SelectOption>
+        <SelectOption value={"pineapple"} searchTerms={["fruit", "exotic"]}>
           Pineapple
-        </Option>
+        </SelectOption>
       </Select>
       <p>Testing</p>
     </>
