@@ -4,7 +4,7 @@ import { css } from "../../utils/index.ts";
 import styles from "./style.module.scss";
 import { Link } from "../Link";
 
-export function LoginForm() {
+export function CreateAccountForm() {
   const translator = state.useTranslator();
   const id = useRef(crypto.randomUUID());
   if (!translator.data) return [];
@@ -26,16 +26,26 @@ export function LoginForm() {
           name={"password"}
         />
       </div>
+      <div className={css(styles.group)}>
+        <label htmlFor={`${id.current}-confirmation`}>
+          {translator.data("words", "password")}
+        </label>
+        <input
+          id={`${id.current}-confirmation`}
+          type={"password"}
+          name={"confirmation"}
+        />
+      </div>
       <div>
-        <Link to={"/app/create-account"}>
-          {translator.data("auth", "createAccount")}
-        </Link>
+        <Link to={"/app/login"}>{translator.data("auth", "login")}</Link>
         <Link to={"/app/forgot-password"}>
           {translator.data("auth", "forgotPassword")}
         </Link>
-        <button type={"submit"}>{translator.data("words", "login")}</button>
+        <button type={"submit"}>
+          {translator.data("auth", "createAccount")}
+        </button>
       </div>
     </form>
   );
 }
-export default LoginForm;
+export default CreateAccountForm;

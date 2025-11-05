@@ -7,4 +7,10 @@ export const sv = {
   },
   themes: { light: "Ljus", dark: "Mörk", auto: "Auto" },
   languages: { en: "Engelska", sv: "Svenska" },
+  auth: {
+    createAccount: "Skapa konto",
+    forgotPassword: "Glömt lösenord",
+    resetPassword: "Återställ lösenord",
+    login: "Logga in",
+  },
 };
