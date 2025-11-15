@@ -1,8 +1,8 @@
-import Select from "../../components/Select/index.tsx";
-import SelectOption from "../SelectOption/index.tsx";
-import { css } from "../../utils/css.ts";
+import Select from "../../atoms/Select";
+import SelectOption from "../../atoms/SelectOption";
+import { css } from "../../../utils/css.ts";
 import styles from "./styles.module.scss";
-import { state } from "../../state/index.ts";
+import { state } from "../../../state";
 
 export interface Props {
   className?: string;

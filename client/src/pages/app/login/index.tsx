@@ -1,4 +1,4 @@
-import LoginForm from "../../../components/LoginForm/index.tsx";
+import LoginForm from "../../../components/organisms/LoginForm/index.tsx";
 import { css } from "../../../utils/index.ts";
 import styles from "./style.module.scss";
 

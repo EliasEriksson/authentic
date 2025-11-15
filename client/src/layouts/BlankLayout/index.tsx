@@ -1,10 +1,10 @@
 import styles from "./styles.module.scss";
 import { Outlet } from "react-router";
-import LanguagePicker from "../../components/LanguagePicker/index.tsx";
-import ThemePicker from "../../components/ThemePicker/index.tsx";
+import LanguagePicker from "../../components/organisms/LanguagePicker/index.tsx";
+import ThemePicker from "../../components/organisms/ThemePicker/index.tsx";
 import { css } from "../../utils/css.ts";
 import { state } from "../../state/index.ts";
-import { Link } from "../../components/Link";
+import { Link } from "../../components/atoms/Link";
 import type { ReactNode } from "react";
 
 interface Props {

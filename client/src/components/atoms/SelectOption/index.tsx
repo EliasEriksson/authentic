@@ -5,7 +5,7 @@ import {
   useState,
   useEffect,
 } from "react";
-import { css } from "../../utils/css.ts";
+import { css } from "../../../utils/css.ts";
 import { SelectContextController } from "../Select/context.ts";
 import styles from "./styles.module.scss";
 

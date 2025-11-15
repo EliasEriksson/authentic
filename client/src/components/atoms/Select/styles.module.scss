@@ -1,8 +1,11 @@
 .select {
-  --padding: 0.5rem;
+  --padding: 0.5em;
   --chevron-size: 20px;
+  position: relative;
+  z-index: 1000;
+  max-width: 8.5em;
+  width: 100%;
 }
-
 .button {
   position: relative;
   z-index: 2500;
@@ -25,6 +28,9 @@
 
   &:hover {
     background-color: var(--color-highlight);
+  }
+  &:not(:hover) {
+    background-color: var(--color-bg0);
   }
 }
 
@@ -55,6 +61,11 @@
   display: grid;
   transition: grid-template-rows 150ms ease-in-out;
   grid-template-rows: 1fr;
+  position: absolute;
+  right: 0;
+  z-index: 9000;
+  min-width: fit-content;
+  max-width: 100%;
 }
 
 .animate {

@@ -1,10 +1,10 @@
-import { state } from "../../state/index.ts";
+import { state } from "../../../state";
 import { useRef } from "react";
-import { css } from "../../utils/index.ts";
+import { css } from "../../../utils";
 import styles from "./style.module.scss";
-import { Link } from "../Link";
+import { Link } from "../../atoms/Link";
 
-export function ForgotPasswordForm() {
+export function LoginForm() {
   const translator = state.useTranslator();
   const id = useRef(crypto.randomUUID());
   if (!translator.data) return [];
@@ -16,14 +16,26 @@ export function ForgotPasswordForm() {
         </label>
         <input id={`${id.current}-email`} type={"email"} name={"email"} />
       </div>
+      <div className={css(styles.group)}>
+        <label htmlFor={`${id.current}-password`}>
+          {translator.data("words", "password")}
+        </label>
+        <input
+          id={`${id.current}-password`}
+          type={"password"}
+          name={"password"}
+        />
+      </div>
       <div>
-        <Link to={"/app/login"}>{translator.data("auth", "login")}</Link>
         <Link to={"/app/create-account"}>
           {translator.data("auth", "createAccount")}
+        </Link>
+        <Link to={"/app/forgot-password"}>
+          {translator.data("auth", "forgotPassword")}
         </Link>
         <button type={"submit"}>{translator.data("words", "login")}</button>
       </div>
     </form>
   );
 }
-export default ForgotPasswordForm;
+export default LoginForm;

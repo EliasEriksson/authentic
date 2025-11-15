@@ -1,6 +1,6 @@
 import { css } from "../../../utils/index.ts";
 import styles from "./style.module.scss";
-import ForgotPasswordForm from "../../../components/ForgotPasswordForm";
+import ForgotPasswordForm from "../../../components/organisms/ForgotPasswordForm";
 
 export const ForgotPassword = () => {
   return (

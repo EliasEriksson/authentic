@@ -6,7 +6,7 @@ import {
   useEffect,
 } from "react";
 import styles from "./styles.module.scss";
-import { css } from "../../utils/css.ts";
+import { css } from "../../../utils/css.ts";
 import { SelectContextController, type SelectContext } from "./context.ts";
 
 export interface Props {

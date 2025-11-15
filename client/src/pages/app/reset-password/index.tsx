@@ -1,6 +1,6 @@
 import { css } from "../../../utils/index.ts";
 import styles from "./style.module.scss";
-import ResetPasswordForm from "../../../components/ResetPasswordForm";
+import ResetPasswordForm from "../../../components/organisms/ResetPasswordForm";
 
 export const ResetPassword = () => {
   return (

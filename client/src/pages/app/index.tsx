@@ -1,5 +1,5 @@
-import Select from "../../components/Select/index.tsx";
-import { SelectOption } from "../../components/SelectOption/index.tsx";
+import Select from "../../components/atoms/Select/index.tsx";
+import { SelectOption } from "../../components/atoms/SelectOption/index.tsx";
 
 export const App = () => {
   return (
