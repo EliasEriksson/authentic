@@ -1,18 +1,11 @@
 .grid {
   display: grid;
   grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
   background-color: var(--color-bg0);
   color: var(--color-fg0);
   --page-padding: 0.75em;
-}
-
-.page-height {
-  position: relative;
-  grid-column: 1 / -1;
-  display: grid;
-  min-height: 100dvh;
-  grid-template-columns: subgrid;
-  grid-template-rows: auto 1fr;
+  height: 100dvh;
 }
 
 .header-wrapper {
@@ -23,6 +16,13 @@
   background-color: var(--color-bg0);
   color: var(--color-fg0);
   border-bottom: 1px solid var(--color-border);
+}
+
+.window {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
 }
 
 .header {
@@ -84,27 +84,34 @@
   stroke: var(--color-fg0);
 }
 
-.aside-wrapper {
+.aside-wrapper-wrapper {
   position: relative;
   display: grid;
-  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+  &:has(> .aside-wrapper > aside.open) {
+    border-right: 1px solid var(--color-border);
+  }
+}
+
+.aside-wrapper {
   background-color: var(--color-bg0);
   color: var(--color-fg0);
+
+  overflow-y: auto;
+  &:has(> .aside.open) {
+    scrollbar-gutter: stable;
+  }
 }
 
 .aside {
-  grid-column: 1 /-1;
   height: fit-content;
   display: grid;
   grid-template-columns: 0fr;
-  grid-template-rows: subgrid;
-  overflow: hidden;
   transition: grid-template-columns 150ms ease-in-out;
 
   & > div {
     grid-column: 1 / span 2;
-    overflow: hidden;
-    min-width: 12em;
+    overflow-x: hidden;
   }
 
   &.open {
@@ -116,8 +123,13 @@
 }
 
 .aside-content {
-  border-right: 1px solid var(--color-border);
-  height: 100%;
+  min-width: 12em;
+}
+
+.main-footer {
+  display: grid;
+  grid-template-rows: 100% auto;
+  overflow-y: auto;
 }
 
 .main-wrapper {
@@ -130,7 +142,6 @@
 }
 
 .footer-wrapper {
-  grid-column: 1 / -1;
   background-color: var(--color-bg0);
   color: var(--color-fg0);
   border-top: 1px solid var(--color-border);

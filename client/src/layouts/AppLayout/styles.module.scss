@@ -1,5 +1,4 @@
 .menu-button {
-  align-self: center;
   aspect-ratio: 1 / 1;
   width: 100%;
   max-width: calc(1.5em + (var(--page-padding)));
@@ -13,9 +12,21 @@
 }
 
 .menu-image {
-  width: 100%;
   max-width: 1.5em;
+  width: 100%;
   fill: var(--color-fg0);
+}
+
+.aside-heading-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.aside-heading {
+}
+
+.aside-wrapper {
+  position: relative;
 }
 
 .aside {
