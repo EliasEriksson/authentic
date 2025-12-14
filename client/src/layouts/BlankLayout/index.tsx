@@ -15,7 +15,11 @@ interface Props {
     right?: { start?: ReactNode; end?: ReactNode };
     end?: ReactNode;
   };
-  aside?: ReactNode;
+  aside?: {
+    start?: ReactNode;
+    asideContent?: ReactNode;
+    end?: ReactNode;
+  };
 }
 
 export const BlankLayout = (props: Props) => {
@@ -48,18 +52,33 @@ export const BlankLayout = (props: Props) => {
         </header>
       </div>
       <div className={css(styles.window)}>
-        <div className={css(styles.asideWrapperWrapper)}>
-          <div className={css(styles.asideWrapper, "darker")}>
+        <div
+          className={css(styles.asideWrapperWrapper, {
+            [styles.open]: props.aside && sidebar.data,
+            open: props.aside && sidebar.data,
+          })}
+        >
+          {props.aside?.start}
+          <div
+            className={css(styles.asideWrapper, "darker", {
+              [styles.open]: props.aside && sidebar.data,
+              open: props.aside && sidebar.data,
+            })}
+          >
             <aside
               className={css(styles.aside, {
                 [styles.open]: props.aside && sidebar.data,
+                open: props.aside && sidebar.data,
               })}
             >
               <div>
-                <div className={css(styles.asideContent)}>{props.aside}</div>
+                <div className={css(styles.asideContent)}>
+                  {props.aside?.asideContent}
+                </div>
               </div>
             </aside>
           </div>
+          {props.aside?.end}
         </div>
         <div className={css(styles.mainFooter)}>
           <div className={css(styles.mainWrapper)}>

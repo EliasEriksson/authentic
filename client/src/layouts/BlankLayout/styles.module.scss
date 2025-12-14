@@ -85,7 +85,9 @@
 }
 
 .aside-wrapper-wrapper {
+  background-color: var(--color-bg0);
   position: relative;
+  z-index: 5000;
   display: grid;
   grid-template-rows: subgrid;
   &:has(> .aside-wrapper > aside.open) {
@@ -96,9 +98,9 @@
 .aside-wrapper {
   background-color: var(--color-bg0);
   color: var(--color-fg0);
-
-  overflow-y: auto;
+  overflow-y: hidden;
   &:has(> .aside.open) {
+    overflow-y: auto;
     scrollbar-gutter: stable;
   }
 }
