@@ -25,7 +25,7 @@
         width: 100%;
         gap: var(--page-padding);
         align-items: center;
-        .header-left {
+        & .header-left {
           flex: 1;
           & .logo-link {
             padding: var(--page-padding);
@@ -43,7 +43,7 @@
             }
           }
         }
-        .header-right {
+        & .header-right {
           flex: 1;
           display: flex;
           align-items: center;
@@ -60,7 +60,7 @@
     display: grid;
     grid-template-columns: subgrid;
     grid-template-rows: subgrid;
-    .aside-wrapper {
+    & .aside-wrapper {
       background-color: var(--color-bg0);
       color: var(--color-fg0);
       position: relative;
@@ -81,11 +81,11 @@
       & .aside-scroll-area {
         overflow-y: hidden;
         :has(.aside-wrapper:is(.open, :hover)) & {
-          overflow-y: auto;
+          overflow-y: scroll;
           scrollbar-gutter: stable;
+          scrollbar-color: var(--color-bg1) var(--color-bg0);
         }
         .aside {
-          height: fit-content;
           display: grid;
           grid-template-columns: 0fr;
           transition: grid-template-columns 150ms ease-in-out;
@@ -102,7 +102,7 @@
         }
       }
     }
-    .content-area {
+    & .content-area {
       display: grid;
       grid-template-rows: 100% auto;
       overflow-y: auto;

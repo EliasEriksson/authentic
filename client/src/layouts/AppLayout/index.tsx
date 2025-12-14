@@ -2,6 +2,7 @@ import styles from "./styles.module.scss";
 import { css } from "../../utils/css.ts";
 import { state } from "../../state/index.ts";
 import BlankLayout from "../BlankLayout";
+import { Link } from "../../components/atoms/Link";
 
 export const AppLayout = () => {
   const translator = state.useTranslator();
@@ -19,7 +20,6 @@ export const AppLayout = () => {
             })}
           >
             <div className={css(styles.homeWrapper)}>
-              <div className={css(styles.home)}>Resources</div>
               <button
                 className={css(styles.asideMenuButton)}
                 onClick={() => changeSidebar(!sidebar.data)}
@@ -38,57 +38,18 @@ export const AppLayout = () => {
                   ></path>
                 </svg>
               </button>
+              <Link to={"/app"} className={css(styles.asideMenuHomeLink)}>
+                <svg className={css(styles.homeImage)} viewBox="0 0 512 512">
+                  <path d="M416 174.74V48h-80v58.45L256 32 0 272h64v208h144V320h96v160h144V272h64l-96-97.26z" />
+                </svg>
+                <div className={css(styles.home)}>Home</div>
+              </Link>
             </div>
 
             <ul className={css(styles.aside)}>
               <li>Applications</li>
               <li>Organizations</li>
               <li>Users</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
-              <li>spam</li>
             </ul>
           </div>
         ),
