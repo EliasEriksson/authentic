@@ -16,9 +16,8 @@ interface Props {
     end?: ReactNode;
   };
   aside?: {
-    start?: ReactNode;
-    asideContent?: ReactNode;
-    end?: ReactNode;
+    hoverArea?: ReactNode;
+    content?: ReactNode;
   };
 }
 
@@ -31,7 +30,7 @@ export const BlankLayout = (props: Props) => {
       <div className={css(styles.headerWrapper)}>
         <header className={css(styles.header)}>
           {props.header?.start}
-          <div className={css(styles.headerTop)}>
+          <div className={css(styles.headerAreas)}>
             <div className={css(styles.headerLeft)}>
               {props.header?.left?.start}
               <Link className={css(styles.logoLink)} to={"/app"}>
@@ -53,34 +52,22 @@ export const BlankLayout = (props: Props) => {
       </div>
       <div className={css(styles.window)}>
         <div
-          className={css(styles.asideWrapperWrapper, {
+          className={css(styles.asideWrapper, "darker", {
             [styles.open]: props.aside && sidebar.data,
-            open: props.aside && sidebar.data,
           })}
         >
-          {props.aside?.start}
-          <div
-            className={css(styles.asideWrapper, "darker", {
-              [styles.open]: props.aside && sidebar.data,
-              open: props.aside && sidebar.data,
-            })}
-          >
-            <aside
-              className={css(styles.aside, {
-                [styles.open]: props.aside && sidebar.data,
-                open: props.aside && sidebar.data,
-              })}
-            >
-              <div>
+          <div className={css(styles.hoverArea)}>{props.aside?.hoverArea}</div>
+          <div className={css(styles.asideScrollArea)}>
+            <aside className={css(styles.aside)}>
+              <div className={css(styles.asideContentHider)}>
                 <div className={css(styles.asideContent)}>
-                  {props.aside?.asideContent}
+                  {props.aside?.content}
                 </div>
               </div>
             </aside>
           </div>
-          {props.aside?.end}
         </div>
-        <div className={css(styles.mainFooter)}>
+        <div className={css(styles.contentArea)}>
           <div className={css(styles.mainWrapper)}>
             <main className={css(styles.main)}>
               <Outlet />

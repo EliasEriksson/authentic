@@ -11,51 +11,33 @@ export const AppLayout = () => {
   return (
     <BlankLayout
       aside={{
-        start: <div className={css(styles.hoverOpen)}></div>,
-        asideContent: (
-          <div className={css(styles.asideWrapper)}>
-            <div className={css(styles.asideHeadingWrapper)}>
-              <div>Resources</div>
-              <div className={css(styles.button)}>
-                <button
-                  className={css(styles.menuButton, styles.close)}
-                  onClick={() => changeSidebar(!sidebar.data)}
+        hoverArea: <div className={css(styles.asideHoverArea)}></div>,
+        content: (
+          <div
+            className={css(styles.asideWrapper, {
+              [styles.open]: sidebar.data,
+            })}
+          >
+            <div className={css(styles.homeWrapper)}>
+              <div className={css(styles.home)}>Resources</div>
+              <button
+                className={css(styles.asideMenuButton)}
+                onClick={() => changeSidebar(!sidebar.data)}
+              >
+                <svg
+                  className={css(styles.asideMenuButtonImage)}
+                  viewBox="0 0 24 24"
+                  focusable="false"
+                  role="presentation"
                 >
-                  <svg
-                    className={css(styles.menuImage)}
-                    viewBox="0 0 24 24"
-                    focusable="false"
-                    aria-hidden="true"
-                    role="presentation"
-                  >
-                    <path d="M21.414 5h-2v14h2V5Z"></path>
-                    <path
-                      fill-rule="evenodd"
-                      d="M8.707 5.293 2 12l6.707 6.707 1.414-1.414L5.828 13h11.586v-2H5.828l4.293-4.293-1.414-1.414Z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                </button>
-                <button
-                  className={css(styles.menuButton, styles.open)}
-                  onClick={() => changeSidebar(!sidebar.data)}
-                >
-                  <svg
-                    className={css(styles.menuImage)}
-                    viewBox="0 0 24 24"
-                    focusable="false"
-                    aria-hidden="true"
-                    role="presentation"
-                  >
-                    <path d="M21.414 5h-2v14h2V5Z"></path>
-                    <path
-                      fill-rule="evenodd"
-                      d="M8.707 5.293 2 12l6.707 6.707 1.414-1.414L5.828 13h11.586v-2H5.828l4.293-4.293-1.414-1.414Z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                </button>
-              </div>
+                  <path d="M21.414 5h-2v14h2V5Z"></path>
+                  <path
+                    fill-rule="evenodd"
+                    d="M8.707 5.293 2 12l6.707 6.707 1.414-1.414L5.828 13h11.586v-2H5.828l4.293-4.293-1.414-1.414Z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
             </div>
 
             <ul className={css(styles.aside)}>
