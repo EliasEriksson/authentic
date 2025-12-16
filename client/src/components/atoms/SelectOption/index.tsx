@@ -42,15 +42,10 @@ export const SelectOption = (props: PropsWithChildren<Props>) => {
   }, [data.search, props.searchTerms, props.value]);
   return (
     <li
-      className={css(
-        {
-          [styles.hidden]: hidden,
-          [styles.selected]: props.value === data.value,
-        },
-        styles.option,
-        props.className,
-        "option",
-      )}
+      className={css(styles.option, props.className, "option", {
+        [styles.hidden]: hidden,
+        [styles.selected]: props.value === data.value,
+      })}
       onClick={() => {
         context.set({ value: props.value, view });
       }}
