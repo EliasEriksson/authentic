@@ -5,98 +5,92 @@
   z-index: 1000;
   max-width: 8.5em;
   width: 100%;
-  & .button {
-    position: relative;
-    z-index: 2500;
-
-    display: grid;
-    grid-template-columns: minmax(2em, 1fr) var(--chevron-size);
-    gap: var(--padding);
-    align-items: center;
-    width: 100%;
-    cursor: pointer;
-    margin: 0;
-    padding: var(--padding);
-    background: var(--color-bg1);
-    color: var(--color-fg0);
-    border: 1px solid var(--color-border);
-
-    &[type="submit"]:focus-visible {
-      outline: solid 2px var(--color-highlight);
-    }
-
-    &:hover {
-      background-color: var(--color-highlight);
-    }
-    &:not(:hover) {
-      background-color: var(--color-bg0);
-    }
-    & .view {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-align: left;
-    }
-    & .chevron-wrapper {
-      max-width: var(--chevron-size);
-      max-height: var(--chevron-size);
-      width: 100%;
-      height: 100%;
-      & .chevron {
-        transition: 90ms rotate ease-in-out;
-        @at-root .select.open .chevron {
-          rotate: 90deg;
-        }
-      }
-    }
+}
+.button {
+  position: relative;
+  z-index: 2500;
+  display: grid;
+  grid-template-columns: minmax(2em, 1fr) var(--chevron-size);
+  gap: var(--padding);
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  margin: 0;
+  padding: var(--padding);
+  background: var(--color-bg1);
+  color: var(--color-fg0);
+  border: 1px solid var(--color-border);
+  &[type="submit"]:focus-visible {
+    outline: solid 2px var(--color-highlight);
   }
-  .drop-down {
-    background-color: var(--color-bg1);
-    color: var(--color-fg1);
-    border: 1px solid var(--color-border);
-    width: 100%;
-    margin-top: -1px;
-    border-top: none;
-    display: grid;
-    transition: grid-template-rows 150ms ease-in-out;
-    grid-template-rows: 1fr;
-    position: absolute;
-    right: 0;
-    z-index: 9000;
-    min-width: fit-content;
-    max-width: 100%;
-    @at-root .select:not(.open) .drop-down {
-      grid-template-rows: 0fr;
-    }
-    .animate {
-      .list {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-        display: flex;
-        flex-direction: column;
-      }
-      overflow: hidden;
-      .search {
-        --color: var(--color-fg2);
-        width: calc(100% - var(--padding));
-        background-color: var(--color-bg1);
-        color: var(--color);
-        border: 1px solid var(--color-border);
-        padding: calc(var(--padding) / 2);
-        margin: calc(var(--padding) / 2);
-
-        &::placeholder {
-          color: var(--color);
-        }
-
-        &:hover {
-          border-color: var(--color-highlight);
-        }
-
-        &.unsearchable {
-          display: none;
-        }
-      }
-    }
+  &:hover {
+    background-color: var(--color-highlight);
+  }
+  &:not(:hover) {
+    background-color: var(--color-bg0);
+  }
+}
+.view {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+.chevron-wrapper {
+  max-width: var(--chevron-size);
+  max-height: var(--chevron-size);
+  width: 100%;
+  height: 100%;
+}
+.chevron {
+  transition: 90ms rotate ease-in-out;
+  .select.open & {
+    rotate: 90deg;
+  }
+}
+.drop-down {
+  background-color: var(--color-bg1);
+  color: var(--color-fg1);
+  border: 1px solid var(--color-border);
+  width: 100%;
+  margin-top: -1px;
+  border-top: none;
+  display: grid;
+  transition: grid-template-rows 150ms ease-in-out;
+  grid-template-rows: 1fr;
+  position: absolute;
+  right: 0;
+  z-index: 9000;
+  min-width: fit-content;
+  max-width: 100%;
+  .select:not(.open) & {
+    grid-template-rows: 0fr;
+  }
+}
+.animate {
+  overflow: hidden;
+}
+.list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+.search {
+  --color: var(--color-fg2);
+  width: calc(100% - var(--padding));
+  background-color: var(--color-bg1);
+  color: var(--color);
+  border: 1px solid var(--color-border);
+  padding: calc(var(--padding) / 2);
+  margin: calc(var(--padding) / 2);
+  &::placeholder {
+    color: var(--color);
+  }
+  &:hover {
+    border-color: var(--color-highlight);
+  }
+  &.unsearchable {
+    display: none;
   }
 }

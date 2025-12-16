@@ -2,23 +2,18 @@
   background-color: var(--color-bg1);
   padding: calc(var(--padding) / 2);
   cursor: pointer;
+  .hidden & {
+    display: none;
+  }
 }
-.hidden {
-}
-.option.hidden {
-  display: none;
-}
-
 .view-wrapper {
   padding: calc(var(--padding) / 2);
-}
-
-.selected .view-wrapper {
-  background-color: var(--color-bg2);
-  color: var(--fg3);
-}
-
-.option:hover .view-wrapper {
-  background-color: var(--color-highlight);
-  color: var(--fg4);
+  .option.selected & {
+    background-color: var(--color-bg2);
+    color: var(--fg3);
+  }
+  .option:hover & {
+    background-color: var(--color-highlight);
+    color: var(--fg4);
+  }
 }
