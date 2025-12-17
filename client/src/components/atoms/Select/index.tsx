@@ -70,7 +70,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
     <SelectContextController.Provider value={context}>
       <div
         ref={rootElement}
-        className={css(
+        {...css(
           { [styles.open]: open },
           styles.select,
           props.className,
@@ -86,7 +86,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
         }}
       >
         <button
-          className={css(styles.button, "select__button")}
+          {...css(styles.button, "select__button")}
           ref={buttonElement}
           name={props.name}
           type={"submit"}
@@ -95,18 +95,16 @@ export const Select = (props: PropsWithChildren<Props>) => {
             setOpen((state) => !state);
           }}
         >
-          <div className={css(styles.view, "select__view")}>
+          <div {...css(styles.view, "select__view")}>
             {view?.() ?? (
-              <span className={css(styles.noValue, "select__view__no-value")}>
+              <span {...css(styles.noValue, "select__view__no-value")}>
                 {"No Value"}
               </span>
             )}
           </div>
-          <div
-            className={css(styles.chevronWrapper, "select__chevron-wrapper")}
-          >
+          <div {...css(styles.chevronWrapper, "select__chevron-wrapper")}>
             <svg
-              className={css(styles.chevron, "select__chevron")}
+              {...css(styles.chevron, "select__chevron")}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
               width={512}
@@ -122,11 +120,11 @@ export const Select = (props: PropsWithChildren<Props>) => {
             </svg>
           </div>
         </button>
-        <div className={css(styles.dropDown, "select__drop-down")}>
-          <div className={css(styles.animate)}>
+        <div {...css(styles.dropDown, "select__drop-down")}>
+          <div {...css(styles.animate)}>
             <input
               tabIndex={open ? 0 : -1}
-              className={css(
+              {...css(
                 { [styles.unsearchable]: props.unsearchable },
                 styles.search,
                 "select__search",
@@ -138,9 +136,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
                 setSearch(event.currentTarget.value);
               }}
             />
-            <ul className={css(styles.list, "select__list")}>
-              {props.children}
-            </ul>
+            <ul {...css(styles.list, "select__list")}>{props.children}</ul>
           </div>
         </div>
       </div>

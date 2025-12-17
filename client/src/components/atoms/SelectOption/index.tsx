@@ -42,7 +42,7 @@ export const SelectOption = (props: PropsWithChildren<Props>) => {
   }, [data.search, props.searchTerms, props.value]);
   return (
     <li
-      className={css(styles.option, props.className, "option", {
+      {...css(styles.option, props.className, "option", {
         [styles.hidden]: hidden,
         [styles.selected]: props.value === data.value,
       })}
@@ -59,7 +59,7 @@ export const SelectOption = (props: PropsWithChildren<Props>) => {
       }}
     >
       <div
-        className={css(styles.viewWrapper, "option__view-wrapper")}
+        {...css(styles.viewWrapper, "option__view-wrapper")}
         tabIndex={data.open ? 0 : -1}
       >
         {props.children}

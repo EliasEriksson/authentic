@@ -4,8 +4,8 @@ import ForgotPasswordForm from "../../../components/organisms/ForgotPasswordForm
 
 export const ForgotPassword = () => {
   return (
-    <div className={css(styles.forgotPasswordWrapper)}>
-      <div className={css(styles.forgotPassword)}>
+    <div {...css(styles.forgotPasswordWrapper)}>
+      <div {...css(styles.forgotPassword)}>
         <ForgotPasswordForm />
       </div>
     </div>

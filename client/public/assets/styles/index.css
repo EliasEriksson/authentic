@@ -50,3 +50,9 @@ select {
 p {
   text-wrap: pretty;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

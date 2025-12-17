@@ -20,6 +20,7 @@ export default defineConfig([
       globals: globals.browser,
     },
     rules: {
+      "@typescript-eslint/no-namespace": ["error", { allowDeclarations: true }],
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {

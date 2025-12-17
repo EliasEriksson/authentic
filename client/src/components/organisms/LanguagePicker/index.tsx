@@ -15,7 +15,7 @@ export const LanguagePicker = (props: Props) => {
   if (!translator.data || !language.data) return [];
   return (
     <Select
-      className={css(styles.select, props.className)}
+      {...css(styles.select, props.className)}
       name={"language"}
       unsearchable
       initialValue={language.data ?? state.translator.languages.fallback}
@@ -25,23 +25,23 @@ export const LanguagePicker = (props: Props) => {
       }}
     >
       <SelectOption value={"en"}>
-        <div className={css(styles.optionContentWrapper)}>
+        <div {...css(styles.optionContentWrapper)}>
           <img
-            className={css(styles.optionContentImage)}
+            {...css(styles.optionContentImage)}
             src={`/assets/icons/flags/4x3/en.svg`}
             alt={"English"}
           />
-          <span className={css(styles.optionContentText)}>English</span>
+          <span {...css(styles.optionContentText)}>English</span>
         </div>
       </SelectOption>
       <SelectOption value={"sv"}>
-        <div className={css(styles.optionContentWrapper)}>
+        <div {...css(styles.optionContentWrapper)}>
           <img
-            className={css(styles.optionContentImage)}
+            {...css(styles.optionContentImage)}
             src={`/assets/icons/flags/4x3/sv.svg`}
             alt={"Svenska"}
           />
-          <span className={css(styles.optionContentText)}>Svenska</span>
+          <span {...css(styles.optionContentText)}>Svenska</span>
         </div>
       </SelectOption>
     </Select>
