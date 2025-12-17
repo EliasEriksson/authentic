@@ -1,4 +1,4 @@
-import type { PropsWithChildren, ReactNode } from "react";
+import { type PropsWithChildren, type ReactNode, useState } from "react";
 import { css } from "../../../utils";
 import styles from "./styles.module.scss";
 import { SettingsIcon } from "../icons/settings";
@@ -9,10 +9,14 @@ export namespace SettingsMenu {
   }
 }
 export const SettingsMenu = (props: PropsWithChildren<SettingsMenu.Props>) => {
+  const [open, setOpen] = useState(false);
   return (
-    <div {...css(styles.menu)}>
+    <div {...css(styles.menu, { [styles.open]: open })}>
       <div {...css(styles.highlight)}>
-        <button {...css(styles.button)}>
+        <button
+          {...css(styles.button)}
+          onClick={() => setOpen((open) => !open)}
+        >
           <SettingsIcon {...css(styles.icon)} />
         </button>
         {props.description && (

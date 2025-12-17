@@ -55,6 +55,9 @@
   height: 100%;
   margin-left: auto;
 }
+.select :global(.select__drop-down) {
+  position: relative;
+}
 .window {
   grid-column: 1 / -1;
   display: grid;

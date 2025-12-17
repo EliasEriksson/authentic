@@ -2,6 +2,7 @@
   border: 1px solid var(--color-border);
   padding: 0.25em;
   position: relative;
+  z-index: 6000;
 }
 .highlight {
   display: grid;
@@ -30,24 +31,19 @@
   padding-right: 0.25em;
 }
 .drop-down {
-  transform: scaleX(-1);
   position: absolute;
+  z-index: 7000;
   top: 100%;
   right: 0;
-  width: 100%;
+  //transform: scaleX(-1);
   display: grid;
-  grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  transition:
-    grid-template-columns 150ms ease-in-out,
-    grid-template-rows 150ms ease-in-out;
-  .menu:not(:hover) & {
-    grid-template-columns: 0fr;
+  transition: grid-template-rows 150ms ease-in-out;
+  .menu:not(:is(.open)) & {
     grid-template-rows: 0fr;
-    width: max-content;
   }
 }
 .drop-down-hider {
-  overflow: hidden;
-  transform: scaleX(-1);
+  overflow-y: clip;
+  grid-row: 1 / span 2;
 }

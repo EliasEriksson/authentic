@@ -45,6 +45,9 @@ export const App = () => {
         <SelectOption value={"pineapple"} searchTerms={["fruit", "exotic"]}>
           Pineapple
         </SelectOption>
+        <SelectOption value={"pineappleX"} searchTerms={["fruit", "exotic"]}>
+          PineappleAppleAppleAppleApple
+        </SelectOption>
       </Select>
       <p>Testing</p>
     </>
