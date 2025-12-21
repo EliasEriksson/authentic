@@ -95,29 +95,31 @@ export const Select = (props: PropsWithChildren<Props>) => {
             setOpen((state) => !state);
           }}
         >
-          <div {...css(styles.view, "select__view")}>
-            {view?.() ?? (
-              <span {...css(styles.noValue, "select__view__no-value")}>
-                {"No Value"}
-              </span>
-            )}
-          </div>
-          <div {...css(styles.chevronWrapper, "select__chevron-wrapper")}>
-            <svg
-              {...css(styles.chevron, "select__chevron")}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              width={512}
-            >
-              <path
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="48"
-                d="M184 112l144 144-144 144"
-              />
-            </svg>
+          <div {...css(styles.buttonContent)}>
+            <div {...css(styles.view, "select__view")}>
+              {view?.() ?? (
+                <span {...css(styles.noValue, "select__view__no-value")}>
+                  {"No Value"}
+                </span>
+              )}
+            </div>
+            <div {...css(styles.chevronWrapper, "select__chevron-wrapper")}>
+              <svg
+                {...css(styles.chevron, "select__chevron")}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width={512}
+              >
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="48"
+                  d="M184 112l144 144-144 144"
+                />
+              </svg>
+            </div>
           </div>
         </button>
         <div {...css(styles.dropDown, "select__drop-down")}>

@@ -55,9 +55,19 @@
   height: 100%;
   margin-left: auto;
 }
-.select :global(.select__drop-down) {
-  position: relative;
+.settings-menu {
+  .select {
+    max-width: unset;
+    & :global(.select__button) {
+      border: none;
+    }
+    & :global(.select__drop-down) {
+      position: relative;
+      border: none;
+    }
+  }
 }
+
 .window {
   grid-column: 1 / -1;
   display: grid;

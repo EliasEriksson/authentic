@@ -1,4 +1,4 @@
-.menu {
+.menu-wrapper {
   border: 1px solid var(--color-border);
   padding: 0.25em;
   position: relative;
@@ -34,16 +34,23 @@
   position: absolute;
   z-index: 7000;
   top: 100%;
-  right: 0;
-  //transform: scaleX(-1);
+  right: -1px;
   display: grid;
   grid-template-rows: 1fr;
   transition: grid-template-rows 150ms ease-in-out;
-  .menu:not(:is(.open)) & {
+  .menu-wrapper:not(:is(.open)) & {
     grid-template-rows: 0fr;
   }
 }
 .drop-down-hider {
   overflow-y: clip;
   grid-row: 1 / span 2;
+}
+.drop-down-items {
+  display: grid;
+  gap: 0.25em;
+  padding: 0.25em;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg0);
+  min-width: 12em;
 }
