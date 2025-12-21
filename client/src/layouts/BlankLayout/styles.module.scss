@@ -67,7 +67,6 @@
     }
   }
 }
-
 .window {
   grid-column: 1 / -1;
   display: grid;
@@ -78,7 +77,7 @@
   background-color: var(--color-bg0);
   color: var(--color-fg0);
   position: relative;
-  z-index: 5000;
+  z-index: 4000;
   display: grid;
   grid-template-rows: subgrid;
   &:is(.open, :hover) {
@@ -120,6 +119,7 @@
   display: grid;
   grid-template-rows: 100% auto;
   overflow-y: auto;
+  touch-action: pan-y;
 }
 .main-wrapper {
   background-color: var(--color-bg1);
@@ -137,10 +137,9 @@
   .aside-wrapper {
     position: absolute;
     grid-row: 2;
-    z-index: 6000;
     height: 100%;
   }
-  .main-wrapper {
-    grid-column: 2 / -1;
+  .content-area {
+    grid-column: 1 / -1;
   }
 }

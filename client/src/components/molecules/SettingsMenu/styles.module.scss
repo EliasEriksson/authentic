@@ -48,8 +48,7 @@
 }
 .drop-down-items {
   display: grid;
-  gap: 0.25em;
-  padding: 0.25em;
+  padding-bottom: 1px;
   border: 1px solid var(--color-border);
   background-color: var(--color-bg0);
   min-width: 12em;
