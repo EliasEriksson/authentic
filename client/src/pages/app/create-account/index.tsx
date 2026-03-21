@@ -4,8 +4,8 @@ import CreateAccountForm from "../../../components/organisms/CreateAccountForm";
 
 export const CreateAccount = () => {
   return (
-    <div {...css(styles.createAccountWrapper)}>
-      <div {...css(styles.createAccount)}>
+    <div className={css(styles.createAccountWrapper)}>
+      <div className={css(styles.createAccount)}>
         <CreateAccountForm />
       </div>
     </div>

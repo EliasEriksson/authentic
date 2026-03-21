@@ -8,8 +8,8 @@ export function ResetPasswordForm() {
   const id = useRef(crypto.randomUUID());
   if (!translator.data) return [];
   return (
-    <form {...css(styles.form)}>
-      <div {...css(styles.group)}>
+    <form className={css(styles.form)}>
+      <div className={css(styles.group)}>
         <label htmlFor={`${id.current}-email`}>
           {translator.data("words", "email")}
         </label>
@@ -20,7 +20,7 @@ export function ResetPasswordForm() {
           disabled
         />
       </div>
-      <div {...css(styles.group)}>
+      <div className={css(styles.group)}>
         <label htmlFor={`${id.current}-password`}>
           {translator.data("words", "password")}
         </label>

@@ -33,26 +33,36 @@ export const SettingsMenu = (props: PropsWithChildren<SettingsMenu.Props>) => {
   return (
     <div
       ref={rootElement}
-      {...css(styles.menuWrapper, props.className, "settings-menu", {
+      className={css(styles.menuWrapper, props.className, "settings-menu", {
         [styles.open]: open,
       })}
     >
-      <div {...css(styles.menu, "settings-menu__menu")}>
-        <div {...css(styles.highlight)}>
+      <div className={css(styles.menu, "settings-menu__menu")}>
+        <div className={css(styles.highlight)}>
           <button
-            {...css(styles.button)}
+            className={css(styles.button)}
             onClick={() => setOpen((open) => !open)}
           >
-            <SettingsIcon {...css(styles.icon)} />
+            <SettingsIcon className={css(styles.icon)} />
           </button>
           {props.description && (
-            <div {...css(styles.description)}>{props.description}</div>
+            <div className={css(styles.description)}>{props.description}</div>
           )}
         </div>
       </div>
-      <div {...css(styles.dropDown, "settings-menu__drop-down")}>
-        <div {...css(styles.dropDownHider, "settings-menu__drop-down-hider")}>
-          <div {...css(styles.dropDownItems, "settings-menu__drop_down-items")}>
+      <div className={css(styles.dropDown, "settings-menu__drop-down")}>
+        <div
+          className={css(
+            styles.dropDownHider,
+            "settings-menu__drop-down-hider",
+          )}
+        >
+          <div
+            className={css(
+              styles.dropDownItems,
+              "settings-menu__drop_down-items",
+            )}
+          >
             {props.children}
           </div>
         </div>

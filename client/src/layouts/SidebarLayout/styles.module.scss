@@ -1,0 +1,43 @@
+.layout {
+  --page-header-height: 3.5rem;
+  --page-height: 100dvh;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: var(--page-header-height) 1fr;
+}
+
+.header-wrapper {
+  background-color: antiquewhite;
+  position: sticky;
+  top: 0;
+  z-index: 7000;
+
+  grid-column: 1 / -1;
+}
+
+.aside-wrapper {
+  background-color: beige;
+  position: sticky;
+  top: var(--page-header-height);
+  z-index: 4000;
+  height: calc(var(--page-height) - var(--page-header-height));
+  overflow-y: scroll;
+}
+
+.aside-content {
+}
+
+.workspace-content {
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+.main-wrapper {
+  background-color: blanchedalmond;
+  min-height: calc(var(--page-height) - var(--page-header-height));
+}
+
+.footer-wrapper {
+  background-color: bisque;
+}

@@ -12,20 +12,20 @@ export const AppLayout = () => {
   return (
     <BlankLayout
       aside={{
-        hoverArea: <div {...css(styles.asideHoverArea)}></div>,
+        hoverArea: <div className={css(styles.asideHoverArea)}></div>,
         content: (
           <div
-            {...css(styles.asideWrapper, {
+            className={css(styles.asideWrapper, {
               [styles.open]: sidebar.data,
             })}
           >
-            <div {...css(styles.homeWrapper)}>
+            <div className={css(styles.homeWrapper)}>
               <button
-                {...css(styles.asideMenuButton)}
+                className={css(styles.asideMenuButton)}
                 onClick={() => changeSidebar(!sidebar.data)}
               >
                 <svg
-                  {...css(styles.asideMenuButtonImage)}
+                  className={css(styles.asideMenuButtonImage)}
                   viewBox="0 0 24 24"
                   focusable="false"
                   role="presentation"
@@ -38,15 +38,15 @@ export const AppLayout = () => {
                   ></path>
                 </svg>
               </button>
-              <Link to={"/app"} {...css(styles.asideMenuHomeLink)}>
-                <svg {...css(styles.homeImage)} viewBox="0 0 512 512">
+              <Link to={"/app"} className={css(styles.asideMenuHomeLink)}>
+                <svg className={css(styles.homeImage)} viewBox="0 0 512 512">
                   <path d="M416 174.74V48h-80v58.45L256 32 0 272h64v208h144V320h96v160h144V272h64l-96-97.26z" />
                 </svg>
-                <div {...css(styles.home)}>Home</div>
+                <div className={css(styles.home)}>Home</div>
               </Link>
             </div>
 
-            <ul {...css(styles.aside)}>
+            <ul className={css(styles.aside)}>
               <li>Applications</li>
               <li>Organizations</li>
               <li>Users</li>

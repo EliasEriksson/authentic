@@ -4,8 +4,8 @@ import ResetPasswordForm from "../../../components/organisms/ResetPasswordForm";
 
 export const ResetPassword = () => {
   return (
-    <div {...css(styles.resetPasswordWrapper)}>
-      <div {...css(styles.resetPassword)}>
+    <div className={css(styles.resetPasswordWrapper)}>
+      <div className={css(styles.resetPassword)}>
         <ResetPasswordForm />
       </div>
     </div>

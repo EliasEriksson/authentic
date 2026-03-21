@@ -70,7 +70,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
     <SelectContextController.Provider value={context}>
       <div
         ref={rootElement}
-        {...css(
+        className={css(
           { [styles.open]: open },
           styles.select,
           props.className,
@@ -86,7 +86,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
         }}
       >
         <button
-          {...css(styles.button, "select__button")}
+          className={css(styles.button, "select__button")}
           ref={buttonElement}
           name={props.name}
           type={"submit"}
@@ -95,17 +95,19 @@ export const Select = (props: PropsWithChildren<Props>) => {
             setOpen((state) => !state);
           }}
         >
-          <div {...css(styles.buttonContent)}>
-            <div {...css(styles.view, "select__view")}>
+          <div className={css(styles.buttonContent)}>
+            <div className={css(styles.view, "select__view")}>
               {view?.() ?? (
-                <span {...css(styles.noValue, "select__view__no-value")}>
+                <span className={css(styles.noValue, "select__view__no-value")}>
                   {"No Value"}
                 </span>
               )}
             </div>
-            <div {...css(styles.chevronWrapper, "select__chevron-wrapper")}>
+            <div
+              className={css(styles.chevronWrapper, "select__chevron-wrapper")}
+            >
               <svg
-                {...css(styles.chevron, "select__chevron")}
+                className={css(styles.chevron, "select__chevron")}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
                 width={512}
@@ -122,11 +124,11 @@ export const Select = (props: PropsWithChildren<Props>) => {
             </div>
           </div>
         </button>
-        <div {...css(styles.dropDown, "select__drop-down")}>
-          <div {...css(styles.animate)}>
+        <div className={css(styles.dropDown, "select__drop-down")}>
+          <div className={css(styles.animate)}>
             <input
               tabIndex={open ? 0 : -1}
-              {...css(
+              className={css(
                 { [styles.unsearchable]: props.unsearchable },
                 styles.search,
                 "select__search",
@@ -138,7 +140,9 @@ export const Select = (props: PropsWithChildren<Props>) => {
                 setSearch(event.currentTarget.value);
               }}
             />
-            <ul {...css(styles.list, "select__list")}>{props.children}</ul>
+            <ul className={css(styles.list, "select__list")}>
+              {props.children}
+            </ul>
           </div>
         </div>
       </div>

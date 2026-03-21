@@ -4,8 +4,8 @@ import styles from "./style.module.scss";
 
 export const Login = () => {
   return (
-    <div {...css(styles.loginWrapper)}>
-      <div {...css(styles.login)}>
+    <div className={css(styles.loginWrapper)}>
+      <div className={css(styles.login)}>
         <LoginForm />
       </div>
     </div>

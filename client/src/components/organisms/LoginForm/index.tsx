@@ -9,14 +9,14 @@ export function LoginForm() {
   const id = useRef(crypto.randomUUID());
   if (!translator.data) return [];
   return (
-    <form {...css(styles.form)}>
-      <div {...css(styles.group)}>
+    <form className={css(styles.form)}>
+      <div className={css(styles.group)}>
         <label htmlFor={`${id.current}-email`}>
           {translator.data("words", "email")}
         </label>
         <input id={`${id.current}-email`} type={"email"} name={"email"} />
       </div>
-      <div {...css(styles.group)}>
+      <div className={css(styles.group)}>
         <label htmlFor={`${id.current}-password`}>
           {translator.data("words", "password")}
         </label>

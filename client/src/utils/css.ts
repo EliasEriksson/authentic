@@ -1,8 +1,6 @@
-import React from "react";
-
 export function css(
   ...classes: (Record<string, unknown> | string | undefined)[]
-): Pick<React.HTMLAttributes<any>, "className"> {
+): string | undefined {
   function* generator() {
     for (const name of classes) {
       if (typeof name === "object") {
@@ -10,6 +8,5 @@ export function css(
       } else if (name) yield name;
     }
   }
-  const result = [...generator()].join(" ") || undefined;
-  return !result ? {} : { className: result };
+  return [...generator()].join(" ") || undefined;
 }

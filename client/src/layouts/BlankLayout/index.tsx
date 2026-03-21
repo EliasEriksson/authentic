@@ -29,25 +29,25 @@ export const BlankLayout = (props: BlankLayout.Props) => {
   const sidebar = state.useSidebar();
   if (!translator.data) return [];
   return (
-    <div {...css(styles.grid, "darker")}>
-      <div {...css(styles.headerWrapper)}>
-        <header {...css(styles.header)}>
+    <div className={css(styles.grid, "darker")}>
+      <div className={css(styles.headerWrapper)}>
+        <header className={css(styles.header)}>
           {props.header?.start}
-          <div {...css(styles.headerAreas)}>
-            <div {...css(styles.headerLeft)}>
+          <div className={css(styles.headerAreas)}>
+            <div className={css(styles.headerLeft)}>
               {props.header?.left?.start}
-              <Link {...css(styles.logoLink)} to={"/app"}>
-                <div {...css(styles.logoWrapper)}>
+              <Link className={css(styles.logoLink)} to={"/app"}>
+                <div className={css(styles.logoWrapper)}>
                   <Logo />
                 </div>
               </Link>
               {props.header?.left?.end}
             </div>
-            <div {...css(styles.headerRight)}>
+            <div className={css(styles.headerRight)}>
               {props.header?.right?.start}
-              <SettingsMenu {...css(styles.settingsMenu)}>
-                <ThemePicker {...css(styles.select)} />
-                <LanguagePicker {...css(styles.select)} />
+              <SettingsMenu className={css(styles.settingsMenu)}>
+                <ThemePicker className={css(styles.select)} />
+                <LanguagePicker className={css(styles.select)} />
               </SettingsMenu>
               {props.header?.right?.end}
             </div>
@@ -55,29 +55,31 @@ export const BlankLayout = (props: BlankLayout.Props) => {
           {props.header?.end}
         </header>
       </div>
-      <div {...css(styles.window)}>
+      <div className={css(styles.window)}>
         <div
-          {...css(styles.asideWrapper, "darker", {
+          className={css(styles.asideWrapper, "darker", {
             [styles.open]: props.aside && sidebar.data,
           })}
         >
-          <div {...css(styles.hoverArea)}>{props.aside?.hoverArea}</div>
-          <div {...css(styles.asideScrollArea)}>
-            <aside {...css(styles.aside)}>
-              <div {...css(styles.asideContentHider)}>
-                <div {...css(styles.asideContent)}>{props.aside?.content}</div>
+          <div className={css(styles.hoverArea)}>{props.aside?.hoverArea}</div>
+          <div className={css(styles.asideScrollArea)}>
+            <aside className={css(styles.aside)}>
+              <div className={css(styles.asideContentHider)}>
+                <div className={css(styles.asideContent)}>
+                  {props.aside?.content}
+                </div>
               </div>
             </aside>
           </div>
         </div>
-        <div {...css(styles.contentArea)}>
-          <div {...css(styles.mainWrapper)}>
-            <main {...css(styles.main)}>
+        <div className={css(styles.contentArea)}>
+          <div className={css(styles.mainWrapper)}>
+            <main className={css(styles.main)}>
               <Outlet />
             </main>
           </div>
-          <div {...css(styles.footerWrapper, "darker")}>
-            <footer {...css(styles.footer)}>footer</footer>
+          <div className={css(styles.footerWrapper, "darker")}>
+            <footer className={css(styles.footer)}>footer</footer>
           </div>
         </div>
       </div>
