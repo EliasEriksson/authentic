@@ -20,16 +20,22 @@ export function SidebarLayout(props: SidebarLayout.Props) {
   if (!translator.data) return [];
   return (
     <div className={css(styles.layout, "darker")}>
-      <ButtonStyles component={"button"} props={{ type: "submit" }}>
-        hello world
-      </ButtonStyles>
-
-      <ButtonStyles component={Link} props={{ to: "/testing" }}>
-        to testing
-      </ButtonStyles>
       <div className={css(styles.headerWrapper)}>
+        {/* add resize observer on the header tag */}
         <header className={css(styles.header)}>
-          <div className={css(styles.headerContent)}>{props.header}</div>
+          <div className={css(styles.headerContent)}>
+            <ButtonStyles component={"button"} props={{ type: "submit" }}>
+              hello world
+            </ButtonStyles>
+
+            <ButtonStyles component={Link} props={{ to: "/testing" }}>
+              to testing
+            </ButtonStyles>
+            <ButtonStyles component={Link} props={{ to: "/testing" }}>
+              to testing
+            </ButtonStyles>
+            {props.header}
+          </div>
         </header>
       </div>
       <div className={css(styles.asideWrapper)}>
