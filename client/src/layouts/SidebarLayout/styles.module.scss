@@ -1,5 +1,6 @@
 .layout {
-  --page-header-height: 3.5rem;
+  --page-header-required-height: 0;
+  --page-header-height: max(3.5rem, var(--page-header-required-height));
   --page-height: 100dvh;
 
   display: grid;
@@ -15,17 +16,39 @@
 
   grid-column: 1 / -1;
 }
+.header {
+  height: 100%;
+}
+.header-content {
+  display: grid;
+  grid-auto-flow: column;
+  height: 100%;
+}
 
 .aside-wrapper {
   background-color: beige;
   position: sticky;
   top: var(--page-header-height);
-  z-index: 4000;
   height: calc(var(--page-height) - var(--page-header-height));
-  overflow-y: scroll;
+  z-index: 4000;
 }
 
+.aside {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.aside-header {
+  grid-row: 1;
+}
 .aside-content {
+  grid-row: 2;
+  height: 100%;
+  overflow-y: scroll;
+}
+.aside-footer {
+  grid-row: 3;
 }
 
 .workspace-content {

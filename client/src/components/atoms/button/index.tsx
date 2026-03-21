@@ -1,30 +1,31 @@
-import styles from "./styles.module.scss";
+import { Link } from "../Link";
 import React from "react";
 import { css } from "../../../utils";
+import styles from "./styles.module.scss";
 
-type WithClassName<P> = P & { className?: string };
+export namespace Button {
+  export type Props =
+    | Link.Props
+    | (React.ComponentPropsWithoutRef<"button"> & { to?: never });
+}
 
-type Props<T extends React.ElementType> =
-  T extends React.ElementType<infer P>
-    ? {
-        component: T;
-        props: WithClassName<P>;
-      }
-    : {
-        component: T;
-        props: WithClassName<React.ComponentPropsWithoutRef<T>>;
-      };
-export function ButtonStyles<T extends React.ElementType>(
-  props: React.PropsWithChildren<Props<T>>,
-) {
-  return (
-    <props.component
-      {...props.props}
-      className={css(props.props.className, styles.componentWrapper)}
-    >
-      <div className={css(styles.component)}>
-        <div className={css(styles.componentContent)}>{props.children}</div>
-      </div>
-    </props.component>
+export function Button({
+  children,
+  ...props
+}: React.PropsWithChildren<Button.Props>) {
+  const className = css(props.className, styles.buttonWrapper);
+  const content = (
+    <div className={css(styles.button)}>
+      <div className={css(styles.buttonContent)}>{children}</div>
+    </div>
+  );
+  return props.to !== undefined ? (
+    <Link {...props} className={className}>
+      {content}
+    </Link>
+  ) : (
+    <button {...props} className={className}>
+      {content}
+    </button>
   );
 }

@@ -2,14 +2,16 @@ import styles from "./styles.module.scss";
 import { Outlet } from "react-router";
 import { css } from "../../utils/css.ts";
 import { state } from "../../state/index.ts";
-import React from "react";
-import { ButtonStyles } from "../../components/atoms/button";
-import { Link } from "../../components/atoms/Link";
+import React, { useEffect, useRef } from "react";
 
 export namespace SidebarLayout {
   export interface Props {
     header?: React.ReactNode;
-    aside?: React.ReactNode;
+    aside?: {
+      header?: React.ReactNode;
+      content: React.ReactNode;
+      footer: React.ReactNode;
+    };
     main?: { start?: React.ReactNode; end?: React.ReactNode };
     footer?: React.ReactNode;
   }
@@ -17,57 +19,49 @@ export namespace SidebarLayout {
 
 export function SidebarLayout(props: SidebarLayout.Props) {
   const translator = state.useTranslator();
+  const layoutElement = useRef<HTMLDivElement | null>(null);
+  const headerWrapperElement = useRef<HTMLDivElement | null>(null);
+  const headerElement = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    if (!headerElement.current) return;
+    const observer = new ResizeObserver(() => {
+      layoutElement.current?.style.setProperty(
+        "--page-header-required-height",
+        `${headerElement.current?.scrollHeight ?? 0}px`,
+      );
+    });
+    observer.observe(headerElement.current);
+    return () => observer.disconnect();
+  }, []);
   if (!translator.data) return [];
   return (
-    <div className={css(styles.layout, "darker")}>
-      <div className={css(styles.headerWrapper)}>
-        {/* add resize observer on the header tag */}
-        <header className={css(styles.header)}>
-          <div className={css(styles.headerContent)}>
-            <ButtonStyles component={"button"} props={{ type: "submit" }}>
-              hello world
-            </ButtonStyles>
-
-            <ButtonStyles component={Link} props={{ to: "/testing" }}>
-              to testing
-            </ButtonStyles>
-            <ButtonStyles component={Link} props={{ to: "/testing" }}>
-              to testing
-            </ButtonStyles>
-            {props.header}
-          </div>
+    <div ref={layoutElement} className={css(styles.layout, "darker")}>
+      <div ref={headerWrapperElement} className={css(styles.headerWrapper)}>
+        <header ref={headerElement} className={css(styles.header)}>
+          <div className={css(styles.headerContent)}>{props.header}</div>
         </header>
       </div>
       <div className={css(styles.asideWrapper)}>
         <aside className={css(styles.aside)}>
+          {props.aside?.header && (
+            <header className={css(styles.asideHeader)}>
+              {props.aside.header}
+            </header>
+          )}
           <div className={css(styles.asideContent)}>
-            {props.aside}
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
+            {props.aside?.content}
+            <p>aside content</p>
+            <p>aside content</p>
+            <p>aside content</p>
+            <p>aside content</p>
+            <p>aside content</p>
+            <p>aside content</p>
           </div>
+          {props.aside?.footer && (
+            <footer className={css(styles.asideFooter)}>
+              {props.aside.footer}
+            </footer>
+          )}
         </aside>
       </div>
       <div className={css(styles.workspaceWrapper)}>
