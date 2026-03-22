@@ -6,6 +6,8 @@ import React, { useEffect, useRef } from "react";
 import { Provider } from "./context/provider.tsx";
 import { useSidebar } from "./context/hook.ts";
 import { Button } from "../../components/atoms/button";
+import { Collapse } from "../../components/molecules/Collapse";
+import { BurgerIcon } from "../../components/atoms/icons/burger";
 
 export namespace SidebarLayout {
   export interface Props {
@@ -46,50 +48,60 @@ function Component(props: SidebarLayout.Props) {
   }, []);
   if (!translator.data) return null;
   return (
-    <div ref={layoutElement} className={css(styles.layout, "darker")}>
-      <div className={css(styles.headerWrapper)}>
-        <header ref={headerElement} className={css(styles.header)}>
+    <div ref={layoutElement} className={styles.layout}>
+      <div className={css(styles.headerWrapper, "darker")}>
+        <header ref={headerElement} className={styles.header}>
           {/* only the div bellow is allowed as child in header */}
           {/* if the size of this element changes it will affect*/}
           {/* the resize observer badly*/}
-          <div className={css(styles.headerContent)}>
-            <Button onClick={() => sidebar.toggle()}>toggle</Button>
-            {props.header}
+          <div className={styles.headerContent}>
+            <div className={styles.headerLeft}>
+              <Button onClick={() => sidebar.toggle()}>
+                <BurgerIcon />
+              </Button>
+            </div>
+            <div className={styles.headerRight}>
+              <p>right</p>
+            </div>
           </div>
         </header>
       </div>
-      <div
-        className={css(styles.asideWrapper, { [styles.open]: sidebar.state })}
-      >
-        <aside className={css(styles.aside)}>
-          {props.aside?.header && (
-            <header className={css(styles.asideHeader)}>
-              {props.aside.header}
-            </header>
-          )}
-          <div className={css(styles.asideContent)}>{props.aside?.content}</div>
-          {props.aside?.footer && (
-            <footer className={css(styles.asideFooter)}>
-              {props.aside.footer}
-            </footer>
-          )}
-        </aside>
+      <div className={css(styles.asideWrapper, "darker")}>
+        <Collapse
+          className={styles.sidebarCollapse}
+          open={sidebar.state}
+          direction={"left-to-right"}
+        >
+          <aside className={styles.aside}>
+            {props.aside?.header && (
+              <header className={styles.asideHeader}>
+                {props.aside.header}
+              </header>
+            )}
+            <div className={styles.asideContent}>{props.aside?.content}</div>
+            {props.aside?.footer && (
+              <footer className={styles.asideFooter}>
+                {props.aside.footer}
+              </footer>
+            )}
+          </aside>
+        </Collapse>
       </div>
-      <div className={css(styles.workspaceWrapper)}>
-        <div className={css(styles.workspace)}>
-          <div className={css(styles.workspaceContent)}>
-            <div className={css(styles.mainWrapper)}>
-              <main className={css(styles.main)}>
-                <div className={css(styles.mainContent)}>
+      <div className={styles.workspaceWrapper}>
+        <div className={styles.workspace}>
+          <div className={styles.workspaceContent}>
+            <div className={styles.mainWrapper}>
+              <main className={styles.main}>
+                <div className={styles.mainContent}>
                   {props.main?.start}
                   <Outlet />
                   {props.main?.end}
                 </div>
               </main>
             </div>
-            <div className={css(styles.footerWrapper)}>
-              <footer className={css(styles.footer)}>
-                <div className={css(styles.footerContent)}>{props.footer}</div>
+            <div className={css(styles.footerWrapper, "darker")}>
+              <footer className={styles.footer}>
+                <div className={styles.footerContent}>{props.footer}</div>
               </footer>
             </div>
           </div>

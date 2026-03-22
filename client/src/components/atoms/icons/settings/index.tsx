@@ -1,7 +1,7 @@
-import React from "react";
+import { type IconProps } from "../types.ts";
 
 export namespace SettingsIcon {
-  export type Props = Omit<React.SVGAttributes<unknown>, "viewBox">;
+  export type Props = IconProps;
 }
 
 export const SettingsIcon = (props: SettingsIcon.Props) => {

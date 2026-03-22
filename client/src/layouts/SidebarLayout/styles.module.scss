@@ -1,5 +1,9 @@
 $page-header-required-height-variable: --page-header-required-height;
 
+body {
+  background-color: var(--color-bg0);
+}
+
 :export {
   pageHeaderRequiredHeightVariable: $page-header-required-height-variable;
 }
@@ -18,7 +22,8 @@ $page-header-required-height-variable: --page-header-required-height;
 }
 
 .header-wrapper {
-  background-color: antiquewhite;
+  background-color: var(--color-bg0);
+  color: var(--color-fg0);
   position: sticky;
   top: 0;
   z-index: 7000;
@@ -31,15 +36,25 @@ $page-header-required-height-variable: --page-header-required-height;
 .header-content {
   display: grid;
   grid-auto-flow: column;
-  height: 100%;
+  justify-content: space-between;
+}
+
+:is(.header-left, .header-right) {
+  display: grid;
+  grid-auto-flow: column;
 }
 
 .aside-wrapper {
-  background-color: beige;
+  background-color: var(--color-bg0);
+  color: var(--color-fg0);
   position: sticky;
   top: var(--page-header-height);
   height: calc(var(--page-height) - var(--page-header-height));
   z-index: 4000;
+}
+
+.sidebar-collapse {
+  height: 100%;
 }
 
 .aside {
@@ -55,6 +70,7 @@ $page-header-required-height-variable: --page-header-required-height;
   grid-row: 2;
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 .aside-footer {
   grid-row: 3;
@@ -66,10 +82,12 @@ $page-header-required-height-variable: --page-header-required-height;
 }
 
 .main-wrapper {
-  background-color: blanchedalmond;
+  background-color: var(--color-bg1);
+  color: var(--color-fg1);
   min-height: calc(var(--page-height) - var(--page-header-height));
 }
 
 .footer-wrapper {
-  background-color: bisque;
+  background-color: var(--color-bg0);
+  color: var(--color-fg0);
 }
