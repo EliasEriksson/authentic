@@ -13,7 +13,7 @@ export function Button({
   children,
   ...props
 }: React.PropsWithChildren<Button.Props>) {
-  const className = css(props.className, styles.buttonWrapper);
+  const className = css(styles.buttonWrapper, props.className);
   const content = (
     <div className={css(styles.button)}>
       <div className={css(styles.buttonContent)}>{children}</div>

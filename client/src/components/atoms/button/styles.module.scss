@@ -1,13 +1,15 @@
 .button-wrapper {
   padding: 0.25em;
   display: block;
-  height: fit-content;
-  width: fit-content;
   text-decoration: none;
   cursor: pointer;
   background: var(--color-bg0) none;
   color: var(--color-fg0);
   border: 1px solid var(--color-border);
+}
+:where(.button-wrapper) {
+  height: fit-content;
+  width: fit-content;
 }
 
 .button {

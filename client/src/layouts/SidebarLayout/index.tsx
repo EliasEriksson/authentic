@@ -8,6 +8,8 @@ import { useSidebar } from "./context/hook.ts";
 import { Button } from "../../components/atoms/button";
 import { Collapse } from "../../components/molecules/Collapse";
 import { BurgerIcon } from "../../components/atoms/icons/burger";
+import { LogoIcon } from "../../components/atoms/icons/logo";
+import { Link } from "../../components/atoms/Link";
 
 export namespace SidebarLayout {
   export interface Props {
@@ -56,13 +58,17 @@ function Component(props: SidebarLayout.Props) {
           {/* the resize observer badly*/}
           <div className={styles.headerContent}>
             <div className={styles.headerLeft}>
-              <Button onClick={() => sidebar.toggle()}>
+              <Button
+                className={styles.burgerButton}
+                onClick={() => sidebar.toggle()}
+              >
                 <BurgerIcon />
               </Button>
+              <Link className={styles.logoButton} to={"/testing"}>
+                <LogoIcon />
+              </Link>
             </div>
-            <div className={styles.headerRight}>
-              <p>right</p>
-            </div>
+            <div className={styles.headerRight}></div>
           </div>
         </header>
       </div>
@@ -78,7 +84,39 @@ function Component(props: SidebarLayout.Props) {
                 {props.aside.header}
               </header>
             )}
-            <div className={styles.asideContent}>{props.aside?.content}</div>
+            <div className={styles.asideContent}>
+              {props.aside?.content}
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+              <p>content</p>
+            </div>
             {props.aside?.footer && (
               <footer className={styles.asideFooter}>
                 {props.aside.footer}

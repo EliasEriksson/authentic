@@ -5,7 +5,6 @@ import ThemePicker from "../../components/organisms/ThemePicker/index.tsx";
 import { css } from "../../utils/css.ts";
 import { state } from "../../state/index.ts";
 import { Link } from "../../components/atoms/Link";
-import { Logo } from "../../components/atoms/Logo";
 import type { ReactNode } from "react";
 import SettingsMenu from "../../components/molecules/SettingsMenu";
 
@@ -37,9 +36,7 @@ export const BlankLayout = (props: BlankLayout.Props) => {
             <div className={css(styles.headerLeft)}>
               {props.header?.left?.start}
               <Link className={css(styles.logoLink)} to={"/app"}>
-                <div className={css(styles.logoWrapper)}>
-                  <Logo />
-                </div>
+                <div className={css(styles.logoWrapper)}></div>
               </Link>
               {props.header?.left?.end}
             </div>

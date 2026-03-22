@@ -1,24 +1,30 @@
-import { type SVGAttributes, useId } from "react";
-import { css } from "../../../utils/index.ts";
+import type { IconProps } from "../types.ts";
+import { css } from "../../../../utils";
 import styles from "./styles.module.scss";
+import { useId } from "react";
 
-interface LogoProps extends SVGAttributes<SVGSVGElement> {
-  className?: string;
+export namespace LogoIcon {
+  export type Props = IconProps;
 }
 
-export function Logo(props: LogoProps) {
+export function LogoIcon(props: LogoIcon.Props) {
   const maskId = useId();
   return (
     <svg
       viewBox="0 0 512 512"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
       {...props}
       className={css(styles.logo, props.className)}
     >
       <defs>
         <mask id={maskId}>
-          <rect x={80} y={192} width={352} height={352} fill={"white"} />
+          <rect
+            className={styles.foreground}
+            x={80}
+            y={192}
+            width={352}
+            height={352}
+            fill={"white"}
+          />
           <path
             d={"M 237,376 L 275,376 L 260,317 L 252,317 Z"}
             fill={"black"}
@@ -26,7 +32,7 @@ export function Logo(props: LogoProps) {
         </mask>
       </defs>
       <path
-        className={css(styles.padlock)}
+        className={styles.foreground}
         d="M420 192h-68v-80a96 96 0 10-192 0v80H92a12 12 0 00-12 12v280a12 12 0 0012 12h328a12 12 0 0012-12V204a12 12 0 00-12-12zm-106 0H198v-80.75a58 58 0 11116 0z"
       />
       <path
@@ -39,4 +45,3 @@ export function Logo(props: LogoProps) {
     </svg>
   );
 }
-export default Logo;

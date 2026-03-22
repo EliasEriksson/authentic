@@ -8,7 +8,7 @@ export const route = {
   element: (
     <SidebarLayout
       header={"header"}
-      aside={{ header: "header", content: "content", footer: "footer" }}
+      aside={{ header: "header", content: "content", footer: "footera" }}
       main={{ start: "main-start", end: "main-end" }}
       footer={"footer"}
     />

@@ -9,12 +9,15 @@ body {
 }
 
 .layout {
-  --page-header-required-height: 0;
-  --page-header-height: max(
-    3.5rem,
-    var(#{$page-header-required-height-variable})
+  --page-header-required-height: 0px;
+  --page-height: 100svh;
+  --footer-padding: 0.375rem;
+  --header-padding: 0.5rem;
+  --aside-content-padding: 0.375rem;
+  --page-header-height: min(
+    max(3.5rem, var(#{$page-header-required-height-variable})),
+    var(--page-height)
   );
-  --page-height: 100dvh;
 
   display: grid;
   grid-template-columns: auto 1fr;
@@ -29,19 +32,38 @@ body {
   z-index: 7000;
 
   grid-column: 1 / -1;
+  border-bottom: 1px solid var(--color-border);
 }
+
 .header {
+  padding: var(--header-padding);
   height: 100%;
 }
+
 .header-content {
   display: grid;
   grid-auto-flow: column;
   justify-content: space-between;
+  height: 100%;
 }
 
 :is(.header-left, .header-right) {
   display: grid;
   grid-auto-flow: column;
+  gap: var(--header-padding);
+}
+
+.burger-button {
+  align-self: center;
+  aspect-ratio: 1 / 1;
+  width: 2.5rem;
+}
+
+.logo-button {
+  align-self: center;
+  aspect-ratio: 1 / 1;
+  width: 2.5rem;
+  color: currentColor;
 }
 
 .aside-wrapper {
@@ -61,19 +83,30 @@ body {
   height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .aside-header {
   grid-row: 1;
+
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--header-padding);
 }
+
 .aside-content {
   grid-row: 2;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+  padding: var(--aside-content-padding);
 }
+
 .aside-footer {
   grid-row: 3;
+
+  border-top: 1px solid var(--color-border);
+  padding: var(--footer-padding);
 }
 
 .workspace-content {
@@ -85,9 +118,28 @@ body {
   background-color: var(--color-bg1);
   color: var(--color-fg1);
   min-height: calc(var(--page-height) - var(--page-header-height));
+  border-bottom: 1px solid var(--color-border);
+}
+
+.main {
 }
 
 .footer-wrapper {
+  position: relative;
   background-color: var(--color-bg0);
   color: var(--color-fg0);
+}
+
+.footer-content {
+  //border-top: 1px solid var(--color-border);
+  padding: var(--footer-padding);
+}
+
+@media screen and (max-width: 1080px) {
+  .layout {
+    grid-template-columns: auto;
+  }
+  .aside-wrapper {
+    position: fixed;
+  }
 }
