@@ -1,13 +1,16 @@
+import styles from "./styles.module.scss";
 import { SelectContext } from "./context";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { css } from "../../../utils";
+import { Button } from "../../atoms/Button";
 
 export namespace Select {
   export interface Props {
     name: string;
     className?: string;
     unsearchable?: boolean;
-    initialValue?: SelectContext["value"];
-    onInput?: (value: SelectContext["value"]) => void;
+    initialValue?: SelectContext.Value;
+    onInput?: (value: SelectContext.Value) => void;
   }
 }
 
@@ -15,40 +18,63 @@ export function Select({
   onInput,
   ...props
 }: React.PropsWithChildren<Select.Props>) {
-  const [isOpen, setIsOpen] = useState<SelectContext["isOpen"]>(false);
-  const [value, setValue] = useState<SelectContext["value"]>("");
-  const [search, setSearch] = useState<SelectContext["search"]>("");
-  const [selectedDisplay, setSelectedDisplay] = useState<
-    SelectContext["selectedDisplay"]
-  >(() => null);
+  const rootElement = useRef<HTMLDivElement | null>(null);
+  const buttonElement = useRef<(HTMLButtonElement & HTMLAnchorElement) | null>(
+    null,
+  );
+  const [open, setOpen] = useState<SelectContext.Open>(false);
+  const [value, setValue] = useState<SelectContext.Value>("");
+  const [search, setSearch] = useState<SelectContext.Search>("");
+  const [selectedDisplay, setSelectedDisplay] =
+    useState<SelectContext.SelectedDisplay>(() => null);
   const setValueStable = React.useCallback(
-    (value: SelectContext["value"]) => {
+    (value) => {
       setValue((old) => {
         if (value !== old) {
           onInput?.(value);
-          setIsOpen(false);
+          setOpen(false);
         }
         return value;
       });
     },
     [onInput],
-  );
+  ) satisfies SelectContext.Value.Set;
   const select = React.useMemo(
     () => ({
-      search: search,
-      setSearch: setSearch,
-      isOpen: isOpen,
-      setIsOpen: setIsOpen,
-      selectedDisplay: selectedDisplay,
-      setSelectedDisplay: setSelectedDisplay,
-      value: value,
-      setValue: setValueStable,
+      get: { value, search, open, selectedDisplay },
+      set: {
+        value: setValueStable,
+        search: setSearch,
+        open: setOpen,
+        selectedDisplay: setSelectedDisplay,
+      },
     }),
-    [isOpen, search, selectedDisplay, setValueStable, value],
+    [open, search, selectedDisplay, setValueStable, value],
   ) satisfies SelectContext;
   return (
     <SelectContext value={select}>
-      <div></div>
+      <div
+        ref={rootElement}
+        className={css({ [styles.open]: open }, styles.select, props.className)}
+        onKeyDown={(event) => {
+          switch (event.key) {
+            case "Escape":
+              setOpen(false);
+              buttonElement.current?.focus();
+              break;
+          }
+        }}
+      >
+        <Button
+          ref={buttonElement}
+          name={props.name}
+          type={"submit"}
+          value={value}
+          onClick={() => {
+            setOpen((open) => !open);
+          }}
+        ></Button>
+      </div>
     </SelectContext>
   );
 }

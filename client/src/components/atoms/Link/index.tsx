@@ -4,6 +4,7 @@ import {
   type Path as ReactRouterPath,
 } from "react-router";
 import type { Paths } from "../../../router.ts";
+import { forwardRef } from "react";
 
 export namespace Link {
   export type Props = Omit<ReactRouterLinkProps, "to"> & {
@@ -16,6 +17,9 @@ export namespace Link {
   }
 }
 
-export const Link = (props: Link.Props) => {
-  return <ReactRouterLink {...props} />;
-};
+export const Link = forwardRef<HTMLAnchorElement, Link.Props>(function (
+  props: Link.Props,
+  ref,
+) {
+  return <ReactRouterLink {...props} ref={ref} />;
+});
