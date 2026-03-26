@@ -1,8 +1,16 @@
 import styles from "./styles.module.scss";
 import { SelectContext } from "./context";
-import React, { useRef, useState } from "react";
+import React, {
+  useRef,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  type PropsWithChildren,
+} from "react";
 import { css } from "../../../utils";
 import { Button } from "../../atoms/Button";
+import { ChevronRightIcon } from "../../atoms/icons/ChevronRightIcon";
+import { Collapse } from "../Collapse";
 
 export namespace Select {
   export interface Props {
@@ -13,20 +21,24 @@ export namespace Select {
     onInput?: (value: SelectContext.Value) => void;
   }
 }
-
-export function Select({
-  onInput,
-  ...props
-}: React.PropsWithChildren<Select.Props>) {
+export const Select = forwardRef<
+  HTMLDivElement | null,
+  PropsWithChildren<Select.Props>
+>(({ onInput, ...props }, ref) => {
   const rootElement = useRef<HTMLDivElement | null>(null);
+  useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(
+    ref,
+    () => rootElement.current,
+    [rootElement],
+  );
   const buttonElement = useRef<(HTMLButtonElement & HTMLAnchorElement) | null>(
     null,
   );
   const [open, setOpen] = useState<SelectContext.Open>(false);
-  const [value, setValue] = useState<SelectContext.Value>("");
+  const [value, setValue] = useState<SelectContext.Value>(props.initialValue);
   const [search, setSearch] = useState<SelectContext.Search>("");
   const [selectedDisplay, setSelectedDisplay] =
-    useState<SelectContext.SelectedDisplay>(() => null);
+    useState<SelectContext.SelectedDisplay>(() => () => null);
   const setValueStable = React.useCallback(
     (value) => {
       setValue((old) => {
@@ -46,35 +58,64 @@ export function Select({
         value: setValueStable,
         search: setSearch,
         open: setOpen,
-        selectedDisplay: setSelectedDisplay,
+        selectedDisplay: (value) => setSelectedDisplay(() => value),
       },
     }),
     [open, search, selectedDisplay, setValueStable, value],
   ) satisfies SelectContext;
   return (
-    <SelectContext value={select}>
-      <div
-        ref={rootElement}
-        className={css({ [styles.open]: open }, styles.select, props.className)}
-        onKeyDown={(event) => {
-          switch (event.key) {
-            case "Escape":
-              setOpen(false);
-              buttonElement.current?.focus();
-              break;
-          }
+    <div
+      ref={ref}
+      className={css(styles.select, props.className, {
+        [styles.open]: open,
+      })}
+      onKeyDown={(event) => {
+        switch (event.key) {
+          case "Escape":
+            setOpen(false);
+            buttonElement.current?.focus();
+            break;
+        }
+      }}
+    >
+      <Button
+        ref={buttonElement}
+        className={styles.button}
+        name={props.name}
+        type={"submit"}
+        value={value ?? ""}
+        onClick={() => {
+          setOpen((open) => !open);
         }}
       >
-        <Button
-          ref={buttonElement}
-          name={props.name}
-          type={"submit"}
-          value={value}
-          onClick={() => {
-            setOpen((open) => !open);
-          }}
-        ></Button>
+        <div className={styles.buttonContent}>
+          <div className={styles.display}>{selectedDisplay()}</div>
+          <ChevronRightIcon className={styles.buttonChevron} />
+        </div>
+      </Button>
+      <div className={styles.dropDown}>
+        <Collapse open={open} direction={"top-to-bottom"}>
+          <div className={styles.dropDownContent}>
+            <input
+              tabIndex={open ? 0 : -1}
+              className={css(styles.search, {
+                [styles.unsearchable]: props.unsearchable,
+              })}
+              type={"text"}
+              placeholder={"🔍"}
+              value={search}
+              onInput={(event) => {
+                setSearch(event.currentTarget.value);
+              }}
+            />
+            <ul className={styles.options}>
+              <SelectContext.Provider value={select}>
+                {props.children}
+              </SelectContext.Provider>
+            </ul>
+          </div>
+        </Collapse>
       </div>
-    </SelectContext>
+    </div>
   );
-}
+});

@@ -11,12 +11,18 @@
   height: fit-content;
   width: fit-content;
 }
+.button-wrapper:focus-visible {
+  outline: none;
+}
 
 .button {
   padding: 0.25em;
 }
 .button-wrapper:hover .button {
   background-color: var(--color-highlight);
+}
+.button-wrapper:focus-visible .button {
+  outline: 2px solid var(--color-highlight);
 }
 
 .button-content {

@@ -115,9 +115,9 @@ export const Select = (props: PropsWithChildren<Props>) => {
                 <path
                   fill="none"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="48"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="48"
                   d="M184 112l144 144-144 144"
                 />
               </svg>
