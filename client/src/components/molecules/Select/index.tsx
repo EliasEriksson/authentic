@@ -93,7 +93,7 @@ export const Select = forwardRef<
           <ChevronRightIcon className={styles.buttonChevron} />
         </div>
       </Button>
-      <div className={styles.dropDown}>
+      <div data-slot={"drop-down"} className={styles.dropDown}>
         <Collapse open={open} direction={"top-to-bottom"}>
           <div className={styles.dropDownContent}>
             <input

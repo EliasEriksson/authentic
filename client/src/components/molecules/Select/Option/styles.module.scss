@@ -9,9 +9,11 @@
 }
 
 .display {
+  --padding: 0.25em;
   padding: 0.25em;
   overflow-x: hidden;
   text-overflow: ellipsis;
+  height: calc((var(--line-height) * 1em) + (var(--padding) * 2));
 }
 .option.selected .display {
   background-color: var(--color-bg2);

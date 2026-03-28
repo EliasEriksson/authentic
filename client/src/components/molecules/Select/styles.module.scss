@@ -26,6 +26,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
+  height: calc(var(--line-height) * 1em);
 }
 
 .button-chevron {
@@ -49,6 +50,7 @@
   background-color: var(--color-bg1);
   color: var(--color-fg1);
   border: 1px solid var(--color-border);
+  border-top: none;
 }
 
 .search {
