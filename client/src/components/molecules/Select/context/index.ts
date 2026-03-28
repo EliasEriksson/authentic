@@ -34,18 +34,3 @@ export namespace SelectContext {
 }
 
 export const SelectContext = createContext<SelectContext | null>(null);
-
-export interface GroupSelectContext {
-  get: { open: GroupSelectContext.Open };
-  set: { open: GroupSelectContext.Open.Set };
-}
-export namespace GroupSelectContext {
-  export type Open = string;
-  export namespace Open {
-    export type Set = (id: Open) => void;
-  }
-}
-
-export const GroupSelectContext = createContext<GroupSelectContext | null>(
-  null,
-);

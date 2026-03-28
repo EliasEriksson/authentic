@@ -1,14 +1,14 @@
 import type { IconProps } from "../types.ts";
 import { css } from "../../../../utils";
 import styles from "./styles.module.scss";
-import { useId } from "react";
+import { useUUID } from "../../../../hooks/useUUID";
 
 export namespace LogoIcon {
   export type Props = IconProps;
 }
 
 export function LogoIcon(props: LogoIcon.Props) {
-  const maskId = useId();
+  const maskId = useUUID();
   return (
     <svg
       viewBox="0 0 512 512"

@@ -4,7 +4,6 @@ import React, {
   useRef,
   useState,
   forwardRef,
-  // useId,
   useImperativeHandle,
   type PropsWithChildren,
 } from "react";
@@ -12,7 +11,7 @@ import { css } from "../../../utils";
 import { Button } from "../../atoms/Button";
 import { ChevronRightIcon } from "../../atoms/icons/ChevronRightIcon";
 import { Collapse } from "../Collapse";
-// import { useGroupSelectContext } from "./context/hook.ts";
+import { useGroupSelectContext, useGroupOpen } from "./Group/context/hooks.ts";
 
 export namespace Select {
   export interface Props {
@@ -36,8 +35,8 @@ export const Select = forwardRef<
   const buttonElement = useRef<(HTMLButtonElement & HTMLAnchorElement) | null>(
     null,
   );
-
-  const [open, setOpen] = useState<SelectContext.Open>(false);
+  const group = useGroupSelectContext();
+  const [open, setOpen] = useGroupOpen(group);
   const [value, setValue] = useState<SelectContext.Value>(props.initialValue);
   const [search, setSearch] = useState<SelectContext.Search>("");
   const [selectedDisplay, setSelectedDisplay] =
@@ -52,7 +51,7 @@ export const Select = forwardRef<
         return value;
       });
     },
-    [onInput],
+    [onInput, setOpen],
   ) satisfies SelectContext.Value.Set;
   const select = React.useMemo(
     () => ({
@@ -64,7 +63,7 @@ export const Select = forwardRef<
         selectedDisplay: (value) => setSelectedDisplay(() => value),
       },
     }),
-    [open, search, selectedDisplay, setValueStable, value],
+    [open, search, selectedDisplay, setOpen, setValueStable, value],
   ) satisfies SelectContext;
   return (
     <div

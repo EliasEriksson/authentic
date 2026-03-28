@@ -12,6 +12,7 @@ import { Link } from "../../components/atoms/Link";
 import ThemePicker from "../../components/organisms/ThemePicker";
 import LanguagePicker from "../../components/organisms/LanguagePicker";
 import SettingsMenu from "../../components/molecules/SettingsMenu";
+import { SelectGroupProvider } from "../../components/molecules/Select/Group";
 
 export namespace SidebarLayout {
   export interface Props {
@@ -79,8 +80,10 @@ function SidebarLayout(props: SidebarLayout.Props) {
               </div>
               <div className={styles.headerRight}>
                 <SettingsMenu className={css(styles.settingsMenu)}>
-                  <ThemePicker className={css(styles.select)} />
-                  <LanguagePicker className={css(styles.select)} />
+                  <SelectGroupProvider>
+                    <ThemePicker className={css(styles.select)} />
+                    <LanguagePicker className={css(styles.select)} />
+                  </SelectGroupProvider>
                 </SettingsMenu>
               </div>
             </div>
