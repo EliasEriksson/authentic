@@ -2,6 +2,7 @@
   background-color: var(--color-bg1);
   padding: 0.25em;
   cursor: pointer;
+  overflow-x: hidden;
 }
 .option.hidden {
   display: none;
@@ -9,6 +10,8 @@
 
 .display {
   padding: 0.25em;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 .option.selected .display {
   background-color: var(--color-bg2);
