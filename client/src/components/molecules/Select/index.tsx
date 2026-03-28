@@ -4,6 +4,7 @@ import React, {
   useRef,
   useState,
   forwardRef,
+  // useId,
   useImperativeHandle,
   type PropsWithChildren,
 } from "react";
@@ -11,6 +12,7 @@ import { css } from "../../../utils";
 import { Button } from "../../atoms/Button";
 import { ChevronRightIcon } from "../../atoms/icons/ChevronRightIcon";
 import { Collapse } from "../Collapse";
+// import { useGroupSelectContext } from "./context/hook.ts";
 
 export namespace Select {
   export interface Props {
@@ -34,6 +36,7 @@ export const Select = forwardRef<
   const buttonElement = useRef<(HTMLButtonElement & HTMLAnchorElement) | null>(
     null,
   );
+
   const [open, setOpen] = useState<SelectContext.Open>(false);
   const [value, setValue] = useState<SelectContext.Value>(props.initialValue);
   const [search, setSearch] = useState<SelectContext.Search>("");
@@ -66,6 +69,7 @@ export const Select = forwardRef<
   return (
     <div
       ref={ref}
+      data-slot-select={"select"}
       className={css(styles.select, props.className, {
         [styles.open]: open,
       })}
@@ -93,7 +97,7 @@ export const Select = forwardRef<
           <ChevronRightIcon className={styles.buttonChevron} />
         </div>
       </Button>
-      <div data-slot={"drop-down"} className={styles.dropDown}>
+      <div data-slot-select={"drop-down"} className={styles.dropDown}>
         <Collapse open={open} direction={"top-to-bottom"}>
           <div className={styles.dropDownContent}>
             <input

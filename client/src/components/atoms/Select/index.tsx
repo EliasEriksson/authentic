@@ -124,7 +124,7 @@ export const Select = (props: PropsWithChildren<Props>) => {
             </div>
           </div>
         </button>
-        <div className={css(styles.dropDown, "select__drop-down")}>
+        <div className={css(styles.dropDown)}>
           <div className={css(styles.animate)}>
             <input
               tabIndex={open ? 0 : -1}

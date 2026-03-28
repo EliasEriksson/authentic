@@ -56,6 +56,10 @@ body {
   gap: var(--content-padding);
 }
 
+.select [data-slot-select="drop-down"] {
+  position: static;
+}
+
 .burger-button {
   align-self: center;
   aspect-ratio: 1 / 1;

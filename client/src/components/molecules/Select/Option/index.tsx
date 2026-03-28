@@ -42,6 +42,7 @@ export const SelectOption = forwardRef<
   return (
     <li
       ref={ref}
+      data-slot-select-option={"option"}
       className={css(styles.option, props.className, {
         [styles.hidden]: hidden,
         [styles.selected]: props.value === select.get.value,
@@ -60,7 +61,11 @@ export const SelectOption = forwardRef<
         }
       }}
     >
-      <div className={styles.display} tabIndex={select.get.open ? 0 : -1}>
+      <div
+        data-slot-select-option-slot={"display"}
+        className={styles.display}
+        tabIndex={select.get.open ? 0 : -1}
+      >
         {props.children}
       </div>
     </li>

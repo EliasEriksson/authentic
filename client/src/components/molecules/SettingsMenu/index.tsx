@@ -8,6 +8,8 @@ import {
 import { css } from "../../../utils";
 import styles from "./styles.module.scss";
 import { SettingsIcon } from "../../atoms/icons/settings";
+import { Button } from "../../atoms/Button";
+import { Collapse } from "../Collapse";
 
 export namespace SettingsMenu {
   export interface Props {
@@ -33,39 +35,25 @@ export const SettingsMenu = (props: PropsWithChildren<SettingsMenu.Props>) => {
   return (
     <div
       ref={rootElement}
-      className={css(styles.menuWrapper, props.className, "settings-menu", {
+      className={css(styles.menu, props.className, {
         [styles.open]: open,
       })}
     >
-      <div className={css(styles.menu, "settings-menu__menu")}>
-        <div className={css(styles.highlight)}>
-          <button
-            className={css(styles.button)}
-            onClick={() => setOpen((open) => !open)}
-          >
-            <SettingsIcon className={css(styles.icon)} />
-          </button>
-          {props.description && (
-            <div className={css(styles.description)}>{props.description}</div>
-          )}
-        </div>
-      </div>
-      <div className={css(styles.dropDown, "settings-menu__drop-down")}>
-        <div
-          className={css(
-            styles.dropDownHider,
-            "settings-menu__drop-down-hider",
-          )}
+      <div className={styles.menu}>
+        <Button
+          className={styles.button}
+          onClick={() => setOpen((open) => !open)}
         >
-          <div
-            className={css(
-              styles.dropDownItems,
-              "settings-menu__drop_down-items",
-            )}
-          >
-            {props.children}
-          </div>
-        </div>
+          <SettingsIcon className={styles.icon} />
+        </Button>
+        {props.description && (
+          <div className={styles.description}>{props.description}</div>
+        )}
+      </div>
+      <div className={styles.dropDown}>
+        <Collapse open={open} direction={"top-to-bottom"}>
+          <div className={styles.dropDownItems}>{props.children}</div>
+        </Collapse>
       </div>
     </div>
   );

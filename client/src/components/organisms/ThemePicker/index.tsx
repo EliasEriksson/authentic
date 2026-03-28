@@ -1,5 +1,5 @@
-import Select from "../../atoms/Select";
-import SelectOption from "../../atoms/SelectOption";
+import { Select } from "../../molecules/Select";
+import { SelectOption } from "../../molecules/Select/Option";
 import { css } from "../../../utils/css.ts";
 import styles from "./styles.module.scss";
 import { state } from "../../../state";

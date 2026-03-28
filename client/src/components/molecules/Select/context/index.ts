@@ -8,10 +8,10 @@ export interface SelectContext {
     selectedDisplay: SelectContext.SelectedDisplay;
   };
   set: {
-    value: (value: SelectContext.Value) => void;
-    search: (search: SelectContext.Search) => void;
-    open: (open: SelectContext.Open) => void;
-    selectedDisplay: (selectedDisplay: SelectContext.SelectedDisplay) => void;
+    value: SelectContext.Value.Set;
+    search: SelectContext.Search.Set;
+    open: SelectContext.Open.Set;
+    selectedDisplay: SelectContext.SelectedDisplay.Set;
   };
 }
 export namespace SelectContext {
@@ -34,3 +34,18 @@ export namespace SelectContext {
 }
 
 export const SelectContext = createContext<SelectContext | null>(null);
+
+export interface GroupSelectContext {
+  get: { open: GroupSelectContext.Open };
+  set: { open: GroupSelectContext.Open.Set };
+}
+export namespace GroupSelectContext {
+  export type Open = string;
+  export namespace Open {
+    export type Set = (id: Open) => void;
+  }
+}
+
+export const GroupSelectContext = createContext<GroupSelectContext | null>(
+  null,
+);
