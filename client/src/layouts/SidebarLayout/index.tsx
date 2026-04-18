@@ -27,29 +27,10 @@ export namespace SidebarLayout {
   }
 }
 
-// function onHeaderResize(
-//   layoutElement: React.RefObject<HTMLElement | null>,
-//   headerElement: React.RefObject<HTMLElement | null>,
-// ) {
-//   layoutElement.current?.style.setProperty(
-//     styles.pageHeaderRequiredHeightVariable,
-//     `${headerElement.current?.scrollHeight ?? 0}px`,
-//   );
-// }
-
 function SidebarLayout(props: SidebarLayout.Props) {
   const translator = state.useTranslator();
   const layoutElement = useRef<HTMLDivElement | null>(null);
   const headerElement = useRef<HTMLElement | null>(null);
-  // useEffect(() => {
-  //   if (!headerElement.current) return;
-  //   const observer = new ResizeObserver(() => {
-  //     onHeaderResize(layoutElement, headerElement);
-  //   });
-  //   observer.observe(headerElement.current);
-  //   onHeaderResize(layoutElement, headerElement);
-  //   return () => observer.disconnect();
-  // }, []);
   const [isOpen, setIsOpen] = useState(false);
   const sidebar = {
     isOpen: isOpen,
@@ -63,9 +44,6 @@ function SidebarLayout(props: SidebarLayout.Props) {
       <div ref={layoutElement} className={styles.layout}>
         <div className={css(styles.headerWrapper, "darker")}>
           <header ref={headerElement} className={styles.header}>
-            {/* only the div bellow is allowed as child in header */}
-            {/* if the size of this element changes it will affect*/}
-            {/* the resize observer badly*/}
             <div className={styles.headerContent}>
               <div className={styles.headerLeft}>
                 <Button
@@ -101,39 +79,7 @@ function SidebarLayout(props: SidebarLayout.Props) {
                   {props.aside.header}
                 </header>
               )}
-              <div className={styles.asideContent}>
-                {props.aside?.content}
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-                <p>content</p>
-              </div>
+              <div className={styles.asideContent}>{props.aside?.content}</div>
               {props.aside?.footer && (
                 <footer className={styles.asideFooter}>
                   {props.aside.footer}
