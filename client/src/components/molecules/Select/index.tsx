@@ -18,8 +18,11 @@ export namespace Select {
     name: string;
     className?: string;
     unsearchable?: boolean;
-    initialValue?: SelectContext.Value;
     onInput?: (value: SelectContext.Value) => void;
+    initialValue?: SelectContext.Value;
+    noMatchingValue?: {
+      display: SelectContext.SelectedDisplay;
+    };
   }
 }
 export const Select = forwardRef<
@@ -40,7 +43,9 @@ export const Select = forwardRef<
   const [value, setValue] = useState<SelectContext.Value>(props.initialValue);
   const [search, setSearch] = useState<SelectContext.Search>("");
   const [selectedDisplay, setSelectedDisplay] =
-    useState<SelectContext.SelectedDisplay>(() => () => null);
+    useState<SelectContext.SelectedDisplay>(
+      () => props.noMatchingValue?.display ?? (() => null),
+    );
   const setValueStable = React.useCallback(
     (value) => {
       setValue((old) => {

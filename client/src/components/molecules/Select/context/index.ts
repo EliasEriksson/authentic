@@ -15,7 +15,7 @@ export interface SelectContext {
   };
 }
 export namespace SelectContext {
-  export type Value = string | number | readonly string[] | undefined;
+  export type Value = string | number | undefined;
   export namespace Value {
     export type Set = (value: Value) => void;
   }

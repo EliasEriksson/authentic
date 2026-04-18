@@ -2,7 +2,7 @@ import styles from "./styles.module.scss";
 import { Outlet } from "react-router";
 import { css } from "../../utils/css.ts";
 import { state } from "../../state/index.ts";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { SidebarContext } from "./context";
 import { Button } from "../../components/atoms/Button";
 import { Collapse } from "../../components/molecules/Collapse";
@@ -27,29 +27,29 @@ export namespace SidebarLayout {
   }
 }
 
-function onHeaderResize(
-  layoutElement: React.RefObject<HTMLElement | null>,
-  headerElement: React.RefObject<HTMLElement | null>,
-) {
-  layoutElement.current?.style.setProperty(
-    styles.pageHeaderRequiredHeightVariable,
-    `${headerElement.current?.scrollHeight ?? 0}px`,
-  );
-}
+// function onHeaderResize(
+//   layoutElement: React.RefObject<HTMLElement | null>,
+//   headerElement: React.RefObject<HTMLElement | null>,
+// ) {
+//   layoutElement.current?.style.setProperty(
+//     styles.pageHeaderRequiredHeightVariable,
+//     `${headerElement.current?.scrollHeight ?? 0}px`,
+//   );
+// }
 
 function SidebarLayout(props: SidebarLayout.Props) {
   const translator = state.useTranslator();
   const layoutElement = useRef<HTMLDivElement | null>(null);
   const headerElement = useRef<HTMLElement | null>(null);
-  useEffect(() => {
-    if (!headerElement.current) return;
-    const observer = new ResizeObserver(() => {
-      onHeaderResize(layoutElement, headerElement);
-    });
-    observer.observe(headerElement.current);
-    onHeaderResize(layoutElement, headerElement);
-    return () => observer.disconnect();
-  }, []);
+  // useEffect(() => {
+  //   if (!headerElement.current) return;
+  //   const observer = new ResizeObserver(() => {
+  //     onHeaderResize(layoutElement, headerElement);
+  //   });
+  //   observer.observe(headerElement.current);
+  //   onHeaderResize(layoutElement, headerElement);
+  //   return () => observer.disconnect();
+  // }, []);
   const [isOpen, setIsOpen] = useState(false);
   const sidebar = {
     isOpen: isOpen,
