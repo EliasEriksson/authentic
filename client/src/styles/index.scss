@@ -1,0 +1,61 @@
+@use "normalize.scss";
+@use "fonts/index.scss";
+@use "./colors.scss";
+
+:root {
+  --default-outline: 2px solid var(--color-highlight);
+  accent-color: var(--color-accent1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:is(*, button):focus-visible {
+  outline: 2px solid var(--color-highlight);
+}
+
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+body {
+  --line-height: 1.5;
+  /* 4. Add accessible line-height */
+  line-height: var(--line-height);
+  /*min-height: 100vh;*/
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+  font-family: Open Sans,
+  sans-serif;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

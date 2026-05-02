@@ -5,19 +5,17 @@ import { router } from "./router.ts";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { state } from "./state/index.ts";
 
-import "./colors.scss";
+import "./styles/index.scss";
 
-(async () => {
-  await state.init();
-  const rootElement = document.getElementById("root");
-  if (rootElement && !rootElement.innerHTML) {
-    const root = createRoot(rootElement);
-    root.render(
-      <StrictMode>
-        <QueryClientProvider client={state.client}>
-          <RouterProvider router={router} />
-        </QueryClientProvider>
-      </StrictMode>,
-    );
-  }
-})();
+state.init();
+const rootElement = document.getElementById("root");
+if (rootElement && !rootElement.innerHTML) {
+  const root = createRoot(rootElement);
+  root.render(
+    <StrictMode>
+      <QueryClientProvider client={state.client}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </StrictMode>,
+  );
+}

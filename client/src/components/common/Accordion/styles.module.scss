@@ -1,0 +1,33 @@
+.accordion {
+  display: grid;
+}
+
+.button {
+  border: none;
+  width: 100%;
+}
+
+.summary-wrapper {
+  display: flex;
+  gap: 2em;
+  justify-content: space-between;
+}
+
+.summary {
+}
+
+.chevron {
+  aspect-ratio: 1 / 1;
+  height: calc(1em * var(--line-height));
+  transition: rotate 150ms ease-in-out;
+}
+
+.accordion.open .chevron {
+  rotate: 90deg;
+}
+
+.content-wrapper {
+}
+
+.content {
+}
