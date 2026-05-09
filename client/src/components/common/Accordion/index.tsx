@@ -19,10 +19,12 @@ export function Accordion({
   return (
     <div className={css(styles.accordion, { [styles.open]: open })}>
       <Button
+        subgrid
         className={styles.button}
         onClick={() => setOpen((open) => !open)}
       >
         <div className={styles.summaryWrapper}>
+          <div>icon</div>
           <div className={styles.summary}>{props.summary}</div>
           <div className={styles.chevron}>
             <ChevronRightIcon />
@@ -30,9 +32,10 @@ export function Accordion({
         </div>
       </Button>
       <Collapse
+        subgrid
         open={open}
         direction={"top-to-bottom"}
-        className={styles.content}
+        className={styles.collapse}
       >
         <div className={styles.contentWrapper}>
           <div className={styles.contentLine} />

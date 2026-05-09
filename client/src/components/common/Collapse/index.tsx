@@ -8,6 +8,7 @@ export namespace Collapse {
     open: boolean;
     direction: Direction;
     className?: string;
+    subgrid?: boolean;
   }
 }
 
@@ -24,9 +25,12 @@ export function Collapse({
     <div
       className={css(
         styles.collapse,
-        { [styles.open]: props.open },
         directions[props.direction],
         props.className,
+        {
+          [styles.open]: props.open,
+          [styles.subgrid]: props.subgrid,
+        },
       )}
     >
       <div className={styles.collapseContent}>{children}</div>

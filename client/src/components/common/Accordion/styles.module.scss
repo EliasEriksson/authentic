@@ -1,16 +1,19 @@
 .accordion {
   display: grid;
+  grid-template-columns: auto 1fr auto;
 }
 
 .button {
   border: none;
   width: 100%;
+  grid-column: 1 / -1;
 }
 
 .summary-wrapper {
-  display: flex;
-  gap: 2em;
-  justify-content: space-between;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  //gap: 1rem;
 }
 
 .summary {
@@ -25,9 +28,22 @@
 .accordion.open .chevron {
   rotate: 90deg;
 }
-
+.collapse {
+  grid-column: 1 / -1;
+}
 .content-wrapper {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+.content-line {
+  grid-column: 1;
+  width: 0.125em;
+  height: 100%;
+  background-color: var(--color-fg0);
 }
 
 .content {
+  grid-column: 2 / -1;
 }

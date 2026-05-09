@@ -7,6 +7,11 @@
   color: var(--color-fg0);
   border: 1px solid var(--color-border);
 }
+.button-wrapper.subgrid {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+}
 
 :where(.button-wrapper) {
   height: fit-content;
@@ -20,6 +25,13 @@
 .button {
   padding: 0.25em;
 }
+.button-wrapper.subgrid .button {
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+}
 
 .button-wrapper:hover .button {
   background-color: var(--color-highlight);
@@ -31,4 +43,11 @@
 
 .button-content {
   background-color: transparent;
+}
+.button-wrapper.subgrid .button-content {
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
 }
