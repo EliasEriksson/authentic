@@ -8,3 +8,17 @@
   display: grid;
   grid-template-columns: subgrid;
 }
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+}
+
+.action-group {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}

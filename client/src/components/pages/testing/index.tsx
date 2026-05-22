@@ -1,17 +1,10 @@
 import * as React from "react";
-import { Select } from "../../common/Select";
-import { SelectOption } from "../../common/Select/Option";
+import LoginForm from "../../features/LoginForm";
 
 export const Testing: React.FC = () => {
   return (
     <>
-      <Select name={"testing"}>
-        <SelectOption value={"hello"}>
-          hellaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaao
-          {/*hello*/}
-        </SelectOption>
-        <SelectOption value={"there"}>there</SelectOption>
-      </Select>
+      <LoginForm />
     </>
   );
 };

@@ -21,7 +21,6 @@ export const SettingsMenu = (props: PropsWithChildren<SettingsMenu.Props>) => {
   const rootElement = useRef<HTMLDivElement | null>(null);
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    console.log("activated");
     const listener = (event: PointerEvent) => {
       if (!rootElement.current) return;
       if (event.composedPath().includes(rootElement.current)) return;
