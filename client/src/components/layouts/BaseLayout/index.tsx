@@ -69,6 +69,26 @@ export function BaseLayout(props: BaseLayout.Props) {
             </div>
           </header>
         </div>
+        <div className={styles.workspaceWrapper}>
+          <div className={styles.workspace}>
+            <div className={styles.workspaceContent}>
+              <div className={styles.mainWrapper}>
+                <main className={styles.main}>
+                  <div className={styles.mainContent}>
+                    {props.main?.start}
+                    <Outlet />
+                    {props.main?.end}
+                  </div>
+                </main>
+              </div>
+              <div className={css(styles.footerWrapper, "darker")}>
+                <footer className={styles.footer}>
+                  <div className={styles.footerContent}>{props.footer}</div>
+                </footer>
+              </div>
+            </div>
+          </div>
+        </div>
         {props.aside && (
           <div className={css(styles.asideWrapper, "darker")}>
             <Collapse
@@ -94,26 +114,6 @@ export function BaseLayout(props: BaseLayout.Props) {
             </Collapse>
           </div>
         )}
-        <div className={styles.workspaceWrapper}>
-          <div className={styles.workspace}>
-            <div className={styles.workspaceContent}>
-              <div className={styles.mainWrapper}>
-                <main className={styles.main}>
-                  <div className={styles.mainContent}>
-                    {props.main?.start}
-                    <Outlet />
-                    {props.main?.end}
-                  </div>
-                </main>
-              </div>
-              <div className={css(styles.footerWrapper, "darker")}>
-                <footer className={styles.footer}>
-                  <div className={styles.footerContent}>{props.footer}</div>
-                </footer>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </SidebarContext>
   );

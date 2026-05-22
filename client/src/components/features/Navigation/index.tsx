@@ -1,8 +1,7 @@
 import styles from "./styles.module.scss";
 import { Link } from "../../common/Link";
-import { Button } from "../../common/Button";
 import { css } from "../../../utils";
-import { Accordion } from "../../common/Accordion";
+import { Heading } from "../../common/Heading";
 
 export namespace Navigation {
   export interface Props {
@@ -15,22 +14,31 @@ export function Navigation(props: Navigation.Props) {
     <nav className={css(styles.navigation, props.className)}>
       <ul className={styles.list}>
         <li>
-          <Link to={"/"}>Home</Link>
+          <Heading h={2}>Applications</Heading>
+          <hr />
+          <ul className={styles.list}>
+            <li>
+              <Link to={"/app"}>Applications</Link>
+            </li>
+          </ul>
         </li>
         <li>
-          <Accordion summary={"Applications"}>
-            <Link to={"/app"}>App</Link>
-          </Accordion>
+          <Heading h={2}>Organizations</Heading>
+          <hr />
+          <ul className={styles.list}>
+            <li>
+              <Link to={"/app"}>Organizations</Link>
+            </li>
+          </ul>
         </li>
         <li>
-          <Accordion summary={"Organizations"}>
-            <Link to={"/testing"}>Testing</Link>
-          </Accordion>
-        </li>
-        <li>
-          <Accordion summary={"Users"}>
-            <Button to={"/testing"}>Testing</Button>
-          </Accordion>
+          <Heading h={2}>Users</Heading>
+          <hr />
+          <ul className={styles.list}>
+            <li>
+              <Link to={"/app"}>Users</Link>
+            </li>
+          </ul>
         </li>
       </ul>
     </nav>

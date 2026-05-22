@@ -33,7 +33,9 @@ export function Collapse({
         },
       )}
     >
-      <div className={styles.collapseContent}>{children}</div>
+      <div className={styles.collapseContent} inert={!props.open}>
+        {children}
+      </div>
     </div>
   );
 }
