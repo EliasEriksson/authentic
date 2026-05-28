@@ -31,11 +31,15 @@ export const Button = forwardRef<
     </div>
   );
   return props.to !== undefined ? (
-    <Link {...props} ref={ref} className={className}>
+    <Link {...props} ref={ref} className={css(className, styles.anchorElement)}>
       {content}
     </Link>
   ) : (
-    <button {...props} ref={ref} className={className}>
+    <button
+      {...props}
+      ref={ref}
+      className={css(className, styles.buttonElement)}
+    >
       {content}
     </button>
   );

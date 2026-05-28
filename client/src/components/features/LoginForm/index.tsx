@@ -3,13 +3,15 @@ import { useRef } from "react";
 import { css } from "../../../utils";
 import styles from "./style.module.scss";
 import { Button } from "../../common/Button";
+import { Form } from "../../common/Form";
+import { TextInput } from "../../common/inputs/TextInput";
 
 export function LoginForm() {
   const translator = state.useTranslator();
   const id = useRef(crypto.randomUUID());
   if (!translator.data) return [];
   return (
-    <form
+    <Form
       className={css(styles.form)}
       onSubmit={(event) => {
         event.preventDefault();
@@ -19,13 +21,14 @@ export function LoginForm() {
         <label htmlFor={`${id.current}-email`}>
           {translator.data("words", "email")}
         </label>
-        <input id={`${id.current}-email`} type={"email"} name={"email"} />
+        <TextInput id={`${id.current}-email`} type={"email"} name={"email"} />
+        {/*<input id={`${id.current}-email`} type={"email"} name={"email"} />*/}
       </div>
       <div className={css(styles.group)}>
         <label htmlFor={`${id.current}-password`}>
           {translator.data("words", "password")}
         </label>
-        <input
+        <TextInput
           id={`${id.current}-password`}
           type={"password"}
           name={"password"}
@@ -44,7 +47,7 @@ export function LoginForm() {
           </Button>
         </div>
       </div>
-    </form>
+    </Form>
   );
 }
 export default LoginForm;

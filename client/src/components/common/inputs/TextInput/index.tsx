@@ -4,6 +4,8 @@ import {
   forwardRef,
 } from "react";
 import { css } from "../../../../utils";
+import styles from "./styles.module.scss";
+import inputStyles from "../input.module.scss";
 
 export namespace TextInput {
   export type Props = Omit<ComponentPropsWithoutRef<"input">, "onInput"> & {
@@ -17,7 +19,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInput.Props>(
       <input
         {...props}
         ref={ref}
-        className={css(className)}
+        className={css(className, styles.input, inputStyles.input)}
         onInput={
           !onInput
             ? undefined
