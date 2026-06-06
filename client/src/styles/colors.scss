@@ -8,6 +8,7 @@
   --color-fg1: hsl(0 0 100);
   --color-fg2: hsl(0 0 100);
   --color-accent1: hsl(200, 100%, 50%);
+  --color-shadow: hsl(0, 0%, 0%)
 }
 
 @mixin darker-dark {
@@ -20,6 +21,7 @@
   --color-fg1: hsl(0 0 100);
   --color-fg2: hsl(0 0 100);
   --color-accent1: hsl(200, 100%, 50%);
+  --color-shadow: hsl(0, 0%, 0%)
 }
 
 @mixin light {
@@ -32,6 +34,7 @@
   --color-fg1: hsl(0 0 0);
   --color-fg2: hsl(0 0 0);
   --color-accent1: hsl(200, 45%, 75%);
+  --color-shadow: hsl(0, 0%, 0%);
 }
 
 @mixin darker-light {
@@ -44,6 +47,7 @@
   --color-fg1: hsl(0 0 0);
   --color-fg2: hsl(0 0 0);
   --color-accent1: hsl(200, 45%, 75%);
+  --color-shadow: hsl(0, 0%, 0%);
 }
 
 :root {

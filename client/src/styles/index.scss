@@ -13,8 +13,11 @@
   box-sizing: border-box;
 }
 
-:is(*, button):focus-visible {
-  outline: 2px solid var(--color-highlight);
+:is(*, button, button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring):focus-visible {
+  outline: 2px solid contrast-color(var(--color-bg0));
 }
 
 html {
