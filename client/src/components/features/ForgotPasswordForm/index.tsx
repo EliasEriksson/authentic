@@ -6,6 +6,7 @@ import { Button } from "../../common/Button";
 import { Link } from "../../common/Link";
 import { Form } from "../../common/Form";
 import { TextInput } from "../../common/inputs/TextInput";
+import { Heading } from "../../common/Heading";
 
 export function ForgotPasswordForm() {
   const translator = state.useTranslator();
@@ -13,6 +14,9 @@ export function ForgotPasswordForm() {
   if (!translator.data) return [];
   return (
     <Form className={css(styles.form)}>
+      <Heading h={1} className={styles.heading}>
+        {translator.data("auth", "resetPassword")}
+      </Heading>
       <div className={css(styles.group)}>
         <label htmlFor={`${id.current}-email`}>
           {translator.data("words", "email")}

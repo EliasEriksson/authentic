@@ -1,7 +1,14 @@
 .form {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1em;
+}
+
+.form > *:not(:first-child) {
+  margin-top: 0.67em;
+}
+
+.heading {
+  margin-top: 0;
 }
 
 .group {

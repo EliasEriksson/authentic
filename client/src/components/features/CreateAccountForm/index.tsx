@@ -6,6 +6,7 @@ import { Button } from "../../common/Button";
 import { Link } from "../../common/Link";
 import { Form } from "../../common/Form";
 import { TextInput } from "../../common/inputs/TextInput";
+import { Heading } from "../../common/Heading";
 
 export function CreateAccountForm() {
   const translator = state.useTranslator();
@@ -13,6 +14,9 @@ export function CreateAccountForm() {
   if (!translator.data) return [];
   return (
     <Form className={css(styles.form)}>
+      <Heading h={1} className={styles.heading}>
+        {translator.data("auth", "createAccount")}
+      </Heading>
       <div className={css(styles.group)}>
         <label htmlFor={`${id.current}-email`}>
           {translator.data("words", "email")}
@@ -31,7 +35,7 @@ export function CreateAccountForm() {
       </div>
       <div className={css(styles.group)}>
         <label htmlFor={`${id.current}-confirmation`}>
-          {translator.data("words", "password")}
+          {translator.data("auth", "confirmPassword")}
         </label>
         <TextInput
           id={`${id.current}-confirmation`}

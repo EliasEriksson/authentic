@@ -1,10 +1,7 @@
+import { words } from "./words";
+
 export const en = {
-  words: {
-    profile: "Profile",
-    email: "Email",
-    password: "Password",
-    login: "Login",
-  },
+  words: words,
   themes: { light: "Light", dark: "Dark", auto: "Auto" },
   languages: { en: "English", sv: "Swedish" },
   auth: {
@@ -12,5 +9,6 @@ export const en = {
     forgotPassword: "Forgot password",
     resetPassword: "Reset password",
     login: "Login",
+    confirmPassword: "Confirm password",
   },
 };

@@ -6,6 +6,7 @@ import { Button } from "../../common/Button";
 import { Link } from "../../common/Link";
 import { Form } from "../../common/Form";
 import { TextInput } from "../../common/inputs/TextInput";
+import { Heading } from "../../common/Heading";
 
 export function LoginForm() {
   const translator = state.useTranslator();
@@ -18,6 +19,9 @@ export function LoginForm() {
         event.preventDefault();
       }}
     >
+      <Heading className={styles.heading} h={1}>
+        {translator.data("auth", "login")}
+      </Heading>
       <div className={css(styles.group)}>
         <label htmlFor={`${id.current}-email`}>
           {translator.data("words", "email")}
