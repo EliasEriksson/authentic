@@ -8,6 +8,13 @@
   border: 1px solid var(--color-border);
 }
 
+.anchor-element.anchor-element,
+.anchor-element.anchor-element:hover,
+.anchor-element.anchor-element:visited {
+  color: var(--color-fg0);
+}
+
+
 .button-element {
 }
 
@@ -57,3 +64,4 @@
   grid-template-columns: subgrid;
   grid-template-rows: subgrid;
 }
+

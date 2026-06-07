@@ -8,7 +8,7 @@
   --color-fg1: hsl(0 0 100);
   --color-fg2: hsl(0 0 100);
   --color-accent1: hsl(200, 100%, 50%);
-  --color-shadow: hsl(0, 0%, 0%)
+  --color-shadow: hsl(0, 0%, 0%);
 }
 
 @mixin darker-dark {
@@ -56,6 +56,9 @@
   & .darker {
     @include darker-dark;
   }
+
+  --color-current-fg: var(--color-fg0);
+  --color-current-bg: var(--color-bg0);
 }
 
 @media (prefers-color-scheme: dark) {

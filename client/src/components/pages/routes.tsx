@@ -11,3 +11,4 @@ export const routes = [
   ...testing,
 ] satisfies RouteObject[];
 export default routes;
+console.log("routes", routes);

@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { css } from "../../../utils";
 import styles from "./style.module.scss";
 import { Button } from "../../common/Button";
+import { Link } from "../../common/Link";
 import { Form } from "../../common/Form";
 import { TextInput } from "../../common/inputs/TextInput";
 
@@ -22,7 +23,6 @@ export function LoginForm() {
           {translator.data("words", "email")}
         </label>
         <TextInput id={`${id.current}-email`} type={"email"} name={"email"} />
-        {/*<input id={`${id.current}-email`} type={"email"} name={"email"} />*/}
       </div>
       <div className={css(styles.group)}>
         <label htmlFor={`${id.current}-password`}>
@@ -39,12 +39,12 @@ export function LoginForm() {
           <Button type={"submit"}>{translator.data("words", "login")}</Button>
         </div>
         <div className={styles.actionGroup}>
-          <Button to={"/app/create-account"}>
+          <Link to={"/app/create-account"}>
             {translator.data("auth", "createAccount")}
-          </Button>
-          <Button to={"/app/forgot-password"}>
+          </Link>
+          <Link to={"/app/forgot-password"}>
             {translator.data("auth", "forgotPassword")}
-          </Button>
+          </Link>
         </div>
       </div>
     </Form>

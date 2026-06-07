@@ -39,8 +39,8 @@ export const useChangeLanguage = () => {
   const { mutate, mutateAsync, ...context } = useMutation({
     mutationFn: async (language: string) => {
       const io = Promise.all([i18next.changeLanguage(language)]);
-      writeLocalStorage(language);
       await io;
+      writeLocalStorage(language);
       return language;
     },
     onSuccess: (language) => {
@@ -52,18 +52,19 @@ export const useChangeLanguage = () => {
 
 export const useLanguage = () => {
   const changeLanguage = useChangeLanguage();
+  function query() {
+    const language = getLocalLanguage();
+    if (i18next.language !== language) changeLanguage(language);
+    return language;
+  }
   return (({ data, ...query }) => ({ data, ...query }))(
     useQuery({
       queryKey: queryKey(),
-      placeholderData: () => {
-        const language = getLocalLanguage();
-        if (i18next.language !== language) changeLanguage(language);
-        return language;
+      initialData: () => {
+        return query();
       },
       queryFn: async () => {
-        const language = getLocalLanguage();
-        if (i18next.language !== language) changeLanguage(language);
-        return language;
+        return query();
       },
     }),
   );

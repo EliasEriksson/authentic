@@ -1,4 +1,19 @@
+.logo,
+.logo:visited {
+
+  //background-color: var(--a);
+  //fill: var(--a);
+  //color: var(--b);
+  //stroke: var(--b);
+  //fill: transparent;
+}
+
 .foreground {
   fill: currentColor;
-  stroke: currentColor;
+  stroke: red;
+}
+
+.letter {
+  stroke: purple;
+  fill: green;
 }

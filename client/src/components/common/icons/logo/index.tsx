@@ -17,14 +17,7 @@ export function LogoIcon(props: LogoIcon.Props) {
     >
       <defs>
         <mask id={maskId}>
-          <rect
-            className={styles.foreground}
-            x={80}
-            y={192}
-            width={352}
-            height={352}
-            fill={"white"}
-          />
+          <rect x={80} y={192} width={352} height={352} fill={"white"} />
           <path
             d={"M 237,376 L 275,376 L 260,317 L 252,317 Z"}
             fill={"black"}

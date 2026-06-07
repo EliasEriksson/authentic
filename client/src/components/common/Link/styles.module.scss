@@ -1,5 +1,11 @@
 .link {
+  color: var(--color-accent1);
+}
+
+.link:visited {
+  color: color-mix(in srgb, var(--color-accent1) 100%, #000 20%);
 }
 
 .link:hover {
+  color: color-mix(in srgb, var(--color-accent1) 100%, #fff 20%);
 }

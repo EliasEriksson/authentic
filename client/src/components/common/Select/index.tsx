@@ -48,13 +48,11 @@ export const Select = forwardRef<
     );
   const setValueStable = React.useCallback(
     (value) => {
-      setValue((old) => {
-        if (value !== old) {
-          onInput?.(value);
-          setOpen(false);
-        }
+      setValue(() => {
         return value;
       });
+      onInput?.(value);
+      setOpen(false);
     },
     [onInput, setOpen],
   ) satisfies SelectContext.Value.Set;

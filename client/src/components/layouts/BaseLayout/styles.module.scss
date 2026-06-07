@@ -67,7 +67,9 @@ body {
   width: 2.5rem;
 }
 
-.logo-button {
+.logo-button,
+.logo-button:visited,
+.logo-button:hover {
   align-self: center;
   aspect-ratio: 1 / 1;
   width: 2.5rem;
