@@ -1,17 +1,18 @@
+@use "/src/styles/mixins";
+
 .button-wrapper {
+  @include mixins.set-theme(--color-bg0, --color-fg0);
   padding: 0.25em;
   display: block;
   text-decoration: none;
   cursor: pointer;
-  background: var(--color-bg0) none;
-  color: var(--color-fg0);
   border: 1px solid var(--color-border);
 }
 
 .anchor-element.anchor-element,
 .anchor-element.anchor-element:hover,
 .anchor-element.anchor-element:visited {
-  color: var(--color-fg0);
+  @include mixins.set-foreground(--color-fg0);
 }
 
 
@@ -29,10 +30,6 @@
   width: fit-content;
 }
 
-.button-wrapper:focus-visible {
-  //outline: none;
-}
-
 .button {
   padding: 0.25em;
 }
@@ -46,15 +43,11 @@
 }
 
 .button-wrapper:hover .button {
-  background-color: var(--color-highlight);
-}
-
-.button-wrapper:focus-visible .button {
-  //outline: 2px solid red;
+  @include mixins.set-theme(--color-highlight);
 }
 
 .button-content {
-  background-color: transparent;
+  @include mixins.set-theme(transparent);
 }
 
 .button-wrapper.subgrid .button-content {

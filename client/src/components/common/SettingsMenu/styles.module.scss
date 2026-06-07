@@ -1,23 +1,30 @@
+@use "/src/styles/mixins";
+
 .menu {
   position: relative;
   z-index: 6000;
 }
+
 .button {
   width: 2.5em;
 }
+
 .description {
   padding-right: 0.25em;
 }
+
 .drop-down {
   position: absolute;
   right: 0;
   top: calc(100% - 1px);
   min-width: 12em;
 }
+
 .drop-down-items {
   display: grid;
-  background-color: var(--color-bg0);
+  @include mixins.set-theme(--color-bg0);
 }
+
 .drop-down-items > *:not(:first-child) {
   margin-top: -1px;
 }

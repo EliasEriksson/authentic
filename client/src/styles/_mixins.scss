@@ -1,0 +1,77 @@
+@use "sass:string";
+@use "sass:meta";
+
+@mixin dark {
+  --color-bg0: hsl(0 0 10);
+  --color-bg1: hsl(0 0 13);
+  --color-bg2: hsl(0 0 20);
+  --color-border: hsl(0 0 30);
+  --color-highlight: hsl(0 0 35);
+  --color-fg0: hsl(0 0 100);
+  --color-fg1: hsl(0 0 100);
+  --color-fg2: hsl(0 0 100);
+  --color-accent1: hsl(200, 100%, 50%);
+  --color-shadow: hsl(0, 0%, 0%);
+}
+
+@mixin darker-dark {
+  --color-bg0: hsl(0 0 7);
+  --color-bg1: hsl(0 0 13);
+  --color-bg2: hsl(0 0 20);
+  --color-border: hsl(0 0 30);
+  --color-highlight: hsl(0 0 35);
+  --color-fg0: hsl(0 0 100);
+  --color-fg1: hsl(0 0 100);
+  --color-fg2: hsl(0 0 100);
+  --color-accent1: hsl(200, 100%, 50%);
+  --color-shadow: hsl(0, 0%, 0%)
+}
+
+@mixin light {
+  --color-bg0: hsl(0 0 80);
+  --color-bg1: hsl(0 0 90);
+  --color-bg2: hsl(0 0 93);
+  --color-border: hsl(0 0 70);
+  --color-highlight: hsl(0 0 100);
+  --color-fg0: hsl(0 0 0);
+  --color-fg1: hsl(0 0 0);
+  --color-fg2: hsl(0 0 0);
+  --color-accent1: hsl(200, 45%, 75%);
+  --color-shadow: hsl(0, 0%, 0%);
+}
+
+@mixin darker-light {
+  --color-bg0: hsl(0 0 80);
+  --color-bg1: hsl(0 0 87);
+  --color-bg2: hsl(0 0 90);
+  --color-border: hsl(0 0 70);
+  --color-highlight: hsl(0 0 100);
+  --color-fg0: hsl(0 0 0);
+  --color-fg1: hsl(0 0 0);
+  --color-fg2: hsl(0 0 0);
+  --color-accent1: hsl(200, 45%, 75%);
+  --color-shadow: hsl(0, 0%, 0%);
+}
+
+@mixin set-background($color) {
+  @if meta.type-of($color) == "string" and string.index($color, "--") == 1 {
+    --color-current-bg: var(#{$color});
+  } @else {
+    --color-current-bg: #{$color};
+  }
+  background-color: var(--color-current-bg);
+}
+
+@mixin set-foreground($color) {
+  @if meta.type-of($color) == "string" and string.index($color, "--") == 1 {
+    --color-current-fg: var(#{$color});
+  } @else {
+    --color-current-fg: #{$color};
+  }
+  color: var(--color-current-fg);
+}
+
+@mixin set-theme($background, $foreground: currentColor) {
+  @include set-background($background);
+  @include set-foreground($foreground);
+}

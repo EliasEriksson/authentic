@@ -1,9 +1,12 @@
+@use "/src/styles/mixins";
+
 .option {
-  background-color: var(--color-bg1);
+  @include mixins.set-theme(--color-bg1, --color-fg1);
   padding: 0.25em;
   cursor: pointer;
   overflow-x: hidden;
 }
+
 .option.hidden {
   display: none;
 }
@@ -15,11 +18,11 @@
   text-overflow: ellipsis;
   height: calc((var(--line-height) * 1em) + (var(--padding) * 2));
 }
+
 .option.selected .display {
-  background-color: var(--color-bg2);
-  color: var(--color-fg2);
+  @include mixins.set-theme(--color-bg2, --color-fg2);
 }
+
 .option:hover .display {
-  background-color: var(--color-highlight);
-  color: var(--color-fg2);
+  @include mixins.set-theme(--color-hightlight, --color-fg2);
 }

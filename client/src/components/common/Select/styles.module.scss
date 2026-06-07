@@ -1,9 +1,12 @@
+@use "/src/styles/mixins";
+
 .select {
   position: relative;
   z-index: 1000;
   width: 100%;
   --chevron-size: 1.25em;
 }
+
 .button {
   display: grid;
 
@@ -12,14 +15,16 @@
 
   width: 100%;
 }
+
 .button-content {
   display: grid;
   grid-template-columns: minmax(2em, 1fr) var(--chevron-size);
   align-items: center;
   gap: 0.5em;
 }
+
 .button:hover .button-content {
-  background-color: var(--color-highlight);
+  @include mixins.set-theme(--color-hilight);
 }
 
 .display {
@@ -32,6 +37,7 @@
 .button-chevron {
   transition: 150ms rotate ease-in-out;
 }
+
 .select.open .button-chevron {
   rotate: 90deg;
 }
@@ -47,26 +53,27 @@
 }
 
 .drop-down-content {
-  background-color: var(--color-bg1);
-  color: var(--color-fg1);
+  @include mixins.set-theme(--color-bg1, --color-fg1);
   border: 1px solid var(--color-border);
   border-top: none;
 }
 
 .search {
+  @include mixins.set-theme(--color-bg1, --color-fg1);
   width: calc(100% - 0.5em);
-  background-color: var(--color-bg1);
-  color: var(--color-fg1);
   border: 1px solid var(--color-border);
   padding: 0.25em;
   margin: 0.25em;
 }
+
 .search::placeholder {
-  color: var(--color-fg1);
+  @include mixins.set-foreground(--color-fg1);
 }
+
 .search:hover {
   border-color: var(--color-highlight);
 }
+
 .search.unsearchable {
   display: none;
 }

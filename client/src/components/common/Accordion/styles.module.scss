@@ -1,3 +1,5 @@
+@use "/src/styles/mixins";
+
 .accordion {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -13,7 +15,6 @@
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: subgrid;
-  //gap: 1rem;
 }
 
 .summary {
@@ -28,9 +29,11 @@
 .accordion.open .chevron {
   rotate: 90deg;
 }
+
 .collapse {
   grid-column: 1 / -1;
 }
+
 .content-wrapper {
   grid-column: 1 / -1;
   display: grid;
@@ -41,7 +44,7 @@
   grid-column: 1;
   width: 0.125em;
   height: 100%;
-  background-color: var(--color-fg0);
+  @include mixins.set-background(--color-fg0);
 }
 
 .content {

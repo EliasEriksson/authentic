@@ -1,3 +1,5 @@
+@use "/src/styles/mixins";
+
 $page-header-required-height-variable: --page-header-required-height;
 
 :root {
@@ -5,7 +7,7 @@ $page-header-required-height-variable: --page-header-required-height;
 }
 
 body {
-  background-color: var(--color-bg0);
+  @include mixins.set-theme(--color-bg0, --color-fg1);
 }
 
 :export {
@@ -28,8 +30,7 @@ body {
 }
 
 .header-wrapper {
-  background-color: var(--color-bg0);
-  color: var(--color-fg0);
+  @include mixins.set-theme(--color-bg0, --color-fg0);
   position: sticky;
   top: 0;
   z-index: 7000;
@@ -73,14 +74,13 @@ body {
   align-self: center;
   aspect-ratio: 1 / 1;
   width: 2.5rem;
-  color: currentColor;
+  color: var(--color-current-fg);
 }
 
 .aside-wrapper {
+  @include mixins.set-theme(--color-bg0, --color-fg0);
   grid-column: 1;
   grid-row: 2;
-  background-color: var(--color-bg0);
-  color: var(--color-fg0);
   position: sticky;
   top: var(--page-header-height);
   height: calc(var(--page-height) - var(--page-header-height));
@@ -134,17 +134,15 @@ body {
 }
 
 .main-wrapper {
-  background-color: var(--color-bg1);
-  color: var(--color-fg1);
+  @include mixins.set-theme(--color-bg1, --color-fg1);
   min-height: calc(var(--page-height) - var(--page-header-height));
   padding: var(--content-padding);
   border-bottom: 1px solid var(--color-border);
 }
 
 .footer-wrapper {
+  @include mixins.set-theme(--color-bg0, --color-fg0);
   position: relative;
-  background-color: var(--color-bg0);
-  color: var(--color-fg0);
   border-bottom: 1px solid var(--color-bg0);
   filter: drop-shadow(0px 0px 5px var(--color-shadow));
 }
